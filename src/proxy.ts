@@ -12,12 +12,20 @@ function getLocale(request: NextRequest): string {
   request.headers.forEach((value, key) => (negotiatorHeaders[key] = value))
 
   const languages = new Negotiator({ headers: negotiatorHeaders }).languages()
+  
+  // Filter out invalid language tags (like '*') that Negotiator might return
+  const validLanguages = languages.filter(lang => lang && lang !== '*' && !lang.startsWith('*'))
+  
+  if (validLanguages.length === 0) {
+    return defaultLocale
+  }
 
-  return match(languages, [...locales], defaultLocale)
+  return match(validLanguages, [...locales], defaultLocale)
 }
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
+  console.log('[middleware] pathname:', pathname)
 
   // Skip static files, API routes, and _next
   if (
@@ -28,6 +36,7 @@ export function middleware(request: NextRequest) {
     pathname.startsWith('/sitemap') ||
     pathname.startsWith('/robots')
   ) {
+    console.log('[middleware] skipping static/api')
     return NextResponse.next()
   }
 
@@ -35,13 +44,16 @@ export function middleware(request: NextRequest) {
   const pathnameHasLocale = locales.some(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   )
+  console.log('[middleware] pathnameHasLocale:', pathnameHasLocale, 'locales:', locales)
 
   if (pathnameHasLocale) {
+    console.log('[middleware] passing through - locale found')
     return NextResponse.next()
   }
 
   // Redirect to locale-prefixed path
   const locale = getLocale(request)
+  console.log('[middleware] redirecting to locale:', locale)
   
   // Handle root path
   if (pathname === '/') {
