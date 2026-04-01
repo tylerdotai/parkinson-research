@@ -65,6 +65,16 @@
 - Include: Respite care, financial assistance, mental health support
 - Focus: What families need to know this week
 
+### 7. This Week's Action Items
+- Source: Derived from all research gathered
+- Format: Top 3 concrete actions patients/families can take based on this week's findings
+- Focus: Specific, timely, actionable — not vague suggestions
+
+### 8. Research Glossary
+- Source: Derived terms from each report
+- Format: Table explaining medical terms in plain language
+- Focus: Make reports accessible to non-medical readers
+
 ---
 
 ## Report Format
