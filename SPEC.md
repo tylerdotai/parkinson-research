@@ -211,6 +211,34 @@ Return findings in Markdown with source URLs. Prioritize actionable, credible in
 | Scheduling | OpenClaw native cron |
 | Data Storage | Markdown files in GitHub repo |
 | Search | SearXNG (primary), Brave Search (fallback) |
+| i18n | Next.js App Router [lang] dynamic segment |
+| Internationalization | English (en), Spanish (es) |
+
+## Internationalization (i18n)
+
+### Supported Locales
+- `en` — English (default)
+- `es` — Spanish
+
+### URL Structure
+```
+/en/           → English home
+/en/reports    → English reports
+/es/           → Spanish home
+/es/reports    → Spanish reports
+```
+
+### Locale Detection
+Middleware uses `Accept-Language` header via `negotiator` and `@formatjs/intl-localematcher` to detect browser preference and redirect appropriately.
+
+### Language Switcher
+Built into Header component. Uses `usePathname` to swap the locale segment without losing the current page context.
+
+### Static Generation
+All locale variants are pre-rendered via `generateStaticParams` for optimal performance.
+
+### API Language
+API responses include `_meta.language` field matching the requested locale.
 
 ---
 

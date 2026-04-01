@@ -1,0 +1,115 @@
+{
+  "metadata": {
+    "title": "Parkinson Research Daily",
+    "description": "Autonomous daily research agent aggregating Parkinson's disease clinical trials, breakthrough treatments, lifestyle interventions, and emerging research.",
+    "keywords": ["parkinsons", "parkinson disease", "clinical trials", "research", "treatment", "caregiver"]
+  },
+  "nav": {
+    "home": "Home",
+    "reports": "Reports",
+    "about": "About",
+    "api": "API"
+  },
+  "home": {
+    "badge": "Autonomous AI Research",
+    "headline": "Daily Parkinson's",
+    "headlineAccent": "Research Reports",
+    "subtitle": "Every morning, AI agents search clinical trials, medical journals, and research databases to bring you the latest breakthroughs, trials, and evidence-based tips.",
+    "browseReports": "Browse All Reports",
+    "learnMore": "Learn More",
+    "latestReport": "Latest Report",
+    "readFullReport": "Read full report",
+    "dailyAt": "Daily at 7:00 AM CDT",
+    "whatsTracked": "What's Tracked",
+    "apiAccess": "API Access",
+    "apiDescription": "Machine-readable format for AI agents and developers.",
+    "viewApi": "View API",
+    "firstReportComing": "First Report Coming Soon",
+    "firstReportDesc": "The research agent will publish its first report soon."
+  },
+  "reports": {
+    "title": "All Reports",
+    "count": "reports available",
+    "noReports": "No Reports Yet",
+    "noReportsDesc": "Reports will appear here once the research agent runs.",
+    "apiSection": "Machine-Readable API",
+    "apiSectionDesc": "Access all reports as JSON for AI agents and integrations."
+  },
+  "report": {
+    "backToAll": "Back to all reports",
+    "allReports": "All Reports",
+    "generatedBy": "Generated autonomously by AI research agents"
+  },
+  "about": {
+    "title": "About This Project",
+    "researchAgent": "The Research Agent",
+    "researchAgentDesc": "Every morning at 7:00 AM CDT, an autonomous AI research agent springs to life. It spawns multiple specialized sub-agents that simultaneously search:",
+    "searchTargets": [
+      "ClinicalTrials.gov for recruiting clinical trials",
+      "Medical journals (NEJM, Lancet Neurology, JAMA) for breakthrough findings",
+      "Research databases for lifestyle intervention studies",
+      "Preprint servers and conference proceedings for emerging science"
+    ],
+    "whatsTracked": "What's Tracked",
+    "clinicalTrials": {
+      "title": "Clinical Trials",
+      "desc": "Active recruiting trials, Phase 2/3 results, eligibility requirements, intervention types, and locations."
+    },
+    "breakthroughs": {
+      "title": "Breakthrough Treatments",
+      "desc": "FDA approvals, drug mechanisms, clinical evidence summaries, and emerging therapeutic targets."
+    },
+    "lifestyle": {
+      "title": "Lifestyle Interventions",
+      "desc": "Exercise protocols, dietary recommendations, sleep optimization, and stress management strategies."
+    },
+    "emerging": {
+      "title": "Emerging Research",
+      "desc": "Novel therapeutic targets, biomarker discoveries, diagnostic advances, and preliminary findings from preprint servers."
+    },
+    "privacy": "Privacy and Safety",
+    "privacyItems": [
+      "No personal data — reports contain zero patient or personal information",
+      "Aggregate research only — we compile public research, not private data",
+      "Medical disclaimers — every report includes clear disclaimers",
+      "Transparent methodology — all research sources are cited"
+    ],
+    "apiAccess": "API Access",
+    "apiAccessDesc": "This site provides a JSON API for AI agents and developers to consume research data programmatically.",
+    "builtWith": "Built With",
+    "disclaimer": "Disclaimer",
+    "disclaimerText": "The information provided by Parkinson Research Daily is for general informational purposes only. All information on the site is provided in good faith; however, we make no representation or warranty of any kind, express or implied, regarding the accuracy, adequacy, validity, reliability, availability, or completeness of any information on the site.",
+    "disclaimerText2": "Under no circumstance shall we have any liability to you for any loss or damage of any kind incurred as a result of the use of the site or reliance on any information provided on the site. Your use of the site and your reliance on any information on the site is solely at your own risk."
+  },
+  "categories": {
+    "clinicalTrials": {
+      "title": "Clinical Trials",
+      "desc": "Active recruiting trials, Phase 2/3 results, eligibility criteria"
+    },
+    "breakthroughs": {
+      "title": "Breakthroughs",
+      "desc": "FDA approvals, drug mechanisms, clinical evidence"
+    },
+    "lifestyle": {
+      "title": "Lifestyle",
+      "desc": "Exercise protocols, diet plans, sleep optimization"
+    },
+    "emergingResearch": {
+      "title": "Emerging Research",
+      "desc": "Preprints, novel targets, biomarkers, diagnostics"
+    }
+  },
+  "footer": {
+    "tagline": "Built with AI agents. Updated daily.",
+    "disclaimer": "For informational purposes only. Consult healthcare providers before making treatment decisions."
+  },
+  "disclaimer": {
+    "title": "Medical Disclaimer",
+    "text": "This report is for informational purposes only. The content is not intended to be a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition."
+  },
+  "languageSwitcher": {
+    "label": "Language",
+    "en": "English",
+    "es": "Spanish"
+  }
+}

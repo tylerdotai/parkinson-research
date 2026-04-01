@@ -1,0 +1,115 @@
+{
+  "metadata": {
+    "title": "Investigacion Parkinson Diaria",
+    "description": "Agente autonomo de investigacion diaria que agrega ensayos clinicos de enfermedad de Parkinson, tratamientos revolucionarios, intervenciones de estilo de vida e investigacion emergente.",
+    "keywords": ["parkinson", "enfermedad de parkinson", "ensayos clinicos", "investigacion", "tratamiento", "cuidador"]
+  },
+  "nav": {
+    "home": "Inicio",
+    "reports": "Informes",
+    "about": "Acerca de",
+    "api": "API"
+  },
+  "home": {
+    "badge": "Investigacion Autonoma con IA",
+    "headline": "Investigacion Diaria de",
+    "headlineAccent": "Enfermedad de Parkinson",
+    "subtitle": "Cada manana, agentes de IA buscan ensayos clinicos, revistas medicas y bases de datos de investigacion para traerle los ultimos avances, ensayos y consejos basados en evidencia.",
+    "browseReports": "Ver Todos los Informes",
+    "learnMore": "Saber Mas",
+    "latestReport": "Ultimo Informe",
+    "readFullReport": "Leer informe completo",
+    "dailyAt": "Diario a las 7:00 AM CDT",
+    "whatsTracked": "Lo Que Se Rastrea",
+    "apiAccess": "Acceso a API",
+    "apiDescription": "Formato legible por maquina para agentes de IA y desarrolladores.",
+    "viewApi": "Ver API",
+    "firstReportComing": "Primer Informe Pronto",
+    "firstReportDesc": "El agente de investigacion publicara su primer informe pronto."
+  },
+  "reports": {
+    "title": "Todos los Informes",
+    "count": "informes disponibles",
+    "noReports": "Sin Informes Todavia",
+    "noReportsDesc": "Los informes apareceran aqui una vez que el agente de investigacion se ejecute.",
+    "apiSection": "API Legible por Maquina",
+    "apiSectionDesc": "Accede a todos los informes como JSON para agentes de IA e integraciones."
+  },
+  "report": {
+    "backToAll": "Volver a todos los informes",
+    "allReports": "Todos los Informes",
+    "generatedBy": "Generado autonomamente por agentes de investigacion de IA"
+  },
+  "about": {
+    "title": "Acerca de Este Proyecto",
+    "researchAgent": "El Agente de Investigacion",
+    "researchAgentDesc": "Cada manana a las 7:00 AM CDT, un agente de investigacion de IA autonomo cobra vida. Genera multiples sub-agentes especializados que buscan simultaneamente:",
+    "searchTargets": [
+      "ClinicalTrials.gov para ensayos clinicos que reclutan",
+      "Revistas medicas (NEJM, Lancet Neurology, JAMA) para hallazgos revolucionarios",
+      "Bases de datos de investigacion para estudios de intervencion del estilo de vida",
+      "Servidores de preprint y actas de conferencias para ciencia emergente"
+    ],
+    "whatsTracked": "Lo Que Se Rastrea",
+    "clinicalTrials": {
+      "title": "Ensayos Clinicos",
+      "desc": "Ensayos activos que reclutan, resultados de Fase 2/3, requisitos de elegibilidad, tipos de intervencion y ubicaciones."
+    },
+    "breakthroughs": {
+      "title": "Tratamientos Revolucionarios",
+      "desc": "Aprobaciones de FDA, mecanismos de farmacos, resumenes de evidencia clinica y objetivos terapeuticos emergentes."
+    },
+    "lifestyle": {
+      "title": "Intervenciones del Estilo de Vida",
+      "desc": "Protocolos de ejercicio, recomendaciones dieteticas, optimizacion del sueno y estrategias de manejo del estres."
+    },
+    "emerging": {
+      "title": "Investigacion Emergente",
+      "desc": "Nuevos objetivos terapeuticos, descubrimientos de biomarcadores, avances diagnosticos y hallazgos preliminares de servidores de preprint."
+    },
+    "privacy": "Privacidad y Seguridad",
+    "privacyItems": [
+      "Sin datos personales — los informes no contienen informacion de pacientes o personal",
+      "Solo investigacion agregada — compilamos investigacion publica, no datos privados",
+      "Avisos de exencion de responsabilidad medica — cada informe incluye avisos claros",
+      "Metodologia transparente — todas las fuentes de investigacion estan citadas"
+    ],
+    "apiAccess": "Acceso a API",
+    "apiAccessDesc": "Este sitio proporciona una API JSON para que los agentes de IA y desarrolladores consuman datos de investigacion programaticamente.",
+    "builtWith": "Construido Con",
+    "disclaimer": "Aviso Legal",
+    "disclaimerText": "La informacion proporcionada por Parkinson Research Daily es solo para fines informativos generales. Toda la informacion en el sitio se proporciona de buena fe; sin embargo, no hacemos ninguna representacion o garantia de ningun tipo, expresa o implicita, con respecto a la exactitud, adecuacion, validez, confiabilidad, disponibilidad o completitud de cualquier informacion en el sitio.",
+    "disclaimerText2": "Bajo ninguna circunstancia tendremos ninguna responsabilidad hacia usted por cualquier perdida o dano de cualquier tipo incurred como resultado del uso del sitio o la dependencia de cualquier informacion proporcionada en el sitio. Su uso del sitio y su dependencia de cualquier informacion en el sitio es solo bajo su propio riesgo."
+  },
+  "categories": {
+    "clinicalTrials": {
+      "title": "Ensayos Clinicos",
+      "desc": "Ensayos activos que reclutan, resultados de Fase 2/3, criterios de elegibilidad"
+    },
+    "breakthroughs": {
+      "title": "Avances",
+      "desc": "Aprobaciones de FDA, mecanismos de farmacos, evidencia clinica"
+    },
+    "lifestyle": {
+      "title": "Estilo de Vida",
+      "desc": "Protocolos de ejercicio, planes de dieta, optimizacion del sueno"
+    },
+    "emergingResearch": {
+      "title": "Investigacion Emergente",
+      "desc": "Preprints, objetivos novedosos, biomarcadores, diagnosticos"
+    }
+  },
+  "footer": {
+    "tagline": "Construido con agentes de IA. Actualizado diariamente.",
+    "disclaimer": "Solo para fines informativos. Consulte a los proveedores de salud antes de tomar decisiones de tratamiento."
+  },
+  "disclaimer": {
+    "title": "Aviso de Exencion de Responsabilidad Medica",
+    "text": "Este informe es solo para fines informativos. El contenido no pretende ser un sustituto del consejo medico profesional, diagnostico o tratamiento. Siempre busque el consejo de su medico u otro proveedor de salud calificado con cualquier pregunta que pueda tener sobre una condicion medica."
+  },
+  "languageSwitcher": {
+    "label": "Idioma",
+    "en": "Ingles",
+    "es": "Espanol"
+  }
+}

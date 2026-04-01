@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getReport, getAllReportDates } from '@/lib/reports'
+import { getReport } from '@/lib/reports'
+import { getDictionary } from '@/lib/dictionary'
 
 interface Params {
-  params: Promise<{ date: string }>
+  params: Promise<{ lang: string; date: string }>
 }
 
 export async function GET(request: NextRequest, { params }: Params) {
-  const { date } = await params
+  const { lang, date } = await params
   
   // Validate date format
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
@@ -17,6 +18,7 @@ export async function GET(request: NextRequest, { params }: Params) {
   }
   
   const report = await getReport(date)
+  const dictionary = await getDictionary(lang)
   
   if (!report) {
     return NextResponse.json(
@@ -32,8 +34,9 @@ export async function GET(request: NextRequest, { params }: Params) {
     content: report.content,
     sections: parseSections(report.content),
     _meta: {
-      source: 'Parkinson Research Daily',
-      url: `https://parkinson-research.vercel.app/report/${date}`,
+      source: dictionary.metadata.title,
+      url: `https://parkinson-research.vercel.app/${lang}/report/${date}`,
+      language: lang,
     }
   })
 }
