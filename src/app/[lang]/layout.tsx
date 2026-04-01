@@ -64,24 +64,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-// Theme script runs before render to prevent flash
-const themeScript = `
-(function() {
-  const stored = localStorage.getItem('theme');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const storedMotion = localStorage.getItem('motion-reduced');
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  
-  if (stored === 'dark' || (!stored && prefersDark)) {
-    document.documentElement.setAttribute('data-theme', 'dark');
-  }
-  if (storedMotion === 'true' || (!storedMotion && prefersReduced)) {
-    document.documentElement.classList.add('motion-reduced');
-    document.querySelector('.motion-toggle')?.classList.add('active');
-  }
-})();
-`
-
 export default async function LangLayout({ children, params }: Props) {
   const { lang } = await params
   
@@ -93,10 +75,9 @@ export default async function LangLayout({ children, params }: Props) {
   const dictionary = await getDictionary(lang)
 
   return (
-    <html lang={lang} suppressHydrationWarning>
+    <html lang={lang}>
       <head>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%232563EB' width='100' height='100' rx='20'/><text x='50' y='68' font-size='50' text-anchor='middle' fill='white' font-family='system-ui'>P</text></svg>" />
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -120,7 +101,7 @@ export default async function LangLayout({ children, params }: Props) {
           }}
         />
       </head>
-      <body className="min-h-screen flex flex-col bg-cream-50 text-charcoal-700">
+      <body className="min-h-screen flex flex-col">
         <a href="#main-content" className="skip-link">Skip to main content</a>
         <Header dictionary={dictionary} lang={lang} />
         <main id="main-content" className="flex-1">{children}</main>
