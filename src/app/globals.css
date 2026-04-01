@@ -1,24 +1,37 @@
 @import "tailwindcss";
 
-:root {
-  --primary: #2D5BFF;
-  --secondary: #10B981;
-  --accent: #F59E0B;
-  --background: #F8FAFC;
-  --foreground: #1E293B;
+@theme {
+  --color-primary: #2D5BFF;
+  --color-secondary: #10B981;
+  --color-accent: #F59E0B;
+  --color-background: #F8FAFC;
+  --color-foreground: #1E293B;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--color-background);
+  color: var(--color-foreground);
 }
 
 @layer components {
   .report-card {
-    @apply bg-white rounded-xl border border-gray-200 p-6 hover:shadow-md transition-shadow;
+    background: white;
+    border-radius: 0.75rem;
+    border: 1px solid #e5e7eb;
+    padding: 1.5rem;
+  }
+  
+  .report-card:hover {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
   }
   
   .section-header {
-    @apply text-2xl font-bold text-foreground mb-4 flex items-center gap-2;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-foreground);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 }

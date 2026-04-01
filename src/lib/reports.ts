@@ -13,7 +13,7 @@ export interface Report {
 }
 
 function simpleMarkdownToHtml(md: string): string {
-  return md
+  let html = md
     // Headers
     .replace(/^### (.*$)/gim, '<h3 class="text-lg font-semibold mt-6 mb-2">$1</h3>')
     .replace(/^## (.*$)/gim, '<h2 class="text-xl font-semibold mt-8 mb-3">$1</h2>')
@@ -22,23 +22,17 @@ function simpleMarkdownToHtml(md: string): string {
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.*?)\*/g, '<em>$1</em>')
     // Links
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-primary hover:underline" target="_blank" rel="noopener">$1</a>')
-    // Lists
-    .replace(/^\- (.*$)/gim, '<li class="ml-4">$1</li>')
-    .replace(/^\d+\. (.*$)/gim, '<li class="ml-4 list-decimal">$1</li>')
-    // Paragraphs
-    .replace(/\n\n/g, '</p><p class="mb-4">')
-    // Line breaks
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-600 hover:underline" target="_blank" rel="noopener">$1</a>')
+    // Line breaks for readability
     .replace(/\n/g, '<br/>')
-    // Wrap in paragraph
-    .replace(/^(?!<[hlip])/gm, '<p class="mb-4">')
-    .replace(/(?<![>])$/gm, '</p>')
-    // Clean up empty paragraphs
-    .replace(/<p class="mb-4"><\/p>/g, '')
-    // Fix list grouping
-    .replace(/(<li class="ml-4">.*?<\/li>)(<br\/>)?/gs, '<ul class="list-disc my-4 space-y-1">$1</ul>')
-    // Re-wrap properly
-    .replace(/<ul class="list-disc my-4 space-y-1">(<li class="ml-4">.*?<\/li>)<\/ul>/gs, '<ul class="list-disc my-4 space-y-1">$1</ul>')
+  
+  // Clean up
+  html = html.replace(/<br\/><br\/>/g, '</p><p class="mb-4">')
+  html = '<p class="mb-4">' + html + '</p>'
+  html = html.replace(/<p class="mb-4"><p class="mb-4">/g, '<p class="mb-4">')
+  html = html.replace(/<p class="mb-4"><\/p>/g, '')
+  
+  return html
 }
 
 export async function getAllReportDates(): Promise<string[]> {
