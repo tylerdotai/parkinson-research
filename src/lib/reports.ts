@@ -155,3 +155,75 @@ export async function getLatestReport(): Promise<Report | null> {
   if (dates.length === 0) return null
   return getReport(dates[0])
 }
+
+export interface ReportSummary {
+  date: string
+  title: string
+  sections: {
+    title: string
+    summary: string
+  }[]
+}
+
+export async function getLatestReportSummary(): Promise<ReportSummary | null> {
+  const dates = await getAllReportDates()
+  if (dates.length === 0) return null
+  
+  const report = await getReport(dates[0])
+  if (!report) return null
+  
+  // Extract section summaries from content
+  const sections: { title: string; summary: string }[] = []
+  const lines = report.content.split('\n')
+  let currentSection = ''
+  let currentContent: string[] = []
+  
+  for (const line of lines) {
+    const h2Match = line.match(/^## (.+)/)
+    
+    if (h2Match) {
+      // Save previous section
+      if (currentSection && currentContent.length > 0) {
+        const summary = extractSummary(currentContent.join(' '))
+        if (summary) {
+          sections.push({ title: currentSection, summary })
+        }
+      }
+      currentSection = h2Match[1].trim()
+      currentContent = []
+    } else if (line.trim() && !line.startsWith('#') && !line.startsWith('---')) {
+      // Skip list items for summary, just get prose
+      const trimmed = line.trim()
+      if (!trimmed.startsWith('-') && !trimmed.match(/^\d+\./)) {
+        currentContent.push(trimmed)
+      }
+    }
+  }
+  
+  // Don't include last section (usually Quick Tips, Action Items, Glossary) - keep it to main categories
+  const mainSections = sections.filter(s => 
+    s.title && !s.title.includes('Quick Tips') && 
+    !s.title.includes('Action Items') && 
+    !s.title.includes('Glossary') &&
+    !s.title.includes('Resources')
+  ).slice(0, 5)
+  
+  return {
+    date: report.date,
+    title: report.title,
+    sections: mainSections,
+  }
+}
+
+function extractSummary(text: string): string {
+  // Remove markdown formatting
+  let cleaned = text
+    .replace(/\*\*(.*?)\*\*/g, '$1')
+    .replace(/\*(.*?)\*/g, '$1')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/\|.*\|/g, '')
+  
+  // Take first 150 chars
+  const summary = cleaned.trim().slice(0, 150)
+  return summary.length < cleaned.trim().length ? summary + '...' : summary
+}

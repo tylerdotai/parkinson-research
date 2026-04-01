@@ -1,8 +1,7 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { getDictionary } from '@/lib/dictionary'
-import { getLatestReport, getAllReportDates } from '@/lib/reports'
-import { getLocaleFromParams } from '@/lib/dictionary'
+import { getLatestReportSummary, getAllReportDates } from '@/lib/reports'
 
 type Props = {
   params: Promise<{ lang: string }>
@@ -22,7 +21,7 @@ export default async function HomePage({ params }: Props) {
   const dictionary = await getDictionary(lang)
   const dates = await getAllReportDates()
   const latestDate = dates[0]
-  const latestReport = latestDate ? await getLatestReport() : null
+  const summary = latestDate ? await getLatestReportSummary() : null
 
   const t = dictionary.home
   const tc = dictionary.categories
@@ -51,14 +50,14 @@ export default async function HomePage({ params }: Props) {
           <Link href={`/${lang}/reports`} className="btn btn-primary w-full sm:w-auto">
             {t.browseReports}
           </Link>
-          <Link href={`/${lang}/about`} className="btn btn-secondary w-full sm:w-auto">
-            {t.learnMore}
+          <Link href={`/${lang}/resources`} className="btn btn-secondary w-full sm:w-auto">
+            {dictionary.nav.resources || 'Resources'}
           </Link>
         </div>
       </section>
 
-      {/* Latest Report */}
-      {latestReport ? (
+      {/* Latest Report Summary */}
+      {summary ? (
         <section className="pb-12">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-slate-900">{t.latestReport}</h2>
@@ -73,14 +72,19 @@ export default async function HomePage({ params }: Props) {
           </div>
           
           <article className="card">
-            <div className="report-content text-sm">
-              <div dangerouslySetInnerHTML={{ __html: latestReport.html }} />
+            <div className="space-y-4">
+              {summary.sections.map((section, i) => (
+                <div key={i}>
+                  <h3 className="font-semibold text-slate-800 mb-2">{section.title}</h3>
+                  <p className="text-slate-600 text-sm leading-relaxed">{section.summary}</p>
+                </div>
+              ))}
             </div>
             
             <div className="mt-6 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <Link 
                 href={`/${lang}/report/${latestDate}`}
-                className="text-blue-600 font-medium text-sm flex items-center gap-1"
+                className="btn btn-primary text-sm"
               >
                 {t.readFullReport}
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -117,25 +121,23 @@ export default async function HomePage({ params }: Props) {
         </div>
       </section>
 
-      {/* API CTA */}
+      {/* AI Agent Integration CTA */}
       <section className="pb-12">
-        <div className="bg-blue-50 rounded-xl p-6 md:p-8">
+        <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl p-6 md:p-8 text-white">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div>
-              <h3 className="text-lg font-semibold text-slate-900 mb-1">{t.apiAccess}</h3>
-              <p className="text-slate-600 text-sm">{t.apiDescription}</p>
+              <h3 className="text-lg font-semibold mb-1">AI Agent Integration</h3>
+              <p className="text-blue-100 text-sm mb-3">Set up your own AI agent to receive daily reports automatically.</p>
+              <code className="text-xs bg-blue-800 px-3 py-1.5 rounded-lg font-mono">
+                GET /en/api/reports/latest
+              </code>
             </div>
-            <a 
-              href={`/${lang}/api/reports`} 
-              className="btn btn-primary text-sm"
-              target="_blank"
-              rel="noopener"
+            <Link 
+              href={`/${lang}/resources`} 
+              className="btn bg-white text-blue-600 hover:bg-blue-50 text-sm"
             >
-              {t.viewApi}
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-              </svg>
-            </a>
+              Setup Guide
+            </Link>
           </div>
         </div>
       </section>

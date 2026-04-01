@@ -2,13 +2,21 @@
   "metadata": {
     "title": "Investigacion Parkinson Diaria",
     "description": "Agente autonomo de investigacion diaria que agrega ensayos clinicos de enfermedad de Parkinson, tratamientos revolucionarios, intervenciones de estilo de vida e investigacion emergente.",
-    "keywords": ["parkinson", "enfermedad de parkinson", "ensayos clinicos", "investigacion", "tratamiento", "cuidador"]
+    "keywords": [
+      "parkinson",
+      "enfermedad de parkinson",
+      "ensayos clinicos",
+      "investigacion",
+      "tratamiento",
+      "cuidador"
+    ]
   },
   "nav": {
     "home": "Inicio",
     "reports": "Informes",
     "about": "Acerca de",
-    "api": "API"
+    "api": "API",
+    "resources": "Recursos"
   },
   "home": {
     "badge": "Investigacion Autonoma con IA",
@@ -111,5 +119,48 @@
     "label": "Idioma",
     "en": "Ingles",
     "es": "Espanol"
+  },
+  "resources": {
+    "title": "Recursos",
+    "subtitle": "Lineas de ayuda, programas de apoyo y asistencia para pacientes y familias con Parkinson.",
+    "emergency": {
+      "title": "Emergencias y Lineas de Ayuda",
+      "pfHelpline": "Educadores de enfermeria disponibles Lun-Vie, 9am-7pm ET. Obtenga respuestas sobre sintomas, tratamientos y recursos locales.",
+      "npfDesc": "Recursos gratuitos, referencias a equipos de atencion especializada y apoyo para pacientes y familias.",
+      "apdaDesc": "Informacion, referencias, grupos de apoyo y programas educativos en todo el pais."
+    },
+    "clinical": {
+      "title": "Ensayos Clinicos e Investigacion",
+      "clinicalTrialsDesc": "Busque todos los ensayos clinicos de Parkinson por ubicacion, fase y tipo de intervencion.",
+      "foxTrialDesc": "Herramienta de Michael J. Fox Foundation para conectar pacientes con ensayos que reclutan. Solo 5 minutos.",
+      "researchMatchDesc": "Conectese con investigadores que realizan estudios sobre Parkinson. Gratis para unirse."
+    },
+    "exercise": {
+      "title": "Ejercicio y Rehabilitacion",
+      "rsbDesc": "Programa de boxeo sin contacto especificamente para Parkinson. Mas de 900 afiliados en todo el mundo. Becas disponibles.",
+      "lsvtDesc": "Metodo terapeutico que usa movimientos exagerados para mejorar la calidad del movimiento.",
+      "pdWarriorsDesc": "Programa de ejercicio basado en circuitos para Parkinson. Opciones virtuales y presenciales.",
+      "danceDesc": "Clases de danza diseñadas para personas con Parkinson. Videos gratuitos en linea y clases presenciales."
+    },
+    "caregiver": {
+      "title": "Apoyo para Cuidadores y Familia",
+      "fcaDesc": "Defensa y apoyo para cuidadores familiares en todo el pais. Guias de descanso, foros y navegacion de cuidado.",
+      "carelinxDesc": "Encuentre cuidadores domesticos verificados y asequibles. Seguro medico aceptado.",
+      "archDesc": "Servicios de cuidado de relevo de emergencia y planificados. Ayuda a los cuidadores a tomar descansos.",
+      "wellSpouseDesc": "Apoyo para conyuges que cuidan de parejas cronicas. Mentores, grupos de apoyo y defensa."
+    },
+    "financial": {
+      "title": "Asistencia Financiera y de Seguro",
+      "medicareDesc": "Seguro medico federal para mayores de 65. Cubre algunos medicamentos, terapias y equipos para Parkinson.",
+      "ssdiDesc": "Aplique temprano — toma 2-3 anos para aprobacion. Proporciona beneficios mensuales.",
+      "pfAssistDesc": "Ayuda a navegar el seguro medico, encontrar asistencia de copagos y programas de asistencia de medicamentos.",
+      "needyMedsDesc": "Encuentre programas de asistencia para medicamentos gratuitos o a costo reducido."
+    },
+    "mental": {
+      "title": "Salud Mental y Consejeria",
+      "crisisTextDesc": "Consejeria de crisis gratuita 24/7 por texto.",
+      "caregiverMentalDesc": "La depresion del cuidador es real y comun. Busque su propio consejero.",
+      "pfMentalDesc": "La depresion y la ansiedad son comunes en Parkinson. Hay ayuda disponible."
+    }
   }
 }

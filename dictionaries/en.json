@@ -2,11 +2,19 @@
   "metadata": {
     "title": "Parkinson Research Daily",
     "description": "Autonomous daily research agent aggregating Parkinson's disease clinical trials, breakthrough treatments, lifestyle interventions, and emerging research.",
-    "keywords": ["parkinsons", "parkinson disease", "clinical trials", "research", "treatment", "caregiver"]
+    "keywords": [
+      "parkinsons",
+      "parkinson disease",
+      "clinical trials",
+      "research",
+      "treatment",
+      "caregiver"
+    ]
   },
   "nav": {
     "home": "Home",
     "reports": "Reports",
+    "resources": "Resources",
     "about": "About",
     "api": "API"
   },
@@ -69,10 +77,10 @@
     },
     "privacy": "Privacy and Safety",
     "privacyItems": [
-      "No personal data — reports contain zero patient or personal information",
-      "Aggregate research only — we compile public research, not private data",
-      "Medical disclaimers — every report includes clear disclaimers",
-      "Transparent methodology — all research sources are cited"
+      "No personal data \u2014 reports contain zero patient or personal information",
+      "Aggregate research only \u2014 we compile public research, not private data",
+      "Medical disclaimers \u2014 every report includes clear disclaimers",
+      "Transparent methodology \u2014 all research sources are cited"
     ],
     "apiAccess": "API Access",
     "apiAccessDesc": "This site provides a JSON API for AI agents and developers to consume research data programmatically.",
@@ -111,5 +119,48 @@
     "label": "Language",
     "en": "English",
     "es": "Spanish"
+  },
+  "resources": {
+    "title": "Resources",
+    "subtitle": "Free hotlines, support programs, and assistance for Parkinson patients and families.",
+    "emergency": {
+      "title": "Emergency & Helplines",
+      "pfHelpline": "Nurse educators available Mon-Fri, 9am-7pm ET. Get answers about symptoms, treatments, and local resources.",
+      "npfDesc": "Free resources, expert care team referrals, and support for patients and families.",
+      "apdaDesc": "Information, referrals, support groups, and educational programs nationwide."
+    },
+    "clinical": {
+      "title": "Clinical Trials & Research",
+      "clinicalTrialsDesc": "Search all recruiting Parkinson clinical trials by location, phase, and intervention type.",
+      "foxTrialDesc": "Michael J. Fox Foundation tool to match patients with recruiting trials. Takes 5 minutes to sign up.",
+      "researchMatchDesc": "Connect with researchers conducting Parkinson studies. Free to join."
+    },
+    "exercise": {
+      "title": "Exercise & Rehabilitation",
+      "rsbDesc": "Non-contact boxing program specifically for Parkinson. 900+ affiliates worldwide. Scholarships available.",
+      "lsvtDesc": "Therapy method using oversized movements to improve movement quality. Find certified therapists.",
+      "pdWarriorsDesc": "Circuit-based exercise program for Parkinson. Virtual and in-person options available.",
+      "danceDesc": "Dance classes designed for people with Parkinson. Free online videos and in-person classes."
+    },
+    "caregiver": {
+      "title": "Caregiver & Family Support",
+      "fcaDesc": "Nationwide advocacy and support for family caregivers. Respite care guides, online forums, and care navigation.",
+      "carelinxDesc": "Find vetted, affordable in-home caregivers. Insurance accepted. Background-checked professionals.",
+      "archDesc": "Emergency and planned respite care services. Helps caregivers take breaks safely.",
+      "wellSpouseDesc": "Support for spouses caring for chronically ill partners. Mentors, support groups, and advocacy."
+    },
+    "financial": {
+      "title": "Financial & Insurance Assistance",
+      "medicareDesc": "Federal health insurance for 65+. Covers some Parkinson medications, therapy, and equipment.",
+      "ssdiDesc": "Apply early \u2014 takes 2-3 years for approval. Provides monthly benefits for eligible disabled individuals.",
+      "pfAssistDesc": "Helps navigate insurance, find co-pay assistance, and access medication assistance programs.",
+      "needyMedsDesc": "Find patient assistance programs for free or reduced-cost medications. Search by drug name."
+    },
+    "mental": {
+      "title": "Mental Health & Counseling",
+      "crisisTextDesc": "Free 24/7 crisis counseling via text. Mental health support when you need it most.",
+      "caregiverMentalDesc": "Caregiver depression is common. Seek your own counselor \u2014 you cannot pour from an empty cup.",
+      "pfMentalDesc": "Depression and anxiety are common in Parkinson. Help is available \u2014 ask your neurologist for referrals."
+    }
   }
 }
