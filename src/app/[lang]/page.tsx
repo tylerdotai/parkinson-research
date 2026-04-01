@@ -89,7 +89,8 @@ export default async function HomePage({ params }: Props) {
             </div>
           </ScrollReveal>
           
-          <div className="bento-grid reveal-stagger">
+          <ScrollReveal>
+          <div className="bento-grid">
             {/* Main card */}
             <div className="bento-item-large card">
               <div className="flex items-center gap-3 mb-4">
@@ -150,6 +151,7 @@ export default async function HomePage({ params }: Props) {
             <CategoryCard title={tc.lifestyle.title} description={tc.lifestyle.desc} icon="heart" />
             <CategoryCard title={tc.emergingResearch.title} description={tc.emergingResearch.desc} icon="sparkles" />
           </div>
+          </ScrollReveal>
         </section>
       ) : (
         <section className="pb-16">
