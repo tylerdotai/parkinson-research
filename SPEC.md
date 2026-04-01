@@ -35,21 +35,35 @@
 - Source: ClinicalTrials.gov API, PubMed
 - Focus: Phase 2/3 trials recruiting, results posted
 - Include: Trial ID, phase, status, location, eligibility, intervention type
+- **NEW:** Patient/family applicability summary — what this trial means in plain language
 
 ### 2. Breakthrough Treatments
 - Source: Medical news (NEJM, Lancet Neurology, JAMA Neurology, Parkinson's News Today)
 - Focus: Peer-reviewed findings, FDA decisions, drug approvals
 - Include: Source citation, mechanism of action, trial results summary
+- **NEW:** Daily life impact — how this treatment could affect symptom management, side effects, quality of life
 
 ### 3. Lifestyle Interventions
 - Source: PubMed, movement disorder journals
 - Focus: Exercise protocols, diet, sleep, stress management
 - Include: Specific recommendations, evidence level, practical tips
+- **NEW:** Specific programs (Rock Steady Boxing, PD Warriors, LSVT BIG), nutrition timing with medications
 
 ### 4. Emerging Research
 - Source: Preprint servers (bioRxiv), conference abstracts
 - Focus: Novel therapeutic targets, biomarkers, diagnostic advances
 - Include: Research stage, team/institution, novelty assessment
+- **NEW:** What this means for patients/families in 1-5 years
+
+### 5. Community & Support Resources
+- Source: Parkinson's Foundation, Michael J. Fox Foundation, local chapters
+- Include: Support groups, advocacy programs, caregiver resources, clinical trial matching tools
+- **NEW:** Outreach programs, volunteer opportunities, community events
+
+### 6. Caregiver & Family Resources
+- Source: Caregiving organizations, Parkinson's-specific programs
+- Include: Respite care, financial assistance, mental health support
+- Focus: What families need to know this week
 
 ---
 
