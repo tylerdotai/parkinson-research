@@ -12,27 +12,83 @@ export interface Report {
   preview: string
 }
 
+// Strip emojis from text for web display (reports keep them in markdown)
+function stripEmojis(text: string): string {
+  return text.replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '')
+}
+
 function simpleMarkdownToHtml(md: string): string {
-  let html = md
+  // Strip emojis for web display
+  let html = stripEmojis(md)
+  
+  // Extract sections and build structured HTML
+  const lines = html.split('\n')
+  const elements: string[] = []
+  let inList = false
+  let listItems: string[] = []
+  
+  const closeList = () => {
+    if (listItems.length > 0) {
+      elements.push(`<ul class="list-disc ml-5 mb-4 space-y-1">${listItems.join('')}</ul>`)
+      listItems = []
+    }
+    inList = false
+  }
+  
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i]
+    const trimmed = line.trim()
+    
+    // Skip empty lines and frontmatter markers
+    if (!trimmed || trimmed === '---') continue
+    
     // Headers
-    .replace(/^### (.*$)/gim, '<h3 class="text-lg font-semibold mt-6 mb-2">$1</h3>')
-    .replace(/^## (.*$)/gim, '<h2 class="text-xl font-semibold mt-8 mb-3">$1</h2>')
-    .replace(/^# (.*$)/gim, '<h1 class="text-2xl font-bold mb-4">$1</h1>')
-    // Bold and italic
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.*?)\*/g, '<em>$1</em>')
-    // Links
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-600 hover:underline" target="_blank" rel="noopener">$1</a>')
-    // Line breaks for readability
-    .replace(/\n/g, '<br/>')
+    if (trimmed.startsWith('#### ')) {
+      closeList()
+      elements.push(`<h4 class="text-base font-semibold mt-5 mb-2 text-slate-900">${trimmed.slice(5)}</h4>`)
+    } else if (trimmed.startsWith('### ')) {
+      closeList()
+      elements.push(`<h3 class="text-lg font-semibold mt-6 mb-2 text-slate-900">${trimmed.slice(4)}</h3>`)
+    } else if (trimmed.startsWith('## ')) {
+      closeList()
+      elements.push(`<h2 class="text-xl font-semibold mt-8 mb-3 text-slate-900">${trimmed.slice(3)}</h2>`)
+    } else if (trimmed.startsWith('# ')) {
+      closeList()
+      elements.push(`<h1 class="text-2xl font-bold mb-4 text-slate-900">${trimmed.slice(2)}</h1>`)
+    }
+    // List items
+    else if (trimmed.startsWith('- ') || trimmed.match(/^[\d]+\.\s/)) {
+      inList = true
+      const content = trimmed.replace(/^[\d]+\.\s/, '').replace(/^- /, '')
+      listItems.push(`<li class="text-slate-600">${content}</li>`)
+    }
+    // Horizontal rules
+    else if (trimmed === '---' || trimmed === '***' || trimmed === '___') {
+      closeList()
+      elements.push('<hr class="border-slate-200 my-6" />')
+    }
+    // Regular paragraph
+    else {
+      closeList()
+      const processed = processedLine(trimmed)
+      if (processed) {
+        elements.push(`<p class="mb-3 text-slate-600 leading-relaxed">${processed}</p>`)
+      }
+    }
+  }
   
-  // Clean up
-  html = html.replace(/<br\/><br\/>/g, '</p><p class="mb-4">')
-  html = '<p class="mb-4">' + html + '</p>'
-  html = html.replace(/<p class="mb-4"><p class="mb-4">/g, '<p class="mb-4">')
-  html = html.replace(/<p class="mb-4"><\/p>/g, '')
-  
-  return html
+  closeList()
+  return elements.join('\n')
+}
+
+function processedLine(text: string): string {
+  // Bold
+  text = text.replace(/\*\*(.*?)\*\*/g, '<strong class="text-slate-900 font-medium">$1</strong>')
+  // Italic
+  text = text.replace(/\*(.*?)\*/g, '<em>$1</em>')
+  // Links
+  text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">$1</a>')
+  return text
 }
 
 export async function getAllReportDates(): Promise<string[]> {
@@ -59,9 +115,10 @@ export function getReportMetadata(date: string): { preview: string } | null {
     const content = fs.readFileSync(filePath, 'utf-8')
     const { data } = matter(content)
     
-    // Extract first paragraph as preview
-    const firstParagraph = content
-      .split('\n\n')[2]?.replace(/^#.*\n/, '').trim() || ''
+    // Extract first paragraph as preview (strip emojis)
+    const firstParagraph = stripEmojis(
+      content.split('\n\n')[2]?.replace(/^#.*\n/, '').trim() || ''
+    )
     
     return {
       preview: firstParagraph.slice(0, 120) + (firstParagraph.length > 120 ? '...' : ''),
@@ -86,7 +143,7 @@ export async function getReport(date: string): Promise<Report | null> {
       date,
       content: body,
       html,
-      preview: body.slice(0, 200) + '...',
+      preview: stripEmojis(body).slice(0, 200) + '...',
     }
   } catch {
     return null
