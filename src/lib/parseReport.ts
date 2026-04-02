@@ -22,25 +22,15 @@ function extractUrl(text: string): string | null {
   return match ? match[0].replace(/\)$/, '') : null
 }
 
-function extractDate(line: string): string | undefined {
-  const match = line.match(/([A-Z][a-z]{2}\s+\d{1,2},?\s+\d{4})/)
-  if (match) return match[1]
-  const isoMatch = line.match(/(\d{4}-\d{2}-\d{2})/)
-  if (isoMatch) return isoMatch[1]
-  return undefined
+function extractCategoryFromTitle(title: string): string {
+  // Strip emoji prefix like "🔬 " or "💊 " or "🏃 "
+  const clean = title.replace(/^[^\w\s]+/, '').trim()
+  return CATEGORY_MAP[clean] || 'clinical'
 }
 
-function extractSourceFromLine(line: string): { source: string; url: string } | null {
-  const match = line.match(/^\*\*(.+?)\*\*(.*)$/)
-  if (match) {
-    const url = extractUrl(line)
-    return { source: match[1].trim(), url: url || '' }
-  }
-  if (line.includes('[ClinicalTrials.gov]') || line.includes('[Source:')) {
-    const url = extractUrl(line)
-    return { source: 'Source', url: url || '' }
-  }
-  return null
+function cleanSectionTitle(title: string): string {
+  // Strip emoji prefix
+  return title.replace(/^[^\w\s]+/, '').trim()
 }
 
 export function parseReportSections(content: string): ReportSection[] {
@@ -48,15 +38,13 @@ export function parseReportSections(content: string): ReportSection[] {
   const sections: ReportSection[] = []
   let currentSection: ReportSection | null = null
   let currentEntry: Partial<ReportEntry> = {}
-  let currentContext: string[] = []
-  let collectingContext = false
+  let pendingSnippet = ''
 
   const flushEntry = () => {
-    const title = currentEntry.title
-    if (title && currentSection) {
-      const snippetText = currentContext.length > 0 ? currentContext.join(' ') : currentEntry.snippet
+    if (currentEntry.title && currentSection) {
+      const snippetText = (currentEntry.snippet || pendingSnippet).trim()
       const entry: ReportEntry = {
-        title,
+        title: currentEntry.title,
         snippet: snippetText || undefined,
         date: currentEntry.date,
         source: currentEntry.source,
@@ -65,95 +53,93 @@ export function parseReportSections(content: string): ReportSection[] {
       currentSection.entries.push(entry)
     }
     currentEntry = {}
-    currentContext = []
-    collectingContext = false
+    pendingSnippet = ''
   }
 
   for (let i = 0; i < lines.length; i++) {
-    const line = lines[i]
-    const trimmed = line.trim()
+    const raw = lines[i]
+    const line = raw.replace(/^\s*/, '') // strip leading space only (preserve internal spaces)
+    const indent = raw.length - line.length
 
     // Skip empty lines
-    if (!trimmed) {
-      collectingContext = false
+    if (!line.trim()) {
+      // Blank line — flush snippet context if nothing else
       continue
     }
 
-    // Skip frontmatter and top-level headers
-    if (trimmed.startsWith('# ') || trimmed.startsWith('---')) continue
+    // Skip top-level headers
+    if (line.startsWith('# ') || line.startsWith('---')) continue
 
-    // Section header (##)
-    if (trimmed.startsWith('## ')) {
+    // Section header: ## [emoji] Category Title
+    if (line.startsWith('## ')) {
       flushEntry()
       if (currentSection) sections.push(currentSection)
-
-      const title = trimmed.slice(3).trim()
+      const rawTitle = line.slice(3).trim()
+      const title = cleanSectionTitle(rawTitle)
       currentSection = {
         title,
-        emoji: getEmojiForSection(title),
-        category: (CATEGORY_MAP[title] || 'clinical') as ReportSection['category'],
+        emoji: '',
+        category: extractCategoryFromTitle(rawTitle) as ReportSection['category'],
         entries: [],
       }
       continue
     }
 
-    // Entry title (### Trial: or ### Title)
-    if (trimmed.startsWith('### ')) {
-      flushEntry()
-      const entryTitle = trimmed.slice(4).trim()
-        .replace(/^Trial:\s*/, '')
-        .replace(/\*\*/g, '')
-      currentEntry.title = entryTitle
-      collectingContext = false
+    // Source on its own indented line
+    if ((line.startsWith('Source:') || line.startsWith('source:')) && indent > 0) {
+      const url = extractUrl(line)
+      if (url) currentEntry.url = url
+      const sourceMatch = line.match(/^Source:\s*(.+)/i)
+      if (sourceMatch) currentEntry.source = sourceMatch[1].trim()
       continue
     }
 
-    // Metadata fields **Key:** Value
-    const metaMatch = trimmed.match(/^\*\*(.+?):\*\*\s*(.+)$/)
-    if (metaMatch) {
-      const [, key, value] = metaMatch
-      collectingContext = false
+    // List item entry: - **Title** — snippet
+    if (line.startsWith('- **')) {
+      flushEntry()
 
-      // Date extraction
-      const dateValue = extractDate(value)
-      if (dateValue) currentEntry.date = dateValue
+      // Non-greedy: stop at first **, then capture rest (snippet)
+      // Handles titles like "UCSD Trials — San Diego" where em-dash is in title
+      const match = line.match(/^- \*\*([^*]+)\*\*(.*)$/)
+      if (match) {
+        currentEntry.title = match[1].trim()
+        const rest = (match[2] || '').trim()
 
-      // Source field
-      if (key.toLowerCase() === 'source') {
-        currentEntry.source = value.trim()
-        const url = extractUrl(trimmed)
-        if (url) currentEntry.url = url
-      }
+        // Remove leading "— " or "- " from snippet
+        currentEntry.snippet = rest.replace(/^[—–-]\s*/, '').trim()
 
-      // Snippet accumulation for non-source, non-date fields
-      if (key !== 'Source' && key !== 'ID' && key !== 'Phase' && key !== 'Status' && key !== 'Location' && key !== 'Eligibility' && key !== 'Intervention' && key !== 'Type' && key !== 'Mechanism' && key !== 'Evidence') {
-        if (!currentEntry.snippet) {
-          currentEntry.snippet = value.trim()
+        // Check for URL in the full line
+        const url = extractUrl(line)
+        if (url) {
+          currentEntry.url = url
+          currentEntry.source = cleanDomain(url)
         }
       }
       continue
     }
 
-    // Patient/Family Context block
-    if (trimmed.includes('Patient/Family Context') || trimmed.includes('Daily Life Impact') || trimmed.includes('** ')) {
-      flushEntry()
-      collectingContext = true
-      const ctx = trimmed.replace(/\*\*/g, '').replace(/^\*\*.*?\*\*:\s*/, '')
-      if (ctx) currentContext.push(ctx)
+    // Metadata: **Date:** value or **Source:** value on same line
+    if (line.startsWith('**') && line.includes(':**')) {
+      const metaMatch = line.match(/^\*\*(.+?):\*\*\s*(.+)/)
+      if (metaMatch) {
+        const [, key, value] = metaMatch
+        const url = extractUrl(value)
+
+        if (key === 'Date' || key === 'date' || key === 'Posted') {
+          currentEntry.date = value.trim()
+        } else if (key === 'Source' || key === 'source') {
+          currentEntry.source = value.trim()
+          if (url) currentEntry.url = url
+        }
+      }
       continue
     }
 
-    // Continuation of context or plain text
-    if (collectingContext) {
-      currentContext.push(trimmed.replace(/\*\*/g, ''))
-      continue
-    }
-
-    // List item (fallback)
-    if (trimmed.startsWith('- ') && !currentEntry.title) {
-      const text = trimmed.slice(2).trim()
-      if (text.length > 20) {
-        currentEntry.snippet = (currentEntry.snippet || '') + ' ' + text
+    // Continuation of snippet or context (not highly indented)
+    if (indent > 0 && indent < 10 && !line.startsWith('**')) {
+      const trimmed = line.trim()
+      if (trimmed && !trimmed.startsWith('Source')) {
+        pendingSnippet += ' ' + trimmed
       }
       continue
     }
@@ -164,14 +150,12 @@ export function parseReportSections(content: string): ReportSection[] {
   return sections
 }
 
-function getEmojiForSection(title: string): string {
-  const lower = title.toLowerCase()
-  if (lower.includes('clinical trial')) return '🧪'
-  if (lower.includes('breakthrough') || lower.includes('treatment')) return '💊'
-  if (lower.includes('lifestyle') || lower.includes('exercise') || lower.includes('diet')) return '🏃'
-  if (lower.includes('emerging') || lower.includes('research')) return '🔬'
-  if (lower.includes('tech') || lower.includes('assistive')) return '📱'
-  if (lower.includes('community') || lower.includes('support')) return '👥'
-  if (lower.includes('caregiver')) return '💜'
-  return '📋'
+function cleanDomain(url: string): string {
+  if (!url) return ''
+  try {
+    const u = new URL(url.startsWith('http') ? url : `https://${url}`)
+    return u.hostname.replace(/^www\./, '')
+  } catch {
+    return url.replace(/^https?:\/\//, '').replace(/\/$/, '')
+  }
 }
