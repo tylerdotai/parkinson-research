@@ -1,8 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
+@reference "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+@import "tailwindcss";
 
 @layer base {
   :root {
@@ -53,7 +51,8 @@
   }
 
   body {
-    @apply bg-bg text-text;
+    background-color: var(--color-bg);
+    color: var(--color-text);
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
   }
 
