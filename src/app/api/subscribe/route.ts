@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
 
       try {
         await getResend().emails.send({
-          from: 'Parkinson Research <onboarding@resend.dev>',
+          from: 'Parkinson Research <research@clawplex.dev>',
           to: email,
           subject: 'Confirm your Parkinson Research subscription',
           html: `
