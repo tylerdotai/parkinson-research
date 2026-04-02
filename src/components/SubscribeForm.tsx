@@ -98,29 +98,33 @@ export default function SubscribeForm({ lang = 'en', dictionary }: Props) {
   }
 
   return (
-    <div className="card">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div>
-          <h3 className="text-lg font-medium mb-1" style={{ fontFamily: 'Instrument Serif, serif', color: 'var(--color-charcoal)' }}>
+    <div className="card" style={{ padding: '2rem 2.25rem' }}>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+        <div className="flex-1 min-w-0">
+          <h3
+            className="mb-2"
+            style={{ fontFamily: 'Instrument Serif, serif', fontSize: '1.1875rem', fontWeight: 400, color: 'var(--color-charcoal)' }}
+          >
             {t.title}
           </h3>
-          <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
+          <p className="text-sm leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>
             {t.subtitle}
           </p>
         </div>
-        <form onSubmit={handleSubmit} className="flex w-full md:w-auto gap-2">
+        <form onSubmit={handleSubmit} className="flex w-full md:w-auto gap-3 flex-shrink-0">
           <input
             type="email"
             value={email}
             onChange={e => setEmail(e.target.value)}
             placeholder={t.placeholder}
             required
-            style={{ fontSize: '0.875rem', padding: '0.625rem 1rem' }}
+            style={{ width: '220px', fontSize: '0.9375rem', padding: '0.75rem 1.125rem' }}
           />
           <button
             type="submit"
             disabled={status === 'loading'}
             className="btn-primary whitespace-nowrap disabled:opacity-50 flex-shrink-0"
+            style={{ fontSize: '0.9375rem', padding: '0.75rem 1.75rem' }}
           >
             {status === 'loading' ? (
               <span className="flex items-center gap-2">
@@ -135,10 +139,10 @@ export default function SubscribeForm({ lang = 'en', dictionary }: Props) {
         </form>
       </div>
       {status === 'error' && (
-        <p className="text-xs mt-3" style={{ color: '#b91c1c' }}>{errorMsg}</p>
+        <p className="text-xs mt-4" style={{ color: '#b91c1c' }}>{errorMsg}</p>
       )}
-      <p className="text-xs mt-3 flex items-center gap-2" style={{ color: 'var(--color-text-muted)' }}>
-        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <p className="text-xs mt-4 flex items-center gap-2" style={{ color: 'var(--color-text-muted)' }}>
+        <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h8.25a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
         </svg>
         No account required. Free forever.
