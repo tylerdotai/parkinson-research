@@ -108,7 +108,10 @@
     }
   },
   "footer": {
-    "tagline": "Construido con agentes de IA. Actualizado diariamente.",
+    "tagline": "Hecho con cuidado para familias que enfrentan el Parkinson.",
+    "allReports": "Todos los Informes",
+    "resources": "Recursos",
+    "api": "API",
     "disclaimer": "Solo para fines informativos. Consulte a los proveedores de salud antes de tomar decisiones de tratamiento."
   },
   "disclaimer": {
@@ -119,6 +122,13 @@
     "label": "Idioma",
     "en": "Ingles",
     "es": "Espanol"
+  },
+  "confirmed": {
+    "title": "Confirmed!",
+    "description": "Recibiras tu primer informe diario de investigacion sobre Parkinson manana a las 7:00 AM CDT. Esperalo en tu bandeja de entrada.",
+    "viewReport": "Ver Informe Mas Reciente",
+    "backHome": "Volver al Inicio",
+    "noSpam": "Sin spam, nunca. Cancela cuando quieras."
   },
   "resources": {
     "title": "Recursos",

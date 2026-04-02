@@ -108,7 +108,10 @@
     }
   },
   "footer": {
-    "tagline": "Built with AI agents. Updated daily.",
+    "tagline": "Built with care for families navigating Parkinson's.",
+    "allReports": "All Reports",
+    "resources": "Resources",
+    "api": "API",
     "disclaimer": "For informational purposes only. Consult healthcare providers before making treatment decisions."
   },
   "disclaimer": {
@@ -119,6 +122,25 @@
     "label": "Language",
     "en": "English",
     "es": "Spanish"
+  },
+  "nav": {
+    "reports": "Reports",
+    "resources": "Resources",
+    "about": "About"
+  },
+  "footer": {
+    "tagline": "Built with care for families navigating Parkinson's.",
+    "allReports": "All Reports",
+    "resources": "Resources",
+    "api": "API",
+    "disclaimer": "For informational purposes only. Consult healthcare providers before making treatment decisions."
+  },
+  "confirmed": {
+    "title": "You're confirmed!",
+    "description": "You'll receive your first Parkinson's Research Daily report tomorrow morning at 7:00 AM CDT. Expect it in your inbox.",
+    "viewReport": "View Latest Report",
+    "backHome": "Back to Home",
+    "noSpam": "No spam, ever. Unsubscribe anytime."
   },
   "resources": {
     "title": "Resources",

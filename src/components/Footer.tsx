@@ -3,9 +3,12 @@ import type { Dictionary } from '@/lib/dictionary'
 
 type Props = {
   dictionary: Dictionary
+  lang: string
 }
 
-export default function Footer({ dictionary }: Props) {
+export default function Footer({ dictionary, lang }: Props) {
+  const t = dictionary.footer
+
   return (
     <footer className="border-t border-slate-200 bg-white mt-16">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
@@ -21,37 +24,37 @@ export default function Footer({ dictionary }: Props) {
               <span className="font-semibold text-slate-900">Parkinson Research</span>
             </div>
             <p className="text-sm text-slate-500 leading-relaxed">
-              {dictionary.footer.tagline}
+              {t.tagline}
             </p>
           </div>
-          
+
           {/* Links */}
           <div>
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-4">Research</h4>
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-4">{dictionary.nav.reports}</h4>
             <ul className="space-y-2">
-              <li><Link href="/en/reports" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">All Reports</Link></li>
-              <li><Link href="/en/resources" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">Resources</Link></li>
-              <li><Link href="/en/api/reports" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">API</Link></li>
+              <li><Link href={`/${lang}/reports`} className="text-sm text-slate-600 hover:text-slate-900 transition-colors">{t.allReports}</Link></li>
+              <li><Link href={`/${lang}/resources`} className="text-sm text-slate-600 hover:text-slate-900 transition-colors">{t.resources}</Link></li>
+              <li><Link href={`/${lang}/api/reports`} className="text-sm text-slate-600 hover:text-slate-900 transition-colors">{t.api}</Link></li>
             </ul>
           </div>
-          
+
           {/* Disclaimer */}
           <div>
             <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-4">Disclaimer</h4>
             <p className="text-xs text-slate-400 leading-relaxed">
-              {dictionary.footer.disclaimer}
+              {t.disclaimer}
             </p>
           </div>
         </div>
-        
+
         {/* Bottom bar */}
         <div className="pt-8 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-slate-400">
-            Built with care for families navigating Parkinson's.
+            {t.tagline}
           </p>
-          <a 
-            href="https://github.com/tylerdotai/parkinson-research" 
-            target="_blank" 
+          <a
+            href="https://github.com/tylerdotai/parkinson-research"
+            target="_blank"
             rel="noopener noreferrer"
             className="text-slate-400 hover:text-slate-600 transition-colors"
             aria-label="View on GitHub"

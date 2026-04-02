@@ -179,43 +179,6 @@ export default async function HomePage({ params }: Props) {
         </section>
       )}
 
-      {/* AI Agent Integration */}
-      <section className="pb-16">
-        <ScrollReveal>
-          <div className="card bg-gradient-to-br from-slate-900 to-slate-800 text-white">
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-              <div>
-                <div className="flex items-center gap-2 mb-3">
-                  <svg className="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
-                  </svg>
-                  <span className="text-xs font-semibold uppercase tracking-wider text-blue-400">
-                    For Developers
-                  </span>
-                </div>
-                <h3 className="text-xl mb-2" style={{ fontFamily: 'Instrument Serif, serif' }}>
-                  AI Agent Integration
-                </h3>
-                <p className="text-sm text-slate-300 max-w-md mb-4">
-                  Set up your own AI agent to receive daily reports via cron job or webhook.
-                </p>
-                <code className="text-xs bg-slate-700 px-4 py-2 rounded-lg font-mono text-blue-300">
-                  GET /{lang}/api/reports/latest
-                </code>
-              </div>
-              <Link 
-                href={`/${lang}/resources`} 
-                className="btn bg-white text-slate-900 hover:bg-slate-100 flex-shrink-0"
-              >
-                Setup Guide
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                </svg>
-              </Link>
-            </div>
-          </div>
-        </ScrollReveal>
-      </section>
     </div>
   )
 }

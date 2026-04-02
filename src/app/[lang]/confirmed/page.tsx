@@ -19,28 +19,28 @@ export default async function ConfirmedPage({ params }: Props) {
             </svg>
           </div>
           <h1 className="text-2xl font-semibold text-slate-900 mb-3" style={{ fontFamily: 'Instrument Serif, serif' }}>
-            You're confirmed!
+            {dictionary.confirmed.title}
           </h1>
           <p className="text-slate-600 mb-8 leading-relaxed">
-            You'll receive your first Parkinson's Research Daily report tomorrow morning at 7:00 AM CDT. Expect it in your inbox.
+            {dictionary.confirmed.description}
           </p>
           <div className="space-y-3">
             <Link
               href={`/${lang}/reports`}
               className="btn btn-primary w-full justify-center"
             >
-              View Latest Report
+              {dictionary.confirmed.viewReport}
             </Link>
             <Link
               href={`/${lang}`}
               className="btn btn-secondary w-full justify-center"
             >
-              Back to Home
+              {dictionary.confirmed.backHome}
             </Link>
           </div>
         </div>
         <p className="text-center text-xs text-slate-400 mt-6">
-          No spam, ever. Unsubscribe anytime.
+          {dictionary.confirmed.noSpam}
         </p>
       </div>
     </div>

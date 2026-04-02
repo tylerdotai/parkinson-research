@@ -51,13 +51,13 @@ export default function Header({ dictionary, lang }: Props) {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-1">
             <Link href={`/${lang}/reports`} className={`nav-link ${pathname === `/${lang}/reports` ? 'bg-slate-100 text-slate-900' : ''}`}>
-              Reports
+              {dictionary.nav.reports}
             </Link>
             <Link href={`/${lang}/resources`} className={`nav-link ${pathname === `/${lang}/resources` ? 'bg-slate-100 text-slate-900' : ''}`}>
-              Resources
+              {dictionary.nav.resources}
             </Link>
             <Link href={`/${lang}/about`} className={`nav-link ${pathname === `/${lang}/about` ? 'bg-slate-100 text-slate-900' : ''}`}>
-              About
+              {dictionary.nav.about}
             </Link>
             
             {/* Language Switcher */}
@@ -100,13 +100,13 @@ export default function Header({ dictionary, lang }: Props) {
           <div className="md:hidden border-t border-slate-200 py-4">
             <div className="flex flex-col space-y-1">
               <Link href={`/${lang}/reports`} className={`nav-link ${pathname === `/${lang}/reports` ? 'bg-slate-100 text-slate-900' : ''}`}>
-                Reports
+                {dictionary.nav.reports}
               </Link>
               <Link href={`/${lang}/resources`} className={`nav-link ${pathname === `/${lang}/resources` ? 'bg-slate-100 text-slate-900' : ''}`}>
-                Resources
+                {dictionary.nav.resources}
               </Link>
               <Link href={`/${lang}/about`} className={`nav-link ${pathname === `/${lang}/about` ? 'bg-slate-100 text-slate-900' : ''}`}>
-                About
+                {dictionary.nav.about}
               </Link>
             </div>
             

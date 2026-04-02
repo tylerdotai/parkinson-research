@@ -105,7 +105,7 @@ export default async function LangLayout({ children, params }: Props) {
         <a href="#main-content" className="skip-link">Skip to main content</a>
         <Header dictionary={dictionary} lang={lang} />
         <main id="main-content" className="flex-1">{children}</main>
-        <Footer dictionary={dictionary} />
+        <Footer dictionary={dictionary} lang={lang} />
       </body>
     </html>
   )
