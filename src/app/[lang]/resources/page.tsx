@@ -211,10 +211,10 @@ export default async function ResourcesPage({ params }: Props) {
               external
             />
             <ResourceItem
-              name="Parkinson's Foundation Financial Assistance"
+              name="Parkinson's Foundation — Legal & Financial"
               phone="1-800-4PD-INFO"
               description={t.financial?.pfAssistDesc || 'Helps navigate insurance, find co-pay assistance, and access medication assistance programs.'}
-              href="https://www.parkinson.org/Resources/Financial-Assistance"
+              href="https://www.parkinson.org/living-with-parkinsons/legal-financial"
               external
             />
           </div>
@@ -238,15 +238,21 @@ export default async function ResourcesPage({ params }: Props) {
           </h2>
           <div className="space-y-1">
             <ResourceItem
-              name="Liftware Steady (Google)"
-              description={t.tech?.liftwareDesc || 'Electronic stabilizing spoon for tremor compensation during eating. Clinically proven to reduce shake by 70%.'}
-              href="https://www.liftware.net"
+              name={`Parkinson's Foundation Tech Tools Guide`}
+              description={`Curated list of apps, devices, and tools recommended for daily living with Parkinson's — tremor aids, voice apps, medication reminders, and more.`}
+              href="https://www.parkinson.org/living-with-parkinsons/management/tech-tools"
               external
             />
             <ResourceItem
               name="Voiceitt"
-              description={t.tech?.voiceittDesc || 'Speech recognition app that adapts to atypical speech patterns. Helps with voice commands and communication.'}
+              description={t.tech?.voiceittDesc || 'Speech recognition app that adapts to atypical speech patterns. Works with standard voice assistants.'}
               href="https://voiceitt.com"
+              external
+            />
+            <ResourceItem
+              name={`PD Avengers — Tech Resources`}
+              description={`Global community of people with Parkinson's sharing practical tech solutions, app reviews, and daily living tools.`}
+              href="https://pdavengers.com"
               external
             />
           </div>
