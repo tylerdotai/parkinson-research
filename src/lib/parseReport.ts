@@ -17,53 +17,12 @@ const CATEGORY_MAP: Record<string, string> = {
   'Recursos para Cuidadores': 'caregiver',
 }
 
-function cleanMarkdown(text: string): string {
-  return text
-    .replace(/\*\*(.*?)\*\*/g, '$1')
-    .replace(/\*(.*?)\*/g, '$1')
-    .replace(/`{1,3}[^`]*`{1,3}/g, (match) => match.replace(/`{1,3}/g, ''))
-}
-
-function extractTitleFromLine(line: string): { title: string; rest: string } | null {
-  // Pattern: **Title** — rest
-  const boldMatch = line.match(/^\*\*(.+?)\*\*(.*)$/)
-  if (boldMatch) {
-    return { title: boldMatch[1].trim(), rest: boldMatch[2].trim() }
-  }
-  // Pattern: Title — rest (without bold)
-  const dashMatch = line.match(/^(.+?)\s*[—–-]\s*(.+)$/)
-  if (dashMatch) {
-    return { title: dashMatch[1].trim(), rest: dashMatch[2].trim() }
-  }
-  return null
-}
-
-function extractSource(lines: string[], startIdx: number): { source: string; url: string } | null {
-  for (let i = startIdx; i < Math.min(startIdx + 3, lines.length); i++) {
-    const line = lines[i].trim()
-    const match = line.match(/^Source:\s*(.+)/i)
-    if (match) {
-      const sourceUrl = extractUrl(line)
-      return {
-        source: match[1].trim(),
-        url: sourceUrl || '',
-      }
-    }
-    // Also check for URL-only lines
-    if (line.match(/^https?:\/\//)) {
-      return { source: line, url: line }
-    }
-  }
-  return null
-}
-
 function extractUrl(text: string): string | null {
   const match = text.match(/https?:\/\/[^\s\)]+/)
-  return match ? match[0] : null
+  return match ? match[0].replace(/\)$/, '') : null
 }
 
 function extractDate(line: string): string | undefined {
-  // Look for date patterns like "Mar 23, 2026" or "2026-03-23"
   const match = line.match(/([A-Z][a-z]{2}\s+\d{1,2},?\s+\d{4})/)
   if (match) return match[1]
   const isoMatch = line.match(/(\d{4}-\d{2}-\d{2})/)
@@ -71,32 +30,62 @@ function extractDate(line: string): string | undefined {
   return undefined
 }
 
-function parseSnippet(rest: string): string {
-  // Remove Source: ... from snippet
-  const withoutSource = rest.replace(/Source:\s*.+/i, '').trim()
-  // Remove URL from snippet
-  const withoutUrl = withoutSource.replace(/https?:\/\/[^\s]+/g, '').trim()
-  // Clean up dashes
-  return withoutUrl.replace(/^[—–-]\s*/, '').trim()
+function extractSourceFromLine(line: string): { source: string; url: string } | null {
+  const match = line.match(/^\*\*(.+?)\*\*(.*)$/)
+  if (match) {
+    const url = extractUrl(line)
+    return { source: match[1].trim(), url: url || '' }
+  }
+  if (line.includes('[ClinicalTrials.gov]') || line.includes('[Source:')) {
+    const url = extractUrl(line)
+    return { source: 'Source', url: url || '' }
+  }
+  return null
 }
 
 export function parseReportSections(content: string): ReportSection[] {
   const lines = content.split('\n')
   const sections: ReportSection[] = []
   let currentSection: ReportSection | null = null
-  let currentEntries: ReportEntry[] = []
+  let currentEntry: Partial<ReportEntry> = {}
+  let currentContext: string[] = []
+  let collectingContext = false
+
+  const flushEntry = () => {
+    const title = currentEntry.title
+    if (title && currentSection) {
+      const snippetText = currentContext.length > 0 ? currentContext.join(' ') : currentEntry.snippet
+      const entry: ReportEntry = {
+        title,
+        snippet: snippetText || undefined,
+        date: currentEntry.date,
+        source: currentEntry.source,
+        url: currentEntry.url,
+      }
+      currentSection.entries.push(entry)
+    }
+    currentEntry = {}
+    currentContext = []
+    collectingContext = false
+  }
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i]
     const trimmed = line.trim()
 
-    // Section header
+    // Skip empty lines
+    if (!trimmed) {
+      collectingContext = false
+      continue
+    }
+
+    // Skip frontmatter and top-level headers
+    if (trimmed.startsWith('# ') || trimmed.startsWith('---')) continue
+
+    // Section header (##)
     if (trimmed.startsWith('## ')) {
-      // Save previous section
-      if (currentSection) {
-        currentSection.entries = [...currentEntries]
-        sections.push(currentSection)
-      }
+      flushEntry()
+      if (currentSection) sections.push(currentSection)
 
       const title = trimmed.slice(3).trim()
       currentSection = {
@@ -105,52 +94,73 @@ export function parseReportSections(content: string): ReportSection[] {
         category: (CATEGORY_MAP[title] || 'clinical') as ReportSection['category'],
         entries: [],
       }
-      currentEntries = []
       continue
     }
 
-    // Skip empty, frontmatter markers, headers, horizontal rules
-    if (!trimmed || trimmed === '---' || trimmed.startsWith('# ') || trimmed.startsWith('### ') || trimmed.startsWith('#### ')) {
+    // Entry title (### Trial: or ### Title)
+    if (trimmed.startsWith('### ')) {
+      flushEntry()
+      const entryTitle = trimmed.slice(4).trim()
+        .replace(/^Trial:\s*/, '')
+        .replace(/\*\*/g, '')
+      currentEntry.title = entryTitle
+      collectingContext = false
       continue
     }
 
-    // List item entry
-    if (trimmed.startsWith('- ')) {
-      const entryText = trimmed.slice(2).trim()
-      const parsed = extractTitleFromLine(entryText)
+    // Metadata fields **Key:** Value
+    const metaMatch = trimmed.match(/^\*\*(.+?):\*\*\s*(.+)$/)
+    if (metaMatch) {
+      const [, key, value] = metaMatch
+      collectingContext = false
 
-      if (parsed) {
-        // Look ahead for Source
-        const source = extractSource(lines, i + 1)
+      // Date extraction
+      const dateValue = extractDate(value)
+      if (dateValue) currentEntry.date = dateValue
 
-        const entry: ReportEntry = {
-          title: parsed.title,
-          snippet: parseSnippet(parsed.rest),
-          date: extractDate(entryText),
-        }
-
-        if (source) {
-          entry.source = source.source.replace(/^Source:\s*/i, '')
-          entry.url = source.url
-        }
-
-        currentEntries.push(entry)
-      } else if (entryText.length > 10) {
-        // Plain text entry without title format
-        currentEntries.push({
-          title: '',
-          snippet: entryText,
-        })
+      // Source field
+      if (key.toLowerCase() === 'source') {
+        currentEntry.source = value.trim()
+        const url = extractUrl(trimmed)
+        if (url) currentEntry.url = url
       }
+
+      // Snippet accumulation for non-source, non-date fields
+      if (key !== 'Source' && key !== 'ID' && key !== 'Phase' && key !== 'Status' && key !== 'Location' && key !== 'Eligibility' && key !== 'Intervention' && key !== 'Type' && key !== 'Mechanism' && key !== 'Evidence') {
+        if (!currentEntry.snippet) {
+          currentEntry.snippet = value.trim()
+        }
+      }
+      continue
+    }
+
+    // Patient/Family Context block
+    if (trimmed.includes('Patient/Family Context') || trimmed.includes('Daily Life Impact') || trimmed.includes('** ')) {
+      flushEntry()
+      collectingContext = true
+      const ctx = trimmed.replace(/\*\*/g, '').replace(/^\*\*.*?\*\*:\s*/, '')
+      if (ctx) currentContext.push(ctx)
+      continue
+    }
+
+    // Continuation of context or plain text
+    if (collectingContext) {
+      currentContext.push(trimmed.replace(/\*\*/g, ''))
+      continue
+    }
+
+    // List item (fallback)
+    if (trimmed.startsWith('- ') && !currentEntry.title) {
+      const text = trimmed.slice(2).trim()
+      if (text.length > 20) {
+        currentEntry.snippet = (currentEntry.snippet || '') + ' ' + text
+      }
+      continue
     }
   }
 
-  // Save last section
-  if (currentSection) {
-    currentSection.entries = currentEntries
-    sections.push(currentSection)
-  }
-
+  flushEntry()
+  if (currentSection) sections.push(currentSection)
   return sections
 }
 

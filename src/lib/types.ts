@@ -1,6 +1,6 @@
 export interface ReportEntry {
   title: string
-  snippet: string
+  snippet?: string
   date?: string
   source?: string
   url?: string
