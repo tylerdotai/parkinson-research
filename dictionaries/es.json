@@ -161,6 +161,13 @@
       "crisisTextDesc": "Consejeria de crisis gratuita 24/7 por texto.",
       "caregiverMentalDesc": "La depresion del cuidador es real y comun. Busque su propio consejero.",
       "pfMentalDesc": "La depresion y la ansiedad son comunes en Parkinson. Hay ayuda disponible."
+    },
+    "tech": {
+      "title": "Tecnologia Asistiva y Herramientas",
+      "pfTechDesc": "Lista curada de ayudas tecnologicas para la vida diaria \u2014 aplicaciones de voz, dispositivos wearables, recordatorios y mas.",
+      "liftwareDesc": "Cuchara electronica estabilizadora para compensar el temblor al comer. Clinicamente probada para reducir el temblor en un 70%.",
+      "voiceittDesc": "Aplicacion de reconocimiento de voz que se adapta a patrones de habla atipicos.",
+      "pdAvengersDesc": "Lista curada por la comunidad de aplicaciones, dispositivos y herramientas recomendadas por personas con Parkinson."
     }
   }
 }

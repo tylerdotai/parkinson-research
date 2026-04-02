@@ -161,6 +161,13 @@
       "crisisTextDesc": "Free 24/7 crisis counseling via text. Mental health support when you need it most.",
       "caregiverMentalDesc": "Caregiver depression is common. Seek your own counselor \u2014 you cannot pour from an empty cup.",
       "pfMentalDesc": "Depression and anxiety are common in Parkinson. Help is available \u2014 ask your neurologist for referrals."
+    },
+    "tech": {
+      "title": "Tech Tools & Assistive Technology",
+      "pfTechDesc": "Curated list of technology aids for daily living \u2014 speech apps, wearables, reminder systems, and more.",
+      "liftwareDesc": "Electronic stabilizing spoon for tremor compensation during eating. Clinically proven to reduce shake by 70%.",
+      "voiceittDesc": "Speech recognition app that adapts to atypical speech patterns. Helps with voice commands and communication.",
+      "pdAvengersDesc": "Community-curated list of apps, devices, and tools recommended by people living with Parkinson."
     }
   }
 }
