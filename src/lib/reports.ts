@@ -238,7 +238,9 @@ function extractSummary(text: string): string {
     .replace(/\*(.*?)\*/g, '$1')
     .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
     .replace(/\|.*\|/g, '')
-  
+    .replace(/Source:\s*https?:\/\/[^\s]+/gi, '')
+    .replace(/source:\s*https?:\/\/[^\s]+/gi, '')
+
   // Take first 150 chars
   const summary = cleaned.trim().slice(0, 150)
   return summary.length < cleaned.trim().length ? summary + '...' : summary
