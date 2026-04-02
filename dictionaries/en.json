@@ -60,10 +60,7 @@
   "report": {
     "backToAll": "Back to all reports",
     "allReports": "All Reports",
-    "generatedBy": "Generated autonomously by AI research agents",
-    "reviewedBy": "Medical content reviewed by",
-    "reviewedOn": "Last reviewed",
-    "reviewerName": "Dr. Sarah Chen, MD, Neurology"
+    "generatedBy": "Generated autonomously by AI research agents"
   },
   "about": {
     "title": "About This Project",

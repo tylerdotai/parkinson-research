@@ -60,10 +60,7 @@
   "report": {
     "backToAll": "Volver a todos los informes",
     "allReports": "Todos los Informes",
-    "generatedBy": "Generado autonomamente por agentes de investigacion de IA",
-    "reviewedBy": "Contenido medico revisado por",
-    "reviewedOn": "Ultima revision",
-    "reviewerName": "Dra. Sarah Chen, MD, Neurologia"
+    "generatedBy": "Generado autonomamente por agentes de investigacion de IA"
   },
   "about": {
     "title": "Acerca de Este Proyecto",

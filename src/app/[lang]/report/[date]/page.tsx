@@ -73,15 +73,9 @@ export default async function ReportPage({ params }: Props) {
       </Link>
 
       {/* Header */}
-      <header className="mb-6">
+      <header className="mb-8">
         <h1 className="text-slate-900 mb-2">{report.title}</h1>
-        <div className="flex flex-wrap items-center gap-3 text-sm text-slate-500">
-          <span>{formatDate(date)}</span>
-          <span className="text-slate-300">|</span>
-          <span>{t.reviewedBy} {t.reviewerName}</span>
-          <span className="text-slate-300">|</span>
-          <span>{t.reviewedOn}: {formatDate(date)}</span>
-        </div>
+        <p className="text-slate-500">{formatDate(date)}</p>
       </header>
 
       {/* Report content */}
