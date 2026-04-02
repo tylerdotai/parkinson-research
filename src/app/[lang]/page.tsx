@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { getDictionary } from '@/lib/dictionary'
 import { getLatestReportSummary, getAllReportDates } from '@/lib/reports'
 import ScrollReveal from '@/components/ScrollReveal'
+import SubscribeForm from '@/components/SubscribeForm'
 
 type Props = {
   params: Promise<{ lang: string }>
@@ -164,6 +165,13 @@ export default async function HomePage({ params }: Props) {
           </div>
         </section>
       )}
+
+      {/* Subscribe Form */}
+      <section className="pb-8">
+        <ScrollReveal>
+          <SubscribeForm />
+        </ScrollReveal>
+      </section>
 
       {/* AI Agent Integration */}
       <section className="pb-16">
