@@ -99,17 +99,8 @@ export default async function HomePage({ params }: Props) {
 
           <ScrollReveal delay={160}>
             <p
-              className="text-base sm:text-lg max-w-xl mx-auto mb-5 leading-relaxed"
-              style={{ color: 'rgba(255,255,255,0.60)', fontStyle: 'italic' }}
-            >
-              Built for my dad and stepmom after his Parkinson's diagnosis.
-            </p>
-          </ScrollReveal>
-
-          <ScrollReveal delay={240}>
-            <p
               className="text-sm sm:text-base max-w-xl mx-auto mb-10 leading-relaxed"
-              style={{ color: 'rgba(255,255,255,0.45)' }}
+              style={{ color: 'rgba(255,255,255,0.55)' }}
             >
               {t.whoItFor}
             </p>

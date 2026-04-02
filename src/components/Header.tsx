@@ -13,6 +13,7 @@ type Props = {
 export default function Header({ dictionary, lang }: Props) {
   const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 10)
@@ -20,6 +21,13 @@ export default function Header({ dictionary, lang }: Props) {
     handler()
     return () => window.removeEventListener('scroll', handler)
   }, [])
+
+  // Close menu on route change
+  useEffect(() => {
+    setMenuOpen(false)
+  }, [pathname])
+
+  const toggleMenu = () => setMenuOpen(prev => !prev)
 
   return (
     <header
@@ -100,43 +108,56 @@ export default function Header({ dictionary, lang }: Props) {
 
           {/* Mobile menu button */}
           <button
+            onClick={toggleMenu}
             className="md:hidden p-2 rounded-lg transition-colors"
             style={{ color: 'var(--color-text-secondary)' }}
-            aria-label="Menu"
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={menuOpen}
           >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-            </svg>
+            {menuOpen ? (
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+              </svg>
+            )}
           </button>
         </div>
       </nav>
 
-      {/* Mobile Navigation */}
-      <div
-        className="md:hidden border-t bg-white"
-        style={{ borderColor: 'var(--color-parchment)' }}
-      >
-        <div className="px-4 py-3 space-y-1">
-          <Link
-            href={`/${lang}/reports`}
-            className={`nav-link nav-link-light block ${pathname === `/${lang}/reports` ? 'active' : ''}`}
-          >
-            {dictionary.nav.reports}
-          </Link>
-          <Link
-            href={`/${lang}/resources`}
-            className={`nav-link nav-link-light block ${pathname === `/${lang}/resources` ? 'active' : ''}`}
-          >
-            {dictionary.nav.resources}
-          </Link>
-          <Link
-            href={`/${lang}/about`}
-            className={`nav-link nav-link-light block ${pathname === `/${lang}/about` ? 'active' : ''}`}
-          >
-            {dictionary.nav.about}
-          </Link>
+      {/* Mobile Navigation — conditional */}
+      {menuOpen && (
+        <div
+          className="md:hidden border-t bg-white"
+          style={{ borderColor: 'var(--color-parchment)' }}
+        >
+          <div className="px-4 py-3 space-y-1">
+            <Link
+              href={`/${lang}/reports`}
+              className={`nav-link nav-link-light block ${pathname === `/${lang}/reports` ? 'active' : ''}`}
+              onClick={() => setMenuOpen(false)}
+            >
+              {dictionary.nav.reports}
+            </Link>
+            <Link
+              href={`/${lang}/resources`}
+              className={`nav-link nav-link-light block ${pathname === `/${lang}/resources` ? 'active' : ''}`}
+              onClick={() => setMenuOpen(false)}
+            >
+              {dictionary.nav.resources}
+            </Link>
+            <Link
+              href={`/${lang}/about`}
+              className={`nav-link nav-link-light block ${pathname === `/${lang}/about` ? 'active' : ''}`}
+              onClick={() => setMenuOpen(false)}
+            >
+              {dictionary.nav.about}
+            </Link>
+          </div>
         </div>
-      </div>
+      )}
     </header>
   )
 }
