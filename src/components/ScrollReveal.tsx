@@ -6,9 +6,10 @@ type Props = {
   children: React.ReactNode
   delay?: number
   className?: string
+  style?: React.CSSProperties
 }
 
-export default function ScrollReveal({ children, delay = 0, className = '' }: Props) {
+export default function ScrollReveal({ children, delay = 0, className = '', style }: Props) {
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -35,7 +36,7 @@ export default function ScrollReveal({ children, delay = 0, className = '' }: Pr
   }, [delay])
 
   return (
-    <div ref={ref} className={`reveal ${className}`}>
+    <div ref={ref} className={`reveal ${className}`} style={style}>
       {children}
     </div>
   )
