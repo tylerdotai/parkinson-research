@@ -17,6 +17,15 @@ export async function POST(request: NextRequest) {
 
     if (result.success && result.id) {
       const confirmUrl = `https://parkinson-research.vercel.app/en/api/confirm/${result.id}`
+      const resendApiKey = process.env.RESEND_API_KEY
+      if (!resendApiKey) {
+        console.error('[subscribe] RESEND_API_KEY is not set')
+        return NextResponse.json({
+          success: true,
+          message: 'Check your inbox to confirm your subscription.'
+        })
+      }
+
       try {
         await getResend().emails.send({
           from: 'Parkinson Research <onboarding@resend.dev>',
@@ -47,6 +56,7 @@ export async function POST(request: NextRequest) {
           `,
           text: `Confirm your Parkinson Research subscription:\n\n${confirmUrl}\n\nOnce confirmed, you'll receive daily research reports every morning.`,
         })
+        console.log('[subscribe] Confirmation email sent to', email)
       } catch (emailErr) {
         console.error('[subscribe] Failed to send confirmation email:', emailErr)
       }
