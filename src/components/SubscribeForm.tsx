@@ -137,6 +137,12 @@ export default function SubscribeForm({ lang = 'en', dictionary }: Props) {
       {status === 'error' && (
         <p className="text-xs text-red-500 mt-3">{errorMsg}</p>
       )}
+      <p className="text-xs text-slate-400 mt-3 flex items-center gap-2">
+        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h8.25a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+        </svg>
+        No account required. Free forever.
+      </p>
     </div>
   )
 }

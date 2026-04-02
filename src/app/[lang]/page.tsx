@@ -50,8 +50,14 @@ export default async function HomePage({ params }: Props) {
         </ScrollReveal>
 
         <ScrollReveal delay={200}>
-          <p className="text-base sm:text-lg text-slate-500 max-w-xl mx-auto mb-6 leading-relaxed italic">
+          <p className="text-base sm:text-lg text-slate-500 max-w-xl mx-auto mb-4 leading-relaxed italic">
             Built for my dad and stepmom after his Parkinson's diagnosis.
+          </p>
+        </ScrollReveal>
+
+        <ScrollReveal delay={250}>
+          <p className="text-sm sm:text-base text-slate-400 max-w-xl mx-auto mb-6 leading-relaxed">
+            {t.whoItFor}
           </p>
         </ScrollReveal>
 

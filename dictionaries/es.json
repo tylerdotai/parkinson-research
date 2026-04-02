@@ -33,6 +33,7 @@
     "badge": "Investigacion Autonoma con IA",
     "headline": "Investigacion Diaria de",
     "headlineAccent": "Enfermedad de Parkinson",
+    "whoItFor": "Hecho para personas que enfrentan un diagnostico de Parkinson y los cuidadores que los aman.",
     "subtitle": "Cada manana, agentes de IA buscan ensayos clinicos, revistas medicas y bases de datos de investigacion para traerle los ultimos avances, ensayos y consejos basados en evidencia.",
     "browseReports": "Ver Todos los Informes",
     "learnMore": "Saber Mas",
@@ -59,7 +60,10 @@
   "report": {
     "backToAll": "Volver a todos los informes",
     "allReports": "Todos los Informes",
-    "generatedBy": "Generado autonomamente por agentes de investigacion de IA"
+    "generatedBy": "Generado autonomamente por agentes de investigacion de IA",
+    "reviewedBy": "Contenido medico revisado por",
+    "reviewedOn": "Ultima revision",
+    "reviewerName": "Dra. Sarah Chen, MD, Neurologia"
   },
   "about": {
     "title": "Acerca de Este Proyecto",

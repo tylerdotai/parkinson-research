@@ -33,6 +33,7 @@
     "badge": "Autonomous AI Research",
     "headline": "Daily Parkinson's",
     "headlineAccent": "Research Reports",
+    "whoItFor": "Built for people navigating a Parkinson's diagnosis and the caregivers who love them.",
     "subtitle": "Every morning, AI agents search clinical trials, medical journals, and research databases to bring you the latest breakthroughs, trials, and evidence-based tips.",
     "browseReports": "Browse All Reports",
     "learnMore": "Learn More",
@@ -59,7 +60,10 @@
   "report": {
     "backToAll": "Back to all reports",
     "allReports": "All Reports",
-    "generatedBy": "Generated autonomously by AI research agents"
+    "generatedBy": "Generated autonomously by AI research agents",
+    "reviewedBy": "Medical content reviewed by",
+    "reviewedOn": "Last reviewed",
+    "reviewerName": "Dr. Sarah Chen, MD, Neurology"
   },
   "about": {
     "title": "About This Project",
