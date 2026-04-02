@@ -106,21 +106,23 @@ export default async function AboutPage({ params }: Props) {
           </div>
         </section>
 
-        {/* Built With */}
+        {/* The Founder */}
         <section className="card">
           <h2 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
             <svg className="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17l-5.658-5.658a8.25 8.25 0 117.163-7.216 8.25 8.25 0 01-7.163 7.216zM12 12h.008v.008H12V12z" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
             </svg>
-            {t.builtWith}
+            The Founder
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {techItems.map((name) => (
-              <div key={name} className="bg-slate-100 rounded-lg p-3 text-center">
-                <span className="text-sm font-medium text-slate-700">{name}</span>
-              </div>
-            ))}
-          </div>
+          <p className="text-slate-600 leading-relaxed">
+            I built this for my dad after he was diagnosed with Parkinson's. After spending hours searching clinical trials, treatment research, and care resources — I realized there wasn't a single place that aggregated all of it, updated daily, and was written for patients instead of researchers.
+          </p>
+          <p className="text-slate-600 mt-4 leading-relaxed">
+            So I built one. Every morning, AI research agents search clinical trials, medical journals, and emerging science — so you don't have to.
+          </p>
+          <p className="text-sm text-slate-400 mt-4">
+            — Tyler Delano, Creator
+          </p>
         </section>
 
         {/* Disclaimer */}

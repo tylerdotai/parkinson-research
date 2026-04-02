@@ -31,9 +31,9 @@ export default async function HomePage({ params }: Props) {
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6">
       {/* Hero */}
-      <section className="py-16 md:py-24 text-center">
+      <section className="py-12 md:py-16 text-center">
         <ScrollReveal>
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 mb-8">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 mb-6">
             <span className="data-pulse">
               <span className="data-pulse-dot"></span>
             </span>
@@ -42,20 +42,26 @@ export default async function HomePage({ params }: Props) {
             </span>
           </div>
         </ScrollReveal>
-        
+
         <ScrollReveal delay={100}>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl text-slate-900 mb-6 max-w-3xl mx-auto" style={{ fontFamily: 'Instrument Serif, serif' }}>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl text-slate-900 mb-4 max-w-3xl mx-auto" style={{ fontFamily: 'Instrument Serif, serif' }}>
             {t.headline}
           </h1>
         </ScrollReveal>
-        
+
         <ScrollReveal delay={200}>
-          <p className="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed">
+          <p className="text-base sm:text-lg text-slate-500 max-w-xl mx-auto mb-6 leading-relaxed italic">
+            Built for my dad and stepmom after his Parkinson's diagnosis.
+          </p>
+        </ScrollReveal>
+
+        <ScrollReveal delay={300}>
+          <p className="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto mb-8 leading-relaxed">
             {t.subtitle}
           </p>
         </ScrollReveal>
-        
-        <ScrollReveal delay={300}>
+
+        <ScrollReveal delay={400}>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href={`/${lang}/reports`} className="btn btn-primary">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -70,6 +76,13 @@ export default async function HomePage({ params }: Props) {
               Resources
             </Link>
           </div>
+        </ScrollReveal>
+      </section>
+
+      {/* Subscribe Form — above fold */}
+      <section className="pb-10">
+        <ScrollReveal>
+          <SubscribeForm />
         </ScrollReveal>
       </section>
 
@@ -165,13 +178,6 @@ export default async function HomePage({ params }: Props) {
           </div>
         </section>
       )}
-
-      {/* Subscribe Form */}
-      <section className="pb-8">
-        <ScrollReveal>
-          <SubscribeForm />
-        </ScrollReveal>
-      </section>
 
       {/* AI Agent Integration */}
       <section className="pb-16">
