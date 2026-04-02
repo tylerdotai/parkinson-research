@@ -77,7 +77,7 @@ export default async function LangLayout({ children, params }: Props) {
   return (
     <html lang={lang}>
       <head>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%232563EB' width='100' height='100' rx='20'/><text x='50' y='68' font-size='50' text-anchor='middle' fill='white' font-family='system-ui'>P</text></svg>" />
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%231b1938' width='100' height='100' rx='12'/><text x='50' y='68' font-size='50' text-anchor='middle' fill='%23cbb7fb' font-family='system-ui'>P</text></svg>" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

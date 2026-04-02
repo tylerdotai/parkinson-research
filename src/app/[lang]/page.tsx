@@ -30,63 +30,94 @@ export default async function HomePage({ params }: Props) {
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6">
-      {/* Hero */}
-      <section className="py-12 md:py-16 text-center">
-        <ScrollReveal>
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 mb-6">
-            <span className="data-pulse">
-              <span className="data-pulse-dot"></span>
-            </span>
-            <span className="text-xs font-medium text-blue-600 uppercase tracking-wider">
-              {t.badge}
-            </span>
-          </div>
-        </ScrollReveal>
+      {/* Hero — deep purple Superhuman style */}
+      <section className="hero-gradient text-center relative overflow-hidden" style={{ paddingTop: '5rem', paddingBottom: '5rem', marginTop: '0' }}>
+        {/* Gradient orbs */}
+        <div className="gradient-orb orb-1"></div>
+        <div className="gradient-orb orb-2"></div>
 
-        <ScrollReveal delay={100}>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl text-slate-900 mb-4 max-w-3xl mx-auto" style={{ fontFamily: 'Instrument Serif, serif' }}>
-            {t.headline}
-          </h1>
-        </ScrollReveal>
+        <div className="relative z-10">
+          <ScrollReveal>
+            <div
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
+              style={{ background: 'rgba(203, 183, 251, 0.12)', border: '1px solid rgba(203, 183, 251, 0.25)' }}
+            >
+              <span className="data-pulse">
+                <span className="data-pulse-dot"></span>
+              </span>
+              <span
+                className="text-xs font-medium uppercase tracking-wider"
+                style={{ color: 'var(--color-lavender)' }}
+              >
+                {t.badge}
+              </span>
+            </div>
+          </ScrollReveal>
 
-        <ScrollReveal delay={200}>
-          <p className="text-base sm:text-lg text-slate-500 max-w-xl mx-auto mb-4 leading-relaxed italic">
-            Built for my dad and stepmom after his Parkinson's diagnosis.
-          </p>
-        </ScrollReveal>
+          <ScrollReveal delay={100}>
+            <h1
+              className="mb-4 max-w-3xl mx-auto"
+              style={{
+                fontFamily: 'Instrument Serif, serif',
+                fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
+                lineHeight: 1.05,
+                fontWeight: 400,
+                letterSpacing: '-0.02em',
+                color: 'rgba(255,255,255,0.95)'
+              }}
+            >
+              {t.headline}
+            </h1>
+          </ScrollReveal>
 
-        <ScrollReveal delay={250}>
-          <p className="text-sm sm:text-base text-slate-400 max-w-xl mx-auto mb-6 leading-relaxed">
-            {t.whoItFor}
-          </p>
-        </ScrollReveal>
+          <ScrollReveal delay={200}>
+            <p
+              className="text-base sm:text-lg max-w-xl mx-auto mb-4 leading-relaxed italic"
+              style={{ color: 'var(--color-misted)', fontWeight: 400 }}
+            >
+              Built for my dad and stepmom after his Parkinson's diagnosis.
+            </p>
+          </ScrollReveal>
 
-        <ScrollReveal delay={300}>
-          <p className="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto mb-8 leading-relaxed">
-            {t.subtitle}
-          </p>
-        </ScrollReveal>
+          <ScrollReveal delay={250}>
+            <p
+              className="text-sm sm:text-base max-w-xl mx-auto mb-6 leading-relaxed"
+              style={{ color: 'rgba(255,255,255,0.6)' }}
+            >
+              {t.whoItFor}
+            </p>
+          </ScrollReveal>
 
-        <ScrollReveal delay={400}>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href={`/${lang}/reports`} className="btn btn-primary">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
-              </svg>
-              Browse Reports
-            </Link>
-            <Link href={`/${lang}/resources`} className="btn btn-secondary">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716 6.273M12 21a9.004 9.004 0 01-8.716-6.273m0 0a8.997 8.997 0 01-2.312-.656M3 12a8.997 8.997 0 012.312-.656m0 0a8.997 8.997 0 012.312.656m0 0a8.997 8.997 0 01-2.312.656" />
-              </svg>
-              Resources
-            </Link>
-          </div>
-        </ScrollReveal>
+          <ScrollReveal delay={300}>
+            <p
+              className="text-lg sm:text-xl max-w-2xl mx-auto mb-8 leading-relaxed"
+              style={{ color: 'rgba(255,255,255,0.8)' }}
+            >
+              {t.subtitle}
+            </p>
+          </ScrollReveal>
+
+          <ScrollReveal delay={400}>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link href={`/${lang}/reports`} className="btn-primary" style={{ fontSize: '0.9375rem', padding: '0.75rem 1.75rem' }}>
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                </svg>
+                Browse Reports
+              </Link>
+              <Link href={`/${lang}/resources`} className="btn-secondary" style={{ fontSize: '0.9375rem', padding: '0.75rem 1.75rem' }}>
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716 6.273M12 21a9.004 9.004 0 01-8.716-6.273m0 0a8.997 8.997 0 01-2.312-.656M3 12a8.997 8.997 0 012.312-.656m0 0a8.997 8.997 0 012.312.656m0 0a8.997 8.997 0 01-2.312.656" />
+                </svg>
+                Resources
+              </Link>
+            </div>
+          </ScrollReveal>
+        </div>
       </section>
 
-      {/* Subscribe Form — above fold */}
-      <section className="pb-10">
+      {/* Subscribe Form — below hero */}
+      <section className="pb-10 -mt-4">
         <ScrollReveal>
           <SubscribeForm lang={lang} dictionary={dictionary.subscribe} />
         </ScrollReveal>
@@ -98,39 +129,42 @@ export default async function HomePage({ params }: Props) {
           <ScrollReveal>
             <div className="flex items-center justify-between mb-6">
               <span className="section-label">{t.latestReport}</span>
-              <span className="text-sm text-slate-400">
-                {new Date(latestDate!).toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US', { 
-                  weekday: 'long', 
-                  year: 'numeric', 
-                  month: 'long', 
-                  day: 'numeric' 
+              <span className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+                {new Date(latestDate!).toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US', {
+                  weekday: 'long',
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
                 })}
               </span>
             </div>
           </ScrollReveal>
-          
+
           <ScrollReveal>
           <div className="bento-grid">
             {/* Main card */}
             <div className="bento-item-large card">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
-                  <svg className="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <div
+                  className="w-10 h-10 rounded-lg flex items-center justify-center"
+                  style={{ background: 'rgba(203, 183, 251, 0.12)' }}
+                >
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--color-amethyst)' }}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-medium text-slate-900" style={{ fontFamily: 'Instrument Serif, serif' }}>
+                  <h3 className="font-medium" style={{ fontFamily: 'Instrument Serif, serif', color: 'var(--color-charcoal)' }}>
                     {summary.title}
                   </h3>
-                  <p className="text-xs text-slate-400">{latestDate}</p>
+                  <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>{latestDate}</p>
                 </div>
               </div>
               <div className="space-y-4">
                 {summary.sections.slice(0, 3).map((section, i) => (
-                  <div key={i} className="border-l-2 border-blue-200 pl-4">
-                    <h4 className="text-sm font-medium text-slate-800 mb-1">{section.title}</h4>
-                    <p className="text-sm text-slate-600 leading-relaxed line-clamp-2">{section.summary}</p>
+                  <div key={i} className="border-l-2 pl-4" style={{ borderColor: 'rgba(203, 183, 251, 0.4)' }}>
+                    <h4 className="text-sm font-medium mb-1" style={{ color: 'var(--color-charcoal)' }}>{section.title}</h4>
+                    <p className="text-sm leading-relaxed line-clamp-2" style={{ color: 'var(--color-text-secondary)' }}>{section.summary}</p>
                   </div>
                 ))}
               </div>
@@ -139,25 +173,33 @@ export default async function HomePage({ params }: Props) {
             {/* Quick actions */}
             <div className="bento-item-tall card flex flex-col justify-between">
               <div>
-                <h3 className="text-sm font-medium text-slate-800 mb-4" style={{ fontFamily: 'Instrument Serif, serif' }}>
+                <h3 className="text-sm font-medium mb-4" style={{ fontFamily: 'Instrument Serif, serif', color: 'var(--color-charcoal)' }}>
                   {t.quickActions}
                 </h3>
                 <div className="space-y-2">
-                  <Link href={`/${lang}/report/${latestDate}`} className="flex items-center gap-3 p-3 rounded-lg bg-slate-50 hover:bg-slate-100 transition-colors">
-                    <svg className="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <Link
+                    href={`/${lang}/report/${latestDate}`}
+                    className="flex items-center gap-3 p-3 rounded-lg transition-colors"
+                    style={{ background: 'var(--color-surface-muted)' }}
+                  >
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--color-amethyst)' }}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                     </svg>
-                    <span className="text-sm text-slate-700">{t.readFullReport}</span>
+                    <span className="text-sm" style={{ color: 'var(--color-charcoal)' }}>{t.readFullReport}</span>
                   </Link>
-                  <Link href={`/${lang}/resources`} className="flex items-center gap-3 p-3 rounded-lg bg-slate-50 hover:bg-slate-100 transition-colors">
-                    <svg className="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <Link
+                    href={`/${lang}/resources`}
+                    className="flex items-center gap-3 p-3 rounded-lg transition-colors"
+                    style={{ background: 'var(--color-surface-muted)' }}
+                  >
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--color-amethyst)' }}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716 6.273M12 21a9.004 9.004 0 01-8.716-6.273m0 0a8.997 8.997 0 01-2.312-.656M3 12a8.997 8.997 0 012.312-.656" />
                     </svg>
-                    <span className="text-sm text-slate-700">{t.findResources}</span>
+                    <span className="text-sm" style={{ color: 'var(--color-charcoal)' }}>{t.findResources}</span>
                   </Link>
                 </div>
               </div>
-              <div className="flex items-center gap-2 text-xs text-slate-400 mt-4 pt-4 border-t border-slate-100">
+              <div className="flex items-center gap-2 text-xs mt-4 pt-4" style={{ color: 'var(--color-text-muted)', borderTop: '1px solid var(--color-parchment)' }}>
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
@@ -218,14 +260,14 @@ function CategoryCard({ title, description, icon }: {
   }
   
   return (
-    <ScrollReveal className="card group cursor-pointer hover:border-slate-300 hover:shadow-md transition-all">
-      <div className="text-blue-600 mb-3">
+    <ScrollReveal className="card group cursor-pointer transition-all">
+      <div className="mb-3" style={{ color: 'var(--color-amethyst)' }}>
         {icons[icon]}
       </div>
-      <h3 className="font-medium text-slate-900 mb-1 text-sm" style={{ fontFamily: 'Instrument Serif, serif' }}>
+      <h3 className="font-medium mb-1 text-sm" style={{ fontFamily: 'Instrument Serif, serif', color: 'var(--color-charcoal)' }}>
         {title}
       </h3>
-      <p className="text-xs text-slate-500 leading-relaxed">{description}</p>
+      <p className="text-xs leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>{description}</p>
     </ScrollReveal>
   )
 }

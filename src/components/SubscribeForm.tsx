@@ -64,15 +64,15 @@ export default function SubscribeForm({ lang = 'en', dictionary }: Props) {
   if (status === 'success') {
     return (
       <div className="card text-center py-8">
-        <div className="w-12 h-12 rounded-full bg-green-50 flex items-center justify-center mx-auto mb-4">
-          <svg className="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: 'rgba(203, 183, 251, 0.15)' }}>
+          <svg className="w-6 h-6" style={{ color: 'var(--color-amethyst)' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
           </svg>
         </div>
-        <h3 className="text-lg font-medium text-slate-900 mb-2" style={{ fontFamily: 'Instrument Serif, serif' }}>
+        <h3 className="text-lg font-medium mb-2" style={{ fontFamily: 'Instrument Serif, serif', color: 'var(--color-charcoal)' }}>
           {t.successTitle}
         </h3>
-        <p className="text-sm text-slate-500">
+        <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
           {t.successDesc.replace('{email}', `<strong>${email}</strong>`)}
         </p>
       </div>
@@ -82,15 +82,15 @@ export default function SubscribeForm({ lang = 'en', dictionary }: Props) {
   if (status === 'already') {
     return (
       <div className="card text-center py-8">
-        <div className="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center mx-auto mb-4">
-          <svg className="w-6 h-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: 'rgba(203, 183, 251, 0.15)' }}>
+          <svg className="w-6 h-6" style={{ color: 'var(--color-amethyst)' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
           </svg>
         </div>
-        <h3 className="text-lg font-medium text-slate-900 mb-2" style={{ fontFamily: 'Instrument Serif, serif' }}>
+        <h3 className="text-lg font-medium mb-2" style={{ fontFamily: 'Instrument Serif, serif', color: 'var(--color-charcoal)' }}>
           {t.alreadyTitle}
         </h3>
-        <p className="text-sm text-slate-500">
+        <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
           {t.alreadyDesc}
         </p>
       </div>
@@ -98,13 +98,13 @@ export default function SubscribeForm({ lang = 'en', dictionary }: Props) {
   }
 
   return (
-    <div className="card bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100">
+    <div className="card">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h3 className="text-lg font-medium text-slate-900 mb-1" style={{ fontFamily: 'Instrument Serif, serif' }}>
+          <h3 className="text-lg font-medium mb-1" style={{ fontFamily: 'Instrument Serif, serif', color: 'var(--color-charcoal)' }}>
             {t.title}
           </h3>
-          <p className="text-sm text-slate-600">
+          <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
             {t.subtitle}
           </p>
         </div>
@@ -115,7 +115,7 @@ export default function SubscribeForm({ lang = 'en', dictionary }: Props) {
             onChange={e => setEmail(e.target.value)}
             placeholder={t.placeholder}
             required
-            className="flex-1 md:w-64 px-4 py-2.5 rounded-lg border border-slate-200 bg-white text-sm shadow-xs focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+            style={{ fontSize: '0.875rem', padding: '0.625rem 1rem' }}
           />
           <button
             type="submit"
@@ -135,9 +135,9 @@ export default function SubscribeForm({ lang = 'en', dictionary }: Props) {
         </form>
       </div>
       {status === 'error' && (
-        <p className="text-xs text-red-500 mt-3">{errorMsg}</p>
+        <p className="text-xs mt-3" style={{ color: '#b91c1c' }}>{errorMsg}</p>
       )}
-      <p className="text-xs text-slate-400 mt-3 flex items-center gap-2">
+      <p className="text-xs mt-3 flex items-center gap-2" style={{ color: 'var(--color-text-muted)' }}>
         <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h8.25a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
         </svg>
