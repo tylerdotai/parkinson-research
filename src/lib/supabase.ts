@@ -10,7 +10,7 @@ export interface Subscriber {
   source: string
 }
 
-export async function subscribe(email: string, source = 'website'): Promise<{ success: boolean; error?: string; alreadySubscribed?: boolean; id?: string }> {
+export async function subscribe(email: string, language = 'en', source = 'website'): Promise<{ success: boolean; error?: string; alreadySubscribed?: boolean; id?: string }> {
   const res = await fetch(`${SUPABASE_URL}/rest/v1/subscribers`, {
     method: 'POST',
     headers: {
@@ -21,6 +21,7 @@ export async function subscribe(email: string, source = 'website'): Promise<{ su
     },
     body: JSON.stringify({
       email,
+      language,
       source,
       confirmed_at: null, // requires email verification
     }),
@@ -82,18 +83,21 @@ export async function unsubscribe(id: string): Promise<{ success: boolean; error
   return { success: false, error: errorText }
 }
 
-export async function getActiveSubscribers(): Promise<string[]> {
-  const res = await fetch(
-    `${SUPABASE_URL}/rest/v1/subscribers?confirmed_at=not.is.null&unsubscribed_at=is.null&select=email`,
-    {
-      headers: {
-        'apikey': SUPABASE_ANON_KEY,
-        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-      },
-    }
-  )
+export async function getActiveSubscribers(language?: 'en' | 'es'): Promise<Subscriber[]> {
+  let query = `${SUPABASE_URL}/rest/v1/subscribers?confirmed_at=not.is.null&unsubscribed_at=is.null`
+  if (language) {
+    query += `&language=eq.${language}`
+  }
+  query += '&select=id,email,language'
+
+  const res = await fetch(query, {
+    headers: {
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+    },
+  })
 
   if (!res.ok) return []
   const data = await res.json()
-  return data.map((s: Subscriber) => s.email)
+  return data
 }

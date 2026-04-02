@@ -82,7 +82,7 @@ export default async function HomePage({ params }: Props) {
       {/* Subscribe Form — above fold */}
       <section className="pb-10">
         <ScrollReveal>
-          <SubscribeForm />
+          <SubscribeForm lang={lang} />
         </ScrollReveal>
       </section>
 

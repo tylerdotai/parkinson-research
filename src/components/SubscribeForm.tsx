@@ -2,7 +2,11 @@
 
 import { useState } from 'react'
 
-export default function SubscribeForm() {
+type Props = {
+  lang?: string
+}
+
+export default function SubscribeForm({ lang = 'en' }: Props) {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error' | 'already'>('idle')
   const [errorMsg, setErrorMsg] = useState('')
@@ -16,7 +20,7 @@ export default function SubscribeForm() {
       const res = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, lang }),
       })
       const data = await res.json()
 
