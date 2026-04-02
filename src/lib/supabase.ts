@@ -10,7 +10,7 @@ export interface Subscriber {
   source: string
 }
 
-export async function subscribe(email: string, source = 'website'): Promise<{ success: boolean; error?: string; alreadySubscribed?: boolean }> {
+export async function subscribe(email: string, source = 'website'): Promise<{ success: boolean; error?: string; alreadySubscribed?: boolean; id?: string }> {
   const res = await fetch(`${SUPABASE_URL}/rest/v1/subscribers`, {
     method: 'POST',
     headers: {
@@ -28,7 +28,7 @@ export async function subscribe(email: string, source = 'website'): Promise<{ su
 
   if (res.status === 201) {
     const data = await res.json()
-    return { success: true }
+    return { success: true, id: data[0]?.id }
   }
 
   if (res.status === 409) {
