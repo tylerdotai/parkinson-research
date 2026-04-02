@@ -115,12 +115,12 @@ export default function SubscribeForm({ lang = 'en', dictionary }: Props) {
             onChange={e => setEmail(e.target.value)}
             placeholder={t.placeholder}
             required
-            className="flex-1 md:w-64 px-4 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="flex-1 md:w-64 px-4 py-2.5 rounded-lg border border-slate-200 bg-white text-sm shadow-xs focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
           />
           <button
             type="submit"
             disabled={status === 'loading'}
-            className="btn btn-primary whitespace-nowrap disabled:opacity-50"
+            className="btn-primary whitespace-nowrap disabled:opacity-50 flex-shrink-0"
           >
             {status === 'loading' ? (
               <span className="flex items-center gap-2">
