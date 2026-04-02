@@ -21,9 +21,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function HomePage({ params }: Props) {
   const { lang } = await params
   const dictionary = await getDictionary(lang)
-  const dates = await getAllReportDates()
+  const dates = await getAllReportDates(lang)
   const latestDate = dates[0]
-  const summary = latestDate ? await getLatestReportSummary() : null
+  const summary = latestDate ? await getLatestReportSummary(lang) : null
 
   const t = dictionary.home
   const tc = dictionary.categories

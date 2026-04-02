@@ -9,11 +9,11 @@ type Props = {
 }
 
 export async function generateStaticParams() {
-  const dates = await getAllReportDates()
   const locales = ['en', 'es']
   const params: { lang: string; date: string }[] = []
   
   for (const lang of locales) {
+    const dates = await getAllReportDates(lang)
     for (const date of dates) {
       params.push({ lang, date })
     }
@@ -25,7 +25,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang, date } = await params
   const dictionary = await getDictionary(lang)
-  const report = await getReport(date)
+  const report = await getReport(date, lang)
   if (!report) return { title: 'Report Not Found' }
   
   return {
@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ReportPage({ params }: Props) {
   const { lang, date } = await params
   const dictionary = await getDictionary(lang)
-  const report = await getReport(date)
+  const report = await getReport(date, lang)
   
   if (!report) {
     notFound()

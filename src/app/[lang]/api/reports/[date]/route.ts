@@ -17,7 +17,7 @@ export async function GET(request: NextRequest, { params }: Params) {
     )
   }
   
-  const report = await getReport(date)
+  const report = await getReport(date, lang)
   const dictionary = await getDictionary(lang)
   
   if (!report) {
@@ -90,8 +90,8 @@ function parseSections(content: string) {
 }
 
 export async function HEAD(request: NextRequest, { params }: Params) {
-  const { date } = await params
-  const report = await getReport(date)
+  const { lang, date } = await params
+  const report = await getReport(date, lang)
   
   if (!report) {
     return new NextResponse(null, { status: 404 })

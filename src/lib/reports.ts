@@ -4,6 +4,13 @@ import matter from 'gray-matter'
 
 const REPORTS_DIR = path.join(process.cwd(), 'public', 'reports')
 
+function getLangReportsDir(lang: string): string {
+  if (lang === 'es') {
+    return path.join(process.cwd(), 'public', 'reports', 'es')
+  }
+  return path.join(process.cwd(), 'public', 'reports')
+}
+
 export interface Report {
   title: string
   date: string
@@ -91,12 +98,13 @@ function processedLine(text: string): string {
   return text
 }
 
-export async function getAllReportDates(): Promise<string[]> {
+export async function getAllReportDates(lang = 'en'): Promise<string[]> {
   try {
-    if (!fs.existsSync(REPORTS_DIR)) {
+    const reportsDir = getLangReportsDir(lang)
+    if (!fs.existsSync(reportsDir)) {
       return []
     }
-    const files = fs.readdirSync(REPORTS_DIR)
+    const files = fs.readdirSync(reportsDir)
       .filter(f => f.endsWith('.md'))
       .map(f => f.replace('.md', ''))
       .sort()
@@ -107,9 +115,9 @@ export async function getAllReportDates(): Promise<string[]> {
   }
 }
 
-export function getReportMetadata(date: string): { preview: string } | null {
+export function getReportMetadata(date: string, lang = 'en'): { preview: string } | null {
   try {
-    const filePath = path.join(REPORTS_DIR, `${date}.md`)
+    const filePath = path.join(getLangReportsDir(lang), `${date}.md`)
     if (!fs.existsSync(filePath)) return null
     
     const content = fs.readFileSync(filePath, 'utf-8')
@@ -128,9 +136,9 @@ export function getReportMetadata(date: string): { preview: string } | null {
   }
 }
 
-export async function getReport(date: string): Promise<Report | null> {
+export async function getReport(date: string, lang = 'en'): Promise<Report | null> {
   try {
-    const filePath = path.join(REPORTS_DIR, `${date}.md`)
+    const filePath = path.join(getLangReportsDir(lang), `${date}.md`)
     if (!fs.existsSync(filePath)) return null
     
     const content = fs.readFileSync(filePath, 'utf-8')
@@ -150,10 +158,10 @@ export async function getReport(date: string): Promise<Report | null> {
   }
 }
 
-export async function getLatestReport(): Promise<Report | null> {
-  const dates = await getAllReportDates()
+export async function getLatestReport(lang = 'en'): Promise<Report | null> {
+  const dates = await getAllReportDates(lang)
   if (dates.length === 0) return null
-  return getReport(dates[0])
+  return getReport(dates[0], lang)
 }
 
 export interface ReportSummary {
@@ -165,8 +173,8 @@ export interface ReportSummary {
   }[]
 }
 
-export async function getLatestReportSummary(): Promise<ReportSummary | null> {
-  const dates = await getAllReportDates()
+export async function getLatestReportSummary(lang = 'en'): Promise<ReportSummary | null> {
+  const dates = await getAllReportDates(lang)
   if (dates.length === 0) return null
   
   const report = await getReport(dates[0])

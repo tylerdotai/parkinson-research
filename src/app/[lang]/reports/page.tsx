@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ReportsPage({ params }: Props) {
   const { lang } = await params
   const dictionary = await getDictionary(lang)
-  const dates = await getAllReportDates()
+  const dates = await getAllReportDates(lang)
   const t = dictionary.reports
 
   const formatDate = (date: string) => {
@@ -49,7 +49,7 @@ export default async function ReportsPage({ params }: Props) {
       ) : (
         <div className="space-y-3">
           {dates.map((date) => {
-            const meta = getReportMetadata(date)
+            const meta = getReportMetadata(date, lang)
             
             return (
               <Link 

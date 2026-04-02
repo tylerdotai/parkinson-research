@@ -8,14 +8,14 @@ export async function GET(
 ) {
   const { lang } = await params
   const { searchParams } = new URL(request.url)
-  const dates = await getAllReportDates()
+  const dates = await getAllReportDates(lang)
   const dictionary = await getDictionary(lang)
   
   // Check if requesting latest specifically
   const isLatest = searchParams.get('latest') === 'true' || searchParams.get('date') === 'latest'
   
   if (isLatest && dates.length > 0) {
-    const latestReport = await getReport(dates[0])
+    const latestReport = await getReport(dates[0], lang)
     if (latestReport) {
       return NextResponse.json({
         date: latestReport.date,
@@ -36,7 +36,7 @@ export async function GET(
   
   const reports = await Promise.all(
     dates.map(async (date) => {
-      const report = await getReport(date)
+      const report = await getReport(date, lang)
       if (!report) return null
       return {
         date,
