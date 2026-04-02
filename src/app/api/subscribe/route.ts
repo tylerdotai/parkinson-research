@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { subscribe } from '@/lib/supabase'
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const getResend = () => new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(request: NextRequest) {
   try {
@@ -16,10 +16,9 @@ export async function POST(request: NextRequest) {
     const result = await subscribe(email.toLowerCase(), body?.source || 'website')
 
     if (result.success && result.id) {
-      // Send confirmation email
       const confirmUrl = `https://parkinson-research.vercel.app/en/api/confirm/${result.id}`
       try {
-        await resend.emails.send({
+        await getResend().emails.send({
           from: 'Parkinson Research <onboarding@resend.dev>',
           to: email,
           subject: 'Confirm your Parkinson Research subscription',
@@ -50,7 +49,6 @@ export async function POST(request: NextRequest) {
         })
       } catch (emailErr) {
         console.error('[subscribe] Failed to send confirmation email:', emailErr)
-        // Still return success — subscriber is stored
       }
 
       return NextResponse.json({
