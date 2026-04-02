@@ -2,7 +2,8 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { getDictionary } from '@/lib/dictionary'
-import { getReport, getAllReportDates } from '@/lib/reports'
+import { getReport, getReportSections, getAllReportDates } from '@/lib/reports'
+import { ReportSection } from '@/components/report'
 
 type Props = {
   params: Promise<{ lang: string; date: string }>
@@ -24,7 +25,6 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang, date } = await params
-  const dictionary = await getDictionary(lang)
   const report = await getReport(date, lang)
   if (!report) return { title: 'Report Not Found' }
 
@@ -42,7 +42,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ReportPage({ params }: Props) {
   const { lang, date } = await params
   const dictionary = await getDictionary(lang)
-  const report = await getReport(date, lang)
+  const [report, sections] = await Promise.all([
+    getReport(date, lang),
+    getReportSections(date, lang),
+  ])
 
   if (!report) {
     notFound()
@@ -53,7 +56,7 @@ export default async function ReportPage({ params }: Props) {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
-      day: 'numeric'
+      day: 'numeric',
     })
   }
 
@@ -83,28 +86,36 @@ export default async function ReportPage({ params }: Props) {
             fontWeight: 400,
             lineHeight: 1.15,
             letterSpacing: '-0.02em',
-            color: 'var(--color-charcoal)'
+            color: 'var(--color-charcoal)',
           }}
         >
           {report.title}
         </h1>
-        <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>{formatDate(date)}</p>
+        <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+          {formatDate(date)}
+        </p>
       </header>
 
-      {/* Report content */}
+      {/* Report content — structured rendering */}
       <article className="card mb-8" style={{ padding: '2.5rem' }}>
-        <div className="report-content" />
-        <div dangerouslySetInnerHTML={{ __html: report.html }} />
+        {sections.length > 0 ? (
+          sections.map((section, i) => (
+            <ReportSection key={section.title} section={section} sectionIndex={i} />
+          ))
+        ) : (
+          // Fallback to raw HTML if parsing failed
+          <div dangerouslySetInnerHTML={{ __html: report.html }} />
+        )}
       </article>
 
-      {/* Disclaimer — lavender tinted, not amber */}
+      {/* Disclaimer */}
       <div
         className="mb-8"
         style={{
           background: 'rgba(203, 183, 251, 0.08)',
           border: '1px solid rgba(203, 183, 251, 0.20)',
           borderRadius: '12px',
-          padding: '1.375rem'
+          padding: '1.375rem',
         }}
       >
         <h4

@@ -1,6 +1,8 @@
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
+import { parseReportSections } from './parseReport'
+import type { ReportSection } from './types'
 
 const REPORTS_DIR = path.join(process.cwd(), 'public', 'reports')
 
@@ -140,12 +142,12 @@ export async function getReport(date: string, lang = 'en'): Promise<Report | nul
   try {
     const filePath = path.join(getLangReportsDir(lang), `${date}.md`)
     if (!fs.existsSync(filePath)) return null
-    
+
     const content = fs.readFileSync(filePath, 'utf-8')
     const { data, content: body } = matter(content)
-    
+
     const html = simpleMarkdownToHtml(body)
-    
+
     return {
       title: data.title || `Parkinson's Research Report — ${date}`,
       date,
@@ -156,6 +158,12 @@ export async function getReport(date: string, lang = 'en'): Promise<Report | nul
   } catch {
     return null
   }
+}
+
+export async function getReportSections(date: string, lang = 'en'): Promise<ReportSection[]> {
+  const report = await getReport(date, lang)
+  if (!report) return []
+  return parseReportSections(report.content)
 }
 
 export async function getLatestReport(lang = 'en'): Promise<Report | null> {

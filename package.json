@@ -14,6 +14,7 @@
     "@formatjs/intl-localematcher": "^0.8.2",
     "@tailwindcss/typography": "^0.5.19",
     "emailmd": "^0.1.5",
+    "framer-motion": "^12.38.0",
     "gray-matter": "^4.0.3",
     "lucide-react": "^1.7.0",
     "negotiator": "^1.0.0",
