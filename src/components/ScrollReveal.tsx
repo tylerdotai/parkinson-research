@@ -2,44 +2,34 @@
 
 import { useEffect, useRef } from 'react'
 
-interface ScrollRevealProps {
+type Props = {
   children: React.ReactNode
-  className?: string
   delay?: number
+  className?: string
 }
 
-export default function ScrollReveal({ children, className = '', delay = 0 }: ScrollRevealProps) {
+export default function ScrollReveal({ children, delay = 0, className = '' }: Props) {
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const element = ref.current
-    if (!element) return
-    
-    // Check if reduced motion is preferred
-    const prefersReduced = 
-      document.documentElement.classList.contains('motion-reduced') ||
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    
-    if (prefersReduced) {
-      element.classList.add('visible')
-      return
-    }
+    const el = ref.current
+    if (!el) return
+
+    el.style.transitionDelay = `${delay}ms`
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setTimeout(() => {
-              entry.target.classList.add('visible')
-            }, delay)
+            entry.target.classList.add('visible')
             observer.unobserve(entry.target)
           }
         })
       },
-      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
     )
 
-    observer.observe(element)
+    observer.observe(el)
 
     return () => observer.disconnect()
   }, [delay])
