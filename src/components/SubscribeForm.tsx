@@ -4,12 +4,35 @@ import { useState } from 'react'
 
 type Props = {
   lang?: string
+  dictionary?: {
+    title: string
+    subtitle: string
+    placeholder: string
+    button: string
+    loading: string
+    successTitle: string
+    successDesc: string
+    alreadyTitle: string
+    alreadyDesc: string
+  }
 }
 
-export default function SubscribeForm({ lang = 'en' }: Props) {
+export default function SubscribeForm({ lang = 'en', dictionary }: Props) {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error' | 'already'>('idle')
   const [errorMsg, setErrorMsg] = useState('')
+
+  const t = dictionary || {
+    title: 'Get daily reports by email',
+    subtitle: 'Free. No spam. Unsubscribe anytime. Powered by AI research agents.',
+    placeholder: 'you@example.com',
+    button: 'Subscribe',
+    loading: 'Subscribing...',
+    successTitle: 'Check your inbox!',
+    successDesc: 'We sent a confirmation link to {email}. Click it to start receiving daily reports.',
+    alreadyTitle: 'Already subscribed',
+    alreadyDesc: "This email is already on the list. You'll receive tomorrow's report automatically.",
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -47,11 +70,10 @@ export default function SubscribeForm({ lang = 'en' }: Props) {
           </svg>
         </div>
         <h3 className="text-lg font-medium text-slate-900 mb-2" style={{ fontFamily: 'Instrument Serif, serif' }}>
-          Check your inbox!
+          {t.successTitle}
         </h3>
         <p className="text-sm text-slate-500">
-          We sent a confirmation link to <strong>{email}</strong>.<br />
-          Click it to start receiving daily reports.
+          {t.successDesc.replace('{email}', `<strong>${email}</strong>`)}
         </p>
       </div>
     )
@@ -66,10 +88,10 @@ export default function SubscribeForm({ lang = 'en' }: Props) {
           </svg>
         </div>
         <h3 className="text-lg font-medium text-slate-900 mb-2" style={{ fontFamily: 'Instrument Serif, serif' }}>
-          Already subscribed
+          {t.alreadyTitle}
         </h3>
         <p className="text-sm text-slate-500">
-          This email is already on the list. You'll receive tomorrow's report automatically.
+          {t.alreadyDesc}
         </p>
       </div>
     )
@@ -80,10 +102,10 @@ export default function SubscribeForm({ lang = 'en' }: Props) {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
           <h3 className="text-lg font-medium text-slate-900 mb-1" style={{ fontFamily: 'Instrument Serif, serif' }}>
-            Get daily reports by email
+            {t.title}
           </h3>
           <p className="text-sm text-slate-600">
-            Free. No spam. Unsubscribe anytime. Powered by AI research agents.
+            {t.subtitle}
           </p>
         </div>
         <form onSubmit={handleSubmit} className="flex w-full md:w-auto gap-2">
@@ -91,7 +113,7 @@ export default function SubscribeForm({ lang = 'en' }: Props) {
             type="email"
             value={email}
             onChange={e => setEmail(e.target.value)}
-            placeholder="you@example.com"
+            placeholder={t.placeholder}
             required
             className="flex-1 md:w-64 px-4 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
@@ -106,9 +128,9 @@ export default function SubscribeForm({ lang = 'en' }: Props) {
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                 </svg>
-                Subscribing...
+                {t.loading}
               </span>
-            ) : 'Subscribe'}
+            ) : t.button}
           </button>
         </form>
       </div>

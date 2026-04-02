@@ -82,7 +82,7 @@ export default async function HomePage({ params }: Props) {
       {/* Subscribe Form — above fold */}
       <section className="pb-10">
         <ScrollReveal>
-          <SubscribeForm lang={lang} />
+          <SubscribeForm lang={lang} dictionary={dictionary.subscribe} />
         </ScrollReveal>
       </section>
 
@@ -91,7 +91,7 @@ export default async function HomePage({ params }: Props) {
         <section className="pb-16">
           <ScrollReveal>
             <div className="flex items-center justify-between mb-6">
-              <span className="section-label">Latest Report</span>
+              <span className="section-label">{t.latestReport}</span>
               <span className="text-sm text-slate-400">
                 {new Date(latestDate!).toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US', { 
                   weekday: 'long', 
@@ -134,20 +134,20 @@ export default async function HomePage({ params }: Props) {
             <div className="bento-item-tall card flex flex-col justify-between">
               <div>
                 <h3 className="text-sm font-medium text-slate-800 mb-4" style={{ fontFamily: 'Instrument Serif, serif' }}>
-                  Quick Actions
+                  {t.quickActions}
                 </h3>
                 <div className="space-y-2">
                   <Link href={`/${lang}/report/${latestDate}`} className="flex items-center gap-3 p-3 rounded-lg bg-slate-50 hover:bg-slate-100 transition-colors">
                     <svg className="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                     </svg>
-                    <span className="text-sm text-slate-700">Read full report</span>
+                    <span className="text-sm text-slate-700">{t.readFullReport}</span>
                   </Link>
                   <Link href={`/${lang}/resources`} className="flex items-center gap-3 p-3 rounded-lg bg-slate-50 hover:bg-slate-100 transition-colors">
                     <svg className="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716 6.273M12 21a9.004 9.004 0 01-8.716-6.273m0 0a8.997 8.997 0 01-2.312-.656M3 12a8.997 8.997 0 012.312-.656" />
                     </svg>
-                    <span className="text-sm text-slate-700">Find resources</span>
+                    <span className="text-sm text-slate-700">{t.findResources}</span>
                   </Link>
                 </div>
               </div>
@@ -155,7 +155,7 @@ export default async function HomePage({ params }: Props) {
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span>Updates daily at 7:00 AM CDT</span>
+                <span>{t.dailyAt}</span>
               </div>
             </div>
             

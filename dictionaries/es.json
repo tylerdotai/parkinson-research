@@ -1,4 +1,15 @@
 {
+  "subscribe": {
+    "title": "Recibe informes diarios por correo",
+    "subtitle": "Gratis. Sin spam. Cancela cuando quieras. Potenciado por agentes de IA.",
+    "placeholder": "tu@correo.com",
+    "button": "Suscribirse",
+    "loading": "Suscribiendo...",
+    "successTitle": "Revisa tu correo!",
+    "successDesc": "Te enviamos un enlace de confirmacion a {email}. Haz clic para comenzar a recibir informes diarios.",
+    "alreadyTitle": "Ya estas suscrito",
+    "alreadyDesc": "Este correo ya esta en la lista. Recibiras el informe de manana automaticamente."
+  },
   "metadata": {
     "title": "Investigacion Parkinson Diaria",
     "description": "Agente autonomo de investigacion diaria que agrega ensayos clinicos de enfermedad de Parkinson, tratamientos revolucionarios, intervenciones de estilo de vida e investigacion emergente.",
@@ -26,8 +37,10 @@
     "browseReports": "Ver Todos los Informes",
     "learnMore": "Saber Mas",
     "latestReport": "Ultimo Informe",
+    "quickActions": "Acciones Rapidas",
     "readFullReport": "Leer informe completo",
-    "dailyAt": "Diario a las 7:00 AM CDT",
+    "findResources": "Buscar recursos",
+    "dailyAt": "Actualizaciones diarias a las 7:00 AM CDT",
     "whatsTracked": "Lo Que Se Rastrea",
     "apiAccess": "Acceso a API",
     "apiDescription": "Formato legible por maquina para agentes de IA y desarrolladores.",
