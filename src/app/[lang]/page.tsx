@@ -149,6 +149,35 @@ export default async function HomePage({ params }: Props) {
           </ScrollReveal>
         </section>
 
+        {/* Why Subscribe */}
+        <section className="pb-16">
+          <ScrollReveal>
+            <div
+              className="card text-center"
+              style={{ padding: '2.5rem 2rem' }}
+            >
+              <h2
+                className="mb-4"
+                style={{
+                  fontFamily: 'Instrument Serif, serif',
+                  fontSize: '1.875rem',
+                  fontWeight: 400,
+                  color: 'var(--color-charcoal)',
+                  letterSpacing: '-0.01em',
+                }}
+              >
+                {t.whySubscribe}
+              </h2>
+              <p
+                className="text-base max-w-xl mx-auto leading-relaxed"
+                style={{ color: 'var(--color-text-secondary)' }}
+              >
+                {t.whySubscribeDesc}
+              </p>
+            </div>
+          </ScrollReveal>
+        </section>
+
         {/* Latest Report */}
         {summary ? (
           <section className="pb-20">
@@ -296,7 +325,7 @@ export default async function HomePage({ params }: Props) {
         )}
 
         {/* What's Tracked */}
-        <section className="pb-20">
+        <section className="pb-16">
           <ScrollReveal>
             <div className="card" style={{ padding: '2rem' }}>
               <h3
@@ -311,6 +340,60 @@ export default async function HomePage({ params }: Props) {
                 <span className="pill-lifestyle">Lifestyle</span>
                 <span className="pill-emerging">Emerging Research</span>
                 <span className="pill-tech">Tech Tools</span>
+              </div>
+            </div>
+          </ScrollReveal>
+        </section>
+
+        {/* Testimonial */}
+        <section className="pb-20">
+          <ScrollReveal>
+            <div
+              style={{
+                background: 'linear-gradient(160deg, #1b1938 0%, #2d2252 100%)',
+                borderRadius: '20px',
+                padding: '2.5rem 2.5rem',
+              }}
+            >
+              <p
+                className="mb-6"
+                style={{
+                  fontFamily: 'Instrument Serif, Georgia, serif',
+                  fontSize: '1.25rem',
+                  lineHeight: 1.55,
+                  color: 'rgba(255,255,255,0.90)',
+                  fontStyle: 'italic',
+                }}
+              >
+                "{t.testimonial}"
+              </p>
+              <div className="flex items-center gap-3">
+                <div
+                  className="w-10 h-10 rounded-full flex items-center justify-center"
+                  style={{ background: 'rgba(203, 183, 251, 0.15)' }}
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={1.5}
+                    style={{ color: 'rgba(203, 183, 251, 0.80)' }}
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                  </svg>
+                </div>
+                <div>
+                  <p
+                    className="text-sm font-medium"
+                    style={{ color: 'rgba(255,255,255,0.80)' }}
+                  >
+                    Tyler Delano
+                  </p>
+                  <p className="text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>
+                    {t.testimonialLabel}
+                  </p>
+                </div>
               </div>
             </div>
           </ScrollReveal>

@@ -47,7 +47,11 @@
     "apiDescription": "Formato legible por maquina para agentes de IA y desarrolladores.",
     "viewApi": "Ver API",
     "firstReportComing": "Primer Informe Pronto",
-    "firstReportDesc": "El agente de investigacion publicara su primer informe pronto."
+    "firstReportDesc": "El agente de investigacion publicara su primer informe pronto.",
+    "whySubscribe": "Por Que Suscribirse?",
+    "whySubscribeDesc": "Cada nuevo tratamiento, ensayo clinico y descubrimiento cientifico podria cambiar la vida de alguien. Este informe lleva esos hallazgos directamente a su bandeja de entrada — sin jerga, sin confusion, solo lo que necesita saber.",
+    "testimonialLabel": "Del Fundador",
+    "testimonial": "Cuando mi padre fue diagnosticado con Parkinson, queria una forma de seguir todos los ultimos avances e investigaciones sin tener que buscar en decenas de sitios medicos. Asi que construi esto — para que las familias como la nuestra puedan entender rapidamente que funciona, que ensayes estan reclutando, y que prometedores tratamientos se acercan."
   },
   "reports": {
     "title": "Todos los Informes",

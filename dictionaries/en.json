@@ -47,7 +47,11 @@
     "apiDescription": "Machine-readable format for AI agents and developers.",
     "viewApi": "View API",
     "firstReportComing": "First Report Coming Soon",
-    "firstReportDesc": "The research agent will publish its first report soon."
+    "firstReportDesc": "The research agent will publish its first report soon.",
+    "whySubscribe": "Why Subscribe?",
+    "whySubscribeDesc": "Every new treatment, clinical trial, and scientific discovery could change someone's life. This report brings those findings straight to your inbox — no jargon, no confusion, just what you need to know.",
+    "testimonialLabel": "From the Founder",
+    "testimonial": "When my dad was diagnosed with Parkinson's, I wanted a way to keep up with all the latest breakthroughs and research without having to search through dozens of medical websites. So I built this — so families like ours can quickly understand what works, which trials are recruiting, and what promising treatments are on the horizon."
   },
   "reports": {
     "title": "All Reports",
