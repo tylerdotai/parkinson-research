@@ -40,8 +40,8 @@ export function parseReportSections(content: string): ReportSection[] {
       let sourceUrl = ''
       let snippet = currentBody.trim()
 
-      // Look for "From: domain.com (https://...)" or "*From: domain.com (https://...)*" (markdown italic)
-      const sourceLine = currentBody.match(/(?:\*From:|From|Source):\s*(.+?)(?:\n|$)/i)
+      // Look for "From: domain.com (https://...)" or "*From/De: domain.com (https://...)*" (markdown italic)
+      const sourceLine = currentBody.match(/(?:\*From:|\*De:|From|De|Source):\s*(.+?)(?:\n|$)/i)
       if (sourceLine) {
         const raw = sourceLine[1].replace(/\*+/g, '').trim()
         // Extract URL from parenthetical: "domain.com (https://...)"
