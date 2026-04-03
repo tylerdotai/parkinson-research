@@ -8,7 +8,8 @@
     "successTitle": "Revisa tu correo!",
     "successDesc": "Te enviamos un enlace de confirmacion a {email}. Haz clic para comenzar a recibir informes diarios.",
     "alreadyTitle": "Ya estas suscrito",
-    "alreadyDesc": "Este correo ya esta en la lista. Recibiras el informe de manana automaticamente."
+    "alreadyDesc": "Este correo ya esta en la lista. Recibiras el informe de manana automaticamente.",
+    "securityNote": "No se requiere cuenta. Gratis para siempre."
   },
   "metadata": {
     "title": "IA Contra el Parkinson — Investigacion Diaria",
