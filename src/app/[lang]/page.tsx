@@ -136,6 +136,7 @@ export default async function HomePage({ params }: Props) {
               }}
             >
               <SubscribeForm lang={lang} dictionary={dictionary.subscribe} />
+            </div>
           </ScrollReveal>
         </section>
 
