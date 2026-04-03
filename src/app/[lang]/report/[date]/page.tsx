@@ -85,26 +85,6 @@ export default async function ReportPage({ params }: Props) {
             All Reports
           </Link>
 
-          {/* Date badge */}
-          <div
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
-            style={{
-              background: 'rgba(203, 183, 251, 0.12)',
-              border: '1px solid rgba(203, 183, 251, 0.20)',
-            }}
-          >
-            <span
-              className="w-2 h-2 rounded-full"
-              style={{ background: 'rgba(203, 183, 251, 0.7)' }}
-            />
-            <span
-              className="text-sm font-semibold"
-              style={{ color: 'rgba(203, 183, 251, 0.90)', letterSpacing: '0.02em' }}
-            >
-              Daily Research Update
-            </span>
-          </div>
-
           <h1
             style={{
               fontFamily: 'Instrument Serif, Georgia, serif',
