@@ -39,10 +39,10 @@ export default function Header({ dictionary, lang }: Props) {
         {/* Logo */}
         <Link href={`/${lang}`} className="flex items-center gap-2.5 group">
           <img
-            src="/images/logo.png"
+            src="/images/logo-cropped.png"
             alt="AI Against Parkinson's"
-            className="h-9 w-auto transition-transform duration-200 group-hover:scale-105"
-            style={{ height: '2.25rem', width: 'auto' }}
+            className="h-12 w-auto rounded-xl transition-transform duration-200 group-hover:scale-105"
+            style={{ height: '3rem', width: 'auto' }}
           />
         </Link>
 
