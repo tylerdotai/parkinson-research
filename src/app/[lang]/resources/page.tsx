@@ -60,17 +60,18 @@ export default async function ResourcesPage({ params }: Props) {
           </h2>
           <div className="grid sm:grid-cols-2 gap-4">
             <a
-              href="https://www.michaeljfox.org/parkinsons/what-is-parkinsons"
+              href="https://www.michaeljfox.org/parkinsons-101"
               target="_blank"
               rel="noopener noreferrer"
               className="block rounded-xl overflow-hidden transition-transform duration-200 hover:scale-[1.02]"
-              style={{ boxShadow: 'var(--shadow-sm)' }}
+              style={{ boxShadow: 'var(--shadow-sm)', height: '320px' }}
             >
               <img
                 src="/images/what-is-parkinson.png"
                 alt="What is Parkinson's? Infographic from Michael J. Fox Foundation"
-                className="w-full h-auto"
+                className="w-full h-full object-contain"
                 loading="lazy"
+                style={{ background: '#f5f4f2' }}
               />
             </a>
             <a
@@ -78,13 +79,14 @@ export default async function ResourcesPage({ params }: Props) {
               target="_blank"
               rel="noopener noreferrer"
               className="block rounded-xl overflow-hidden transition-transform duration-200 hover:scale-[1.02]"
-              style={{ boxShadow: 'var(--shadow-sm)' }}
+              style={{ boxShadow: 'var(--shadow-sm)', height: '320px' }}
             >
               <img
                 src="/images/parkinsons-symptoms.jpg"
                 alt="Parkinson's Disease Main Symptoms infographic"
-                className="w-full h-auto"
+                className="w-full h-full object-contain"
                 loading="lazy"
+                style={{ background: '#f5f4f2' }}
               />
             </a>
           </div>
