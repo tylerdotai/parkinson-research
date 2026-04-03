@@ -100,7 +100,7 @@ export default function SubscribeForm({ lang = 'en', dictionary }: Props) {
   return (
     <div className="card" style={{ padding: '2rem 2.25rem' }}>
       <div className="flex flex-col md:flex-row items-start md:items-center justify-start md:justify-between gap-8">
-        <div className="flex-1 min-w-0">
+        <div className="flex-1 min-w-0 w-full sm:w-auto">
           <h3
             className="mb-2"
             style={{ fontFamily: 'Instrument Serif, serif', fontSize: '1.1875rem', fontWeight: 400, color: 'var(--color-charcoal)' }}
