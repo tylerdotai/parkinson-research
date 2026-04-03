@@ -4,6 +4,7 @@ const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'sb_publi
 export interface Subscriber {
   id: string
   email: string
+  language: 'en' | 'es'
   subscribed_at: string
   confirmed_at: string | null
   unsubscribed_at: string | null

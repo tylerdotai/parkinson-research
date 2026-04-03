@@ -4,6 +4,7 @@
 create table if not exists public.subscribers (
   id uuid default gen_random_uuid() primary key,
   email text unique not null,
+  language text default 'en' check (language in ('en', 'es')),
   subscribed_at timestamptz default now(),
   confirmed_at timestamptz,
   unsubscribed_at timestamptz,
@@ -25,7 +26,16 @@ create policy "anyone_can_view_subscribers"
 
 -- Service role (for cron sending)
 create policy "service_role_full_access"
-  on public.subscribers using (true)
+  on public.subscribers for select
+  using (true);
+
+create policy "service_role_full_insert"
+  on public.subscribers for insert
+  with check (true);
+
+create policy "service_role_full_update"
+  on public.subscribers for update
+  using (true)
   with check (true);
 
 -- Indexes for common queries
