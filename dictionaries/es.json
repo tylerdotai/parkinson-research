@@ -134,6 +134,8 @@
     "allReports": "Todos los Informes",
     "resources": "Recursos",
     "api": "API",
+    "privacy": "Politica de Privacidad",
+    "terms": "Terminos de Servicio",
     "disclaimer": "Solo para fines informativos. Consulte a los proveedores de salud antes de tomar decisiones de tratamiento."
   },
   "disclaimer": {
@@ -210,5 +212,98 @@
     "allReports": "Todos los Informes",
     "updatesForFamilies": "actualizaciones para familias",
     "freeUpdatedDaily": "Gratis, actualizado diariamente"
+  },
+  "privacy": {
+    "pageTitle": "Politica de Privacidad",
+    "metaDesc": "Politica de Privacidad de IA Contra el Parkinson. Solo recopilamos direcciones de correo, nunca vendemos sus datos y puede cancelar en cualquier momento.",
+    "lastUpdated": "Ultima actualizacion",
+    "intro": "IA Contra el Parkinson (\"nosotros,\" \"nuestro\" o \"nos\") esta comprometido con la proteccion de su privacidad. Esta Politica de Privacidad explica que informacion recopilamos, como la usamos y sus derechos respecto a sus datos personales. Somos un servicio simple y gratuito: le enviamos informes diarios de investigacion generados por IA, y eso es todo lo que hacemos.",
+    "whatWeCollect": "Informacion que Recopilamos",
+    "collectItems": [
+      "Direccion de correo electronico — recopilada cuando se suscribe voluntariamente a nuestro boletin",
+      "Estado de suscripcion — si su correo esta activo o cancelado",
+      "Sin otros datos personales — no recopilamos nombres, numeros de telefono, informacion de salud ni otros datos"
+    ],
+    "howWeUse": "Como Usamos Su Informacion",
+    "useItems": [
+      "Para enviarle informes diarios de investigacion sobre Parkinson generados por IA",
+      "Para entregar su correo de confirmacion cuando se suscribe",
+      "Para procesar su solicitud de cancelacion de manera rapida",
+      "Para mantener la salud de nuestro sistema de entrega de correo (manejo de rebotes, gestion de quejas de spam)"
+    ],
+    "whatWeDontDo": "Lo Que NO Hacemos",
+    "noItems": [
+      "No vendemos, alquilamos ni compartimos su direccion de correo con terceros con fines de marketing",
+      "No lo seguimos en sitios web ni creamos perfiles publicitarios",
+      "No recopilamos historiales de salud, informacion medica ni identificadores personales mas alla de su correo",
+      "No usamos toma de decisiones automatizada que afecte sus derechos"
+    ],
+    "dataStorage": "Almacenamiento y Seguridad de Datos",
+    "storageItems": [
+      "Las direcciones de correo se almacenan en Supabase (base de datos PostgreSQL) con seguridad estandar de la industria",
+      "Los correos se envian a traves de Resend, un servicio de correo electronico transaccional enfocado en privacidad",
+      "Todas las transmisiones de datos estan cifradas usando TLS",
+      "Conservamos su correo solo mientras su suscripcion este activa — al cancelar, sus datos se eliminan rapidamente"
+    ],
+    "yourRights": "Sus Derechos",
+    "rightsItems": [
+      "Cancele en cualquier momento — cada correo incluye un enlace de 'Cancelar suscripcion' en la parte inferior",
+      "Solicite eliminacion — contactenos via GitHub Issues y eliminaremos su correo en 72 horas",
+      "Sin cuenta requerida — no usamos contrasenas ni cuentas de usuario, por lo que no hay nada que hackear",
+      "Sin necesidad de portabilidad de datos — solo almacenamos su direccion de correo, que usted ya tiene"
+    ],
+    "cookies": "Cookies",
+    "cookiesText": "Este sitio web usa cookies minimas. Usamos una sola cookie funcional para recordar su preferencia de idioma (Ingles o Espanol). No se usan cookies de publicidad, pixeles de seguimiento ni analisis de terceros.",
+    "thirdParties": "Servicios de Terceros",
+    "thirdPartiesText": "Usamos dos servicios de terceros para operar este sitio. Ambos fueron elegidos por sus solides practicas de privacidad:",
+    "thirdPartyItems": [
+      { "name": "Supabase", "purpose": "Almacena su direccion de correo electronico y estado de suscripcion de forma segura." },
+      { "name": "Resend", "purpose": "Envía correos electronicos transaccionales (informes diarios, confirmacion, cancelacion)." }
+    ],
+    "contactTitle": "Contactenos",
+    "contactText": "Si tiene preguntas sobre esta Politica de Privacidad, o para solicitar la eliminacion de sus datos, comuniquese via GitHub Issues. Nuestro objetivo es responder en 72 horas.",
+    "policyChanges": "Cambios a Esta Politica",
+    "policyChangesText": "Si realizamos cambios a esta Politica de Privacidad, actualizaremos la fecha de 'Ultima actualizacion' en la parte superior de esta pagina. Los cambios importantes se notaran en el historial de commits de GitHub."
+  },
+  "terms": {
+    "pageTitle": "Terminos de Servicio",
+    "metaDesc": "Terminos de Servicio de IA Contra el Parkinson. Este servicio proporciona informacion de investigacion sobre Parkinson solo con fines informativos — no es consejo medico.",
+    "lastUpdated": "Ultima actualizacion",
+    "intro": "Bienvenido a IA Contra el Parkinson. Al usar este servicio gratuito, acepta los siguientes Terminos de Servicio. Por favor lealos cuidadosamente. Si no esta de acuerdo con estos terminos, no use el servicio.",
+    "noMedicalAdvice": "No Es Consejo Medico",
+    "noMedicalAdviceText": "El contenido proporcionado por IA Contra el Parkinson no constituye consejo medico, diagnostico ni tratamiento. Nada en este sitio web o en nuestros correos debe interpretarse como asesoria medica. Siempre debe consultar a un profesional de salud capacitado — un medico, neurologo u otro proveedor autorizado — antes de tomar cualquier decision medica.",
+    "noMedicalAdviceText2": "Bajo ninguna circunstancia debe retrasar la busqueda de asesoria medica profesional debido a algo que lea en este sitio.",
+    "informationalOnly": "Solo Fines Informativos",
+    "infoItems": [
+      "Todos los informes de investigacion son generados por agentes de IA y compilados solo con fines informativos",
+      "No verificamos la exactitud de hallazgos de investigacion individuales mas alla del control de calidad general de nuestro sistema de IA",
+      "Las citas de investigacion se proporcionan para que pueda leer las fuentes primarias — lo encouraged a hacerlo",
+      "Este servicio no esta afiliado a ninguna institucion medica, hospital ni agencia de salud gubernamental",
+      "Somos una herramienta gratuita e independiente de agregacion de investigacion construida y mantenida por una persona"
+    ],
+    "serviceDescription": "El Servicio",
+    "serviceDescText": "IA Contra el Parkinson es un boletin diario gratuito por correo electronico que agrega investigacion disponible publicamente sobre la enfermedad de Parkinson — incluyendo ensayos clinicos, articulos de revistas medicas, estudios de estilo de vida y ciencia emergente — y lo entrega a su bandeja de entrada cada manana. El servicio se proporciona 'tal cual' sin garantia de continuidad, exactitud o completitud.",
+    "acceptableUse": "Uso Aceptable",
+    "useItems": [
+      "Use el servicio solo para fines personales y no comerciales",
+      "No revenda, redistribuya ni republicque los informes de investigacion sin atribucion",
+      "No use el servicio de ninguna manera que interfiera con su operacion o seguridad",
+      "No intente extraer o cosechar direcciones de correo de nuestros sistemas",
+      "No represente incorrectamente la fuente o autoria del contenido"
+    ],
+    "intellectualProperty": "Propiedad Intelectual",
+    "ipText": "El nombre IA Contra el Parkinson, el logotipo y el diseno del sitio web son propiedad de Flume SaaS Factory. El contenido de investigacion agregado en nuestros informes proviene de fuentes publicas — clinicaltrials.gov, revistas revisadas por pares y bases de datos de investigacion publicas — y no se reclama como nuestra propiedad intelectual.",
+    "ipText2": "El software que alimenta este servicio (el codigo del agente de investigacion) es codigo abierto bajo la Licencia MIT y esta disponible en GitHub. Puede estudiarlo, modificarlo y distribuirlo bajo los terminos de esa licencia.",
+    "noWarranty": "Sin Garantia",
+    "noWarrantyText": "Este servicio se proporciona 'tal cual' y 'seg available' sin garantias de ningun tipo, expresas o implicitas. No garantizamos que:",
+    "noWarrantyText2": "el servicio estara sin interrupciones, sea seguro o este libre de errores; los resultados obtenidos del uso del servicio sean precisos o confiables; o la calidad de cualquier contenido de investigacion cumpla sus expectativas. Usted usa el servicio bajo su propio riesgo.",
+    "limitationLiability": "Limitacion de Responsabilidad",
+    "liabilityText": "En la maxima medida permitida por la ley, IA Contra el Parkinson y sus creadores no seran responsables de danos indirectos, incidentales, especiales, consecuentes o punitivos — incluyendo pero no limitado a perdida de ganancias, datos u otras perdidas intangibles — derivados de o en conexion con su uso, o incapacidad de usar, el servicio. En ningun caso nuestra responsabilidad total excedera $0, porque este es un servicio gratuito proporcionado sin cargo.",
+    "thirdPartyContent": "Contenido de Terceros",
+    "thirdPartyText": "Nuestros informes agregan contenido de fuentes de terceros incluyendo ClinicalTrials.gov, revistas medicas y bases de datos de investigacion publicas. No controlamos, respaldamos ni garantizamos la exactitud de ningun contenido de terceros. Los enlaces a sitios externos se proporcionan solo para su conveniencia — hacer clic en ellos es bajo su propio riesgo.",
+    "termsChanges": "Cambios a Estos Terminos",
+    "termsChangesText": "Nos reservamos el derecho de modificar estos Terminos de Servicio en cualquier momento. Los cambios se publicaran en esta pagina con una fecha de 'Ultima actualizacion' actualizada. El uso continuo del servicio despues de cualquier cambio constituye su aceptacion de los nuevos terminos.",
+    "governingLaw": "Ley Aplicable",
+    "governingLawText": "Estos Terminos de Servicio se rigen e interpretan de acuerdo con las leyes del Estado de Texas, Estados Unidos de America, sin referencia a su disposicion de conflicto de leyes. Cualquier disputa que surja de estos terminos se resolvera en los tribunales de Texas."
   }
 }

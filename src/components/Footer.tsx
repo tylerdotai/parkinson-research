@@ -84,6 +84,24 @@ export default function Footer({ dictionary, lang }: Props) {
                   {t.api}
                 </Link>
               </li>
+              <li>
+                <Link
+                  href={`/${lang}/privacy`}
+                  className="text-sm transition-colors"
+                  style={{ color: 'var(--color-text-secondary)' }}
+                >
+                  {t.privacy}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href={`/${lang}/terms`}
+                  className="text-sm transition-colors"
+                  style={{ color: 'var(--color-text-secondary)' }}
+                >
+                  {t.terms}
+                </Link>
+              </li>
             </ul>
           </div>
 

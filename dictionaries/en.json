@@ -135,6 +135,8 @@
     "allReports": "All Reports",
     "resources": "Resources",
     "api": "API",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
     "disclaimer": "For informational purposes only. Consult healthcare providers before making treatment decisions."
   },
   "disclaimer": {
@@ -145,18 +147,6 @@
     "label": "Language",
     "en": "English",
     "es": "Spanish"
-  },
-  "nav": {
-    "reports": "Reports",
-    "resources": "Resources",
-    "about": "About"
-  },
-  "footer": {
-    "tagline": "Built with care for families navigating Parkinson's.",
-    "allReports": "All Reports",
-    "resources": "Resources",
-    "api": "API",
-    "disclaimer": "For informational purposes only. Consult healthcare providers before making treatment decisions."
   },
   "confirmed": {
     "title": "You're confirmed!",
@@ -223,5 +213,98 @@
     "allReports": "All Reports",
     "updatesForFamilies": "updates for families",
     "freeUpdatedDaily": "Free, updated daily"
+  },
+  "privacy": {
+    "pageTitle": "Privacy Policy",
+    "metaDesc": "Privacy Policy for AI Against Parkinson's. We collect only email addresses, never sell your data, and you can unsubscribe anytime.",
+    "lastUpdated": "Last updated",
+    "intro": "AI Against Parkinson's (\"we,\" \"our,\" or \"us\") is committed to protecting your privacy. This Privacy Policy explains what information we collect, how we use it, and your rights regarding your personal data. We are a simple, free service: we send you daily AI-generated research reports, and that's all we do.",
+    "whatWeCollect": "Information We Collect",
+    "collectItems": [
+      "Email address — collected when you voluntarily subscribe to our newsletter",
+      "Subscription status — whether your email is active or unsubscribed",
+      "No other personal data — we do not collect names, phone numbers, health information, or any other data"
+    ],
+    "howWeUse": "How We Use Your Information",
+    "useItems": [
+      "To send you daily AI-generated Parkinson's research reports",
+      "To deliver your confirmation email when you subscribe",
+      "To process your unsubscribe request promptly",
+      "To maintain the health of our email delivery system (bounce handling, spam complaint management)"
+    ],
+    "whatWeDontDo": "What We Do NOT Do",
+    "noItems": [
+      "We do not sell, rent, or share your email address with any third party for marketing purposes",
+      "We do not track you across websites or build advertising profiles",
+      "We do not collect health records, medical information, or personal identifiers beyond your email",
+      "We do not use automated decision-making that affects your rights"
+    ],
+    "dataStorage": "Data Storage & Security",
+    "storageItems": [
+      "Email addresses are stored in Supabase (PostgreSQL database) with industry-standard security",
+      "Emails are sent via Resend, a privacy-focused transactional email service",
+      "All data transmissions are encrypted using TLS",
+      "We retain your email only for as long as your subscription is active — unsubscribe and your data is deleted promptly"
+    ],
+    "yourRights": "Your Rights",
+    "rightsItems": [
+      "Unsubscribe at any time — every email includes an 'Unsubscribe' link at the bottom",
+      "Request deletion — contact us via GitHub Issues and we will delete your email within 72 hours",
+      "No account required — we don't use passwords or user accounts, so there is nothing to hack on our end",
+      "No data portability needed — we store only your email address, which you already have"
+    ],
+    "cookies": "Cookies",
+    "cookiesText": "This website uses minimal cookies. We use a single functional cookie to remember your language preference (English or Spanish). No advertising cookies, tracking pixels, or third-party analytics are used.",
+    "thirdParties": "Third-Party Services",
+    "thirdPartiesText": "We use two third-party services to operate this site. Both are chosen for their strong privacy practices:",
+    "thirdPartyItems": [
+      { "name": "Supabase", "purpose": "Stores your email address and subscription status securely." },
+      { "name": "Resend", "purpose": "Sends transactional emails (daily reports, confirmation, unsubscribe)." }
+    ],
+    "contactTitle": "Contact Us",
+    "contactText": "If you have any questions about this Privacy Policy, or to request deletion of your data, please reach out via GitHub Issues. We aim to respond within 72 hours.",
+    "policyChanges": "Changes to This Policy",
+    "policyChangesText": "If we make any changes to this Privacy Policy, we will update the \"Last updated\" date at the top of this page. Significant changes will be noted in the GitHub commit history."
+  },
+  "terms": {
+    "pageTitle": "Terms of Service",
+    "metaDesc": "Terms of Service for AI Against Parkinson's. This service provides Parkinson's research information for informational purposes only — not medical advice.",
+    "lastUpdated": "Last updated",
+    "intro": "Welcome to AI Against Parkinson's. By using this free service, you agree to the following Terms of Service. Please read them carefully. If you do not agree with these terms, do not use the service.",
+    "noMedicalAdvice": "Not Medical Advice",
+    "noMedicalAdviceText": "The content provided by AI Against Parkinson's does not constitute medical advice, diagnosis, or treatment. Nothing on this website or in our emails should be construed as medical counsel. You must always consult a qualified healthcare professional — a physician, neurologist, or other licensed provider — before making any medical decisions.",
+    "noMedicalAdviceText2": "Under no circumstances should you delay seeking professional medical advice because of something you read on this site.",
+    "informationalOnly": "Informational Purposes Only",
+    "infoItems": [
+      "All research reports are generated by AI agents and compiled for informational purposes only",
+      "We do not verify the accuracy of individual research findings beyond general quality assurance of our AI pipeline",
+      "Research citations are provided so you can read primary sources — we encourage you to do so",
+      "This service is not affiliated with any medical institution, hospital, or government health agency",
+      "We are a free, independent research aggregation tool built and maintained by one person"
+    ],
+    "serviceDescription": "The Service",
+    "serviceDescText": "AI Against Parkinson's is a free daily email newsletter that aggregates publicly available Parkinson's disease research — including clinical trials, medical journal articles, lifestyle studies, and emerging science — and delivers it to your inbox each morning. The service is provided \"as is\" with no guarantee of continuity, accuracy, or completeness.",
+    "acceptableUse": "Acceptable Use",
+    "useItems": [
+      "Use the service for personal, non-commercial purposes only",
+      "Do not resell, redistribute, or republish the research reports without attribution",
+      "Do not use the service in any way that interferes with its operation or security",
+      "Do not attempt to extract or harvest subscriber email addresses from our systems",
+      "Do not misrepresent the source or authorship of the content"
+    ],
+    "intellectualProperty": "Intellectual Property",
+    "ipText": "The AI Against Parkinson's name, logo, and website design are property of Flume SaaS Factory. The research content aggregated in our reports comes from publicly available sources — clinicaltrials.gov, peer-reviewed journals, and public research databases — and is not claimed as our intellectual property.",
+    "ipText2": "The software that powers this service (the research agent code) is open source under the MIT License and available on GitHub. You are free to study, modify, and distribute it under the terms of that license.",
+    "noWarranty": "No Warranty",
+    "noWarrantyText": "This service is provided \"as is\" and \"as available\" without warranties of any kind, either express or implied. We do not warrant that:",
+    "noWarrantyText2": "the service will be uninterrupted, secure, or error-free; the results obtained from using the service will be accurate or reliable; or the quality of any research content will meet your expectations. You use the service at your own risk.",
+    "limitationLiability": "Limitation of Liability",
+    "liabilityText": "To the fullest extent permitted by law, AI Against Parkinson's and its creator(s) shall not be liable for any indirect, incidental, special, consequential, or punitive damages — including but not limited to loss of profits, data, or other intangible losses — arising out of or in connection with your use of, or inability to use, the service. In no event shall our total liability exceed $0, because this is a free service provided without charge.",
+    "thirdPartyContent": "Third-Party Content",
+    "thirdPartyText": "Our reports aggregate content from third-party sources including ClinicalTrials.gov, medical journals, and public research databases. We do not control, endorse, or guarantee the accuracy of any third-party content. Links to external sites are provided for convenience only — clicking them is at your own risk.",
+    "termsChanges": "Changes to These Terms",
+    "termsChangesText": "We reserve the right to modify these Terms of Service at any time. Changes will be posted on this page with an updated \"Last updated\" date. Continued use of the service after any change constitutes your acceptance of the new terms.",
+    "governingLaw": "Governing Law",
+    "governingLawText": "These Terms of Service are governed by and construed in accordance with the laws of the State of Texas, United States of America, without regard to its conflict of law provisions. Any disputes arising from these terms shall be resolved in the courts of Texas."
   }
 }
