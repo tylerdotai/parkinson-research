@@ -2,7 +2,7 @@
 
 Daily AI-compiled research reports on Parkinson's disease — clinical trials, breakthrough treatments, lifestyle interventions, and emerging science. Free, bilingual (EN/ES), delivered to your inbox.
 
-**Live:** [parkinson-research.vercel.app](https://parkinson-research.vercel.app)
+**Live:** [aiagainstparkinson.com](https://aiagainstparkinson.com)
 
 ---
 

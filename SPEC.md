@@ -255,7 +255,7 @@ Commit to GitHub (parkinson-research repo)
     ↓
 Vercel GitHub Action auto-deploys
     ↓
-Site updated at parkinson-research.vercel.app
+Site updated at aiagainstparkinson.com
 ```
 
 ---
