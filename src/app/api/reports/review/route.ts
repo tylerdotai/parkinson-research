@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
       return Response.json({ error: 'Missing date or language' }, { status: 400 })
     }
 
-    const report = await getReport(date, language)
+    const report = await getReport(date, language as 'en' | 'es')
     if (!report) {
       return Response.json({ error: 'Report not found' }, { status: 404 })
     }
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Call MiniMax to do the review
-    const apiKey = process.env.MINIMAX_API_KEY || require('fs').readFileSync(require('os').homedir() + '/.minimax/token_plan_key', 'utf8').trim()
+    const apiKey = process.env.MINIMAX_API_KEY
     if (!apiKey) {
       return Response.json({ error: 'MINIMAX_API_KEY not configured' }, { status: 500 })
     }
@@ -117,7 +117,7 @@ export async function POST(req: NextRequest) {
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)
   const date = searchParams.get('date')
-  const language = searchParams.get('language') || 'en'
+  const language = (searchParams.get('language') || 'en') as 'en' | 'es'
 
   if (!date) {
     return Response.json({ error: 'Missing date param' }, { status: 400 })
