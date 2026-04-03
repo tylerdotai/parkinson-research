@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Valid email required' }, { status: 400 })
     }
 
-    const result = await subscribe(email.toLowerCase(), body?.source || 'website')
+    const result = await subscribe(email.toLowerCase(), 'en', body?.source || 'website')
 
     if (result.success && result.id) {
       const confirmUrl = `https://aiagainstparkinson.com/en/api/confirm/${result.id}`
