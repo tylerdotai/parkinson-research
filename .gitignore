@@ -39,3 +39,8 @@ next-env.d.ts
 # Vercel
 .vercel
 RESEND_API_KEY
+
+# Outreach — private, not committed
+outreach/
+PRIVATE/
+
