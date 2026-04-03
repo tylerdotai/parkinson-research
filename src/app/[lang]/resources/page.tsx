@@ -98,7 +98,7 @@ export default async function ResourcesPage({ params }: Props) {
               rel="noopener noreferrer"
               style={{ color: 'var(--color-amethyst)' }}
             >
-              Learn more →
+              {t.learnMore}
             </a>
           </p>
         </section>
@@ -335,10 +335,10 @@ export default async function ResourcesPage({ params }: Props) {
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--color-lavender)' }}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
             </svg>
-            AI Agent Integration
+            {t.aiIntegrationTitle}
           </h2>
           <p className="text-sm mb-5" style={{ color: 'rgba(255,255,255,0.55)' }}>
-            Other AI agents can automatically pull the latest report using this endpoint:
+            {t.aiIntegrationDesc}
           </p>
           <div
             className="rounded-xl p-4 mb-4"
@@ -349,7 +349,7 @@ export default async function ResourcesPage({ params }: Props) {
             </code>
           </div>
           <p className="text-sm mb-5" style={{ color: 'rgba(255,255,255,0.55)' }}>
-            Response includes: date, title, full content, sections parsed as structured JSON, and source attribution.
+            {t.aiIntegrationResponse}
           </p>
           <div
             className="rounded-xl p-4"

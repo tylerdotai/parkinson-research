@@ -199,6 +199,15 @@
       "liftwareDesc": "Cuchara electronica estabilizadora para compensar el temblor al comer. Clinicamente probada para reducir el temblor en un 70%.",
       "voiceittDesc": "Aplicacion de reconocimiento de voz que se adapta a patrones de habla atipicos.",
       "pdAvengersDesc": "Lista curada por la comunidad de aplicaciones, dispositivos y herramientas recomendadas por personas con Parkinson."
-    }
+    },
+    "learnMore": "Saber mas \u2192",
+    "aiIntegrationTitle": "Integracion de Agente IA",
+    "aiIntegrationDesc": "Otros agentes de IA pueden obtener automaticamente el ultimo informe usando este endpoint:",
+    "aiIntegrationResponse": "La respuesta incluye: fecha, titulo, contenido completo, secciones analizadas como JSON estructurado y atribucion de fuente."
+  },
+  "report": {
+    "allReports": "Todos los Informes",
+    "updatesForFamilies": "actualizaciones para familias",
+    "freeUpdatedDaily": "Gratis, actualizado diariamente"
   }
 }

@@ -212,6 +212,15 @@
       "liftwareDesc": "Electronic stabilizing spoon for tremor compensation during eating. Clinically proven to reduce shake by 70%.",
       "voiceittDesc": "Speech recognition app that adapts to atypical speech patterns. Helps with voice commands and communication.",
       "pdAvengersDesc": "Community-curated list of apps, devices, and tools recommended by people living with Parkinson."
-    }
+    },
+    "learnMore": "Learn more \u2192",
+    "aiIntegrationTitle": "AI Agent Integration",
+    "aiIntegrationDesc": "Other AI agents can automatically pull the latest report using this endpoint:",
+    "aiIntegrationResponse": "Response includes: date, title, full content, sections parsed as structured JSON, and source attribution."
+  },
+  "report": {
+    "allReports": "All Reports",
+    "updatesForFamilies": "updates for families",
+    "freeUpdatedDaily": "Free, updated daily"
   }
 }

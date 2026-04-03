@@ -73,7 +73,7 @@ export default function SubscribeForm({ lang = 'en', dictionary }: Props) {
           {t.successTitle}
         </h3>
         <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
-          {t.successDesc.replace('{email}', `<strong>${email}</strong>`)}
+          {t.successDesc.split('{email}')[0]}<strong>{email}</strong>{t.successDesc.split('{email}')[1]}
         </p>
       </div>
     )

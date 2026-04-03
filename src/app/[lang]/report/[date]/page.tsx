@@ -82,7 +82,7 @@ export default async function ReportPage({ params }: Props) {
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
             </svg>
-            All Reports
+            {dictionary.report.allReports}
           </Link>
 
           <h1
@@ -103,7 +103,7 @@ export default async function ReportPage({ params }: Props) {
             className="text-base"
             style={{ color: 'rgba(255,255,255,0.50)' }}
           >
-            {formatDate(date)} • {totalEntries} updates for families
+            {formatDate(date)} • {totalEntries} {dictionary.report.updatesForFamilies}
           </p>
         </div>
       </header>
@@ -153,10 +153,10 @@ export default async function ReportPage({ params }: Props) {
               alignItems: 'center',
             }}
           >
-            ← All Reports
+            ← {dictionary.report.allReports}
           </Link>
           <span className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
-            Free, updated daily
+            {dictionary.report.freeUpdatedDaily}
           </span>
         </div>
       </main>
