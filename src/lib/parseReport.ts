@@ -40,18 +40,14 @@ export function parseReportSections(content: string): ReportSection[] {
       let sourceUrl = ''
       let snippet = currentBody.trim()
 
-      // Look for "From: domain.com" or "Source: domain.com"
-      const sourceMatch = currentBody.match(/(?:From|Source):\s*(.+?)(?:\n|$)/i)
-      if (sourceMatch) {
-        source = sourceMatch[1].trim()
-        // Try to find URL in the body
+      // Look for "From: domain.com" or "Source: domain.com" or "*From: domain.com*" (markdown italic)
+      const sourceLine = currentBody.match(/(?:\*From:|From|Source):\s*(.+?)(?:\n|$)/i)
+      if (sourceLine) {
+        source = sourceLine[1].replace(/\*+/g, '').trim()
         const urlMatch = currentBody.match(/https?:\/\/[^\s]+/)
         if (urlMatch) sourceUrl = urlMatch[0]
-        // Clean source to just domain
-        if (!sourceUrl) source = cleanDomain(source)
-        else source = cleanDomain(sourceUrl)
-        // Remove source line from snippet
-        snippet = snippet.replace(/(?:From|Source):\s*https?:\/\/[^\s]+\s*/gi, '').replace(/(?:From|Source):\s*[^\n]+/gi, '').trim()
+        source = cleanDomain(sourceUrl || source)
+        snippet = snippet.replace(/(?:\*From:|From|Source):\s*https?:\/\/[^\s]+\s*/gi, '').replace(/(?:\*From:|From|Source):\s*[^\n]+/gi, '').trim()
       }
 
       // Clean markdown from snippet

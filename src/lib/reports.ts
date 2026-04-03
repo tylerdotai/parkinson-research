@@ -121,18 +121,23 @@ export function getReportMetadata(date: string, lang = 'en'): { preview: string 
   try {
     const filePath = path.join(getLangReportsDir(lang), `${date}.md`)
     if (!fs.existsSync(filePath)) return null
-    
-    const content = fs.readFileSync(filePath, 'utf-8')
-    const { data } = matter(content)
-    
-    // Extract first paragraph as preview (strip emojis)
-    const firstParagraph = stripEmojis(
-      content.split('\n\n')[2]?.replace(/^#.*\n/, '').trim() || ''
-    )
-    
-    return {
-      preview: firstParagraph.slice(0, 120) + (firstParagraph.length > 120 ? '...' : ''),
+
+    const rawContent = fs.readFileSync(filePath, 'utf-8')
+    const { data, content } = matter(rawContent)
+
+    // Find the intro paragraph (first non-header, non-empty paragraph after frontmatter)
+    const lines = content.split('\n')
+    let introLine = ''
+    for (const line of lines) {
+      const trimmed = line.trim()
+      if (trimmed && !trimmed.startsWith('#') && !trimmed.startsWith('##') && !trimmed.startsWith('*From:')) {
+        introLine = trimmed
+        break
+      }
     }
+
+    const preview = stripEmojis(introLine).slice(0, 120) + (introLine.length > 120 ? '...' : '')
+    return { preview: preview || 'Daily research update' }
   } catch {
     return null
   }
@@ -184,49 +189,47 @@ export interface ReportSummary {
 export async function getLatestReportSummary(lang = 'en'): Promise<ReportSummary | null> {
   const dates = await getAllReportDates(lang)
   if (dates.length === 0) return null
-  
-  const report = await getReport(dates[0])
-  if (!report) return null
-  
-  // Extract section summaries from content
+
+  const filePath = path.join(getLangReportsDir(lang), `${dates[0]}.md`)
+  if (!fs.existsSync(filePath)) return null
+
+  const rawContent = fs.readFileSync(filePath, 'utf-8')
+  const { content } = matter(rawContent)
+
+  // Extract section summaries from content (already stripped of frontmatter)
   const sections: { title: string; summary: string }[] = []
-  const lines = report.content.split('\n')
+  const lines = content.split('\n')
   let currentSection = ''
   let currentContent: string[] = []
-  
+
   for (const line of lines) {
     const h2Match = line.match(/^## (.+)/)
-    
+
     if (h2Match) {
-      // Save previous section
       if (currentSection && currentContent.length > 0) {
         const summary = extractSummary(currentContent.join(' '))
-        if (summary) {
-          sections.push({ title: currentSection, summary })
-        }
+        if (summary) sections.push({ title: currentSection, summary })
       }
       currentSection = h2Match[1].trim()
       currentContent = []
-    } else if (line.trim() && !line.startsWith('#') && !line.startsWith('---')) {
-      // Skip list items for summary, just get prose
+    } else if (line.trim() && !line.startsWith('#') && !line.startsWith('---') && !line.startsWith('*From:')) {
       const trimmed = line.trim()
       if (!trimmed.startsWith('-') && !trimmed.match(/^\d+\./)) {
         currentContent.push(trimmed)
       }
     }
   }
-  
-  // Don't include last section (usually Quick Tips, Action Items, Glossary) - keep it to main categories
-  const mainSections = sections.filter(s => 
-    s.title && !s.title.includes('Quick Tips') && 
-    !s.title.includes('Action Items') && 
+
+  const mainSections = sections.filter(s =>
+    s.title && !s.title.includes('Quick Tips') &&
+    !s.title.includes('Action Items') &&
     !s.title.includes('Glossary') &&
     !s.title.includes('Resources')
   ).slice(0, 5)
-  
+
   return {
-    date: report.date,
-    title: report.title,
+    date: dates[0],
+    title: "Parkinson's Research",
     sections: mainSections,
   }
 }
