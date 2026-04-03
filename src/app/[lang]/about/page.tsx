@@ -236,10 +236,10 @@ export default async function AboutPage({ params }: Props) {
               style={{ minHeight: '280px' }}
             >
               <img
-                src="/images/founder-hands.webp"
-                alt="Caring for family"
+                src="/images/founder-hockey.png"
+                alt="Tyler and his father at Fort Worth Panthers hockey"
                 className="absolute inset-0 w-full h-full object-cover"
-                style={{ objectPosition: 'center' }}
+                style={{ objectPosition: 'center 20%' }}
               />
               <div
                 className="absolute inset-0"
