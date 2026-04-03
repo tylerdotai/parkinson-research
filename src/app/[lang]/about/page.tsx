@@ -241,16 +241,15 @@ export default async function AboutPage({ params }: Props) {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
               </svg>
             </span>
-            The Founder
+            {t.founderLabel}
           </h2>
-          <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.65)' }}>
-            I built this after a family member was diagnosed with Parkinson's. After spending hours searching clinical trials, treatment research, and care resources — I realized there wasn't a single place that aggregated all of it, updated daily, and was written for patients instead of researchers.
-          </p>
-          <p className="text-sm leading-relaxed mt-4" style={{ color: 'rgba(255,255,255,0.65)' }}>
-            So I built one. Every morning, AI research agents search clinical trials, medical journals, and emerging science — so you don't have to.
-          </p>
+          {t.founderText.split('\n\n').map((para, i) => (
+            <p key={i} className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.65)' }}>
+              {para}
+            </p>
+          ))}
           <p className="text-xs mt-5" style={{ color: 'rgba(255,255,255,0.40)' }}>
-            — Tyler Delano, Creator
+            {t.founderSig}
           </p>
         </section>
       </div>

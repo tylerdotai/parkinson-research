@@ -68,6 +68,9 @@
   },
   "about": {
     "title": "About This Project",
+    "founderLabel": "The Founder",
+    "founderText": "I built this after a family member was diagnosed with Parkinson's. After spending hours searching clinical trials, treatment research, and care resources — I realized there wasn't a single place that aggregated all of it, updated daily, and was written for patients instead of researchers.\n\nSo I built one. Every morning, AI research agents search clinical trials, medical journals, and emerging science — so you don't have to.",
+    "founderSig": "— Tyler Delano, Creator",
     "researchAgent": "The Research Agent",
     "researchAgentDesc": "Every morning at 7:00 AM CDT, an autonomous AI research agent springs to life. It spawns multiple specialized sub-agents that simultaneously search:",
     "searchTargets": [

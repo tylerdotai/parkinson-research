@@ -68,6 +68,9 @@
   },
   "about": {
     "title": "Acerca de Este Proyecto",
+    "founderLabel": "El Fundador",
+    "founderText": "Construi esto despues de que un familiar fuera diagnosticado con Parkinson. Despues de pasar horas buscando ensayos clinicos, investigaciones de tratamientos y recursos de atencion — me di cuenta de que no habia un solo lugar que lo agregara todo, se actualizara diariamente, y estuviera escrito para pacientes en lugar de investigadores.\n\nAsi que construi uno. Cada manana, agentes de investigacion de IA buscan ensayos clinicos, revistas medicas y ciencia emergente — para que tu no tengas que hacerlo.",
+    "founderSig": "— Tyler Delano, Creador",
     "researchAgent": "El Agente de Investigacion",
     "researchAgentDesc": "Cada manana a las 7:00 AM CDT, un agente de investigacion de IA autonomo cobra vida. Genera multiples sub-agentes especializados que buscan simultaneamente:",
     "searchTargets": [
