@@ -125,7 +125,17 @@ export default async function HomePage({ params }: Props) {
         {/* Subscribe Form */}
         <section className="py-14">
           <ScrollReveal>
-            <SubscribeForm lang={lang} dictionary={dictionary.subscribe} />
+            <div
+              style={{
+                background: 'var(--color-white)',
+                border: '1px solid var(--color-parchment)',
+                borderTop: '3px solid var(--color-amethyst)',
+                borderRadius: '8px',
+                boxShadow: 'var(--shadow-xs)',
+                padding: '2rem 2.25rem',
+              }}
+            >
+              <SubscribeForm lang={lang} dictionary={dictionary.subscribe} />
           </ScrollReveal>
         </section>
 
@@ -134,7 +144,11 @@ export default async function HomePage({ params }: Props) {
           <ScrollReveal>
             <div
               className="card text-center"
-              style={{ padding: '2.5rem 2rem' }}
+              style={{
+                padding: '2.5rem 2rem',
+                borderTop: '3px solid var(--color-amethyst)',
+                background: 'linear-gradient(180deg, rgba(203,183,251,0.05) 0%, var(--color-white) 100%)',
+              }}
             >
               <h2
                 className="mb-4"
@@ -176,7 +190,7 @@ export default async function HomePage({ params }: Props) {
             <ScrollReveal delay={80}>
               <div className="bento-grid">
                 {/* Main card */}
-                <div className="bento-item-large card" style={{ padding: '1.75rem' }}>
+                <div className="bento-item-large card" style={{ padding: '1.75rem', borderTop: '3px solid var(--color-amethyst)' }}>
                   <div className="flex items-center gap-4 mb-5">
                     <div
                       className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
@@ -307,7 +321,14 @@ export default async function HomePage({ params }: Props) {
         {/* What's Tracked */}
         <section className="pb-16">
           <ScrollReveal>
-            <div className="card" style={{ padding: '2rem' }}>
+            <div
+              className="card"
+              style={{
+                padding: '2rem',
+                borderTop: '3px solid var(--color-amethyst)',
+                background: 'linear-gradient(180deg, rgba(203,183,251,0.05) 0%, var(--color-white) 100%)',
+              }}
+            >
               <h3
                 className="text-sm font-medium mb-5"
                 style={{ fontFamily: 'Instrument Serif, serif', color: 'var(--color-charcoal)' }}

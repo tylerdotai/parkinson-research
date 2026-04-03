@@ -191,11 +191,11 @@
     letter-spacing: 0;
   }
 
-  .pill-clinical { background-color: rgba(203, 183, 251, 0.12); }
-  .pill-breakthrough { background-color: rgba(203, 183, 251, 0.18); }
-  .pill-lifestyle { background-color: rgba(203, 183, 251, 0.10); }
-  .pill-emerging { background-color: rgba(203, 183, 251, 0.22); }
-  .pill-tech { background-color: rgba(203, 183, 251, 0.08); color: #5b3fa0; }
+  .pill-clinical { background-color: rgba(113, 76, 182, 0.12); color: #5b3fa0; }
+  .pill-breakthrough { background-color: rgba(113, 76, 182, 0.18); color: #4a2f8a; }
+  .pill-lifestyle { background-color: rgba(113, 76, 182, 0.10); color: #5b3fa0; }
+  .pill-emerging { background-color: rgba(113, 76, 182, 0.22); color: #3a2070; }
+  .pill-tech { background-color: rgba(113, 76, 182, 0.08); color: #6b4db6; }
 
   /* Hero gradient */
   .hero-gradient {
@@ -318,8 +318,8 @@
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--color-lavender);
-    opacity: 0.8;
+    color: var(--color-amethyst);
+    opacity: 1;
   }
 }
 

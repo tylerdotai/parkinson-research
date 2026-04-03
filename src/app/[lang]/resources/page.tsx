@@ -75,7 +75,7 @@ export default async function ResourcesPage({ params }: Props) {
               />
             </a>
             <a
-              href="https://www.michaeljfox.org/parkinsons/symptoms"
+              href="https://www.michaeljfox.org/symptoms"
               target="_blank"
               rel="noopener noreferrer"
               className="block rounded-xl overflow-hidden transition-transform duration-200 hover:scale-[1.02]"
