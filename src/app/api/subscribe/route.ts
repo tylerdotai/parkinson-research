@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
     const result = await subscribe(email.toLowerCase(), body?.source || 'website')
 
     if (result.success && result.id) {
-      const confirmUrl = `https://parkinson-research.vercel.app/en/api/confirm/${result.id}`
+      const confirmUrl = `https://aiagainstparkinson.com/en/api/confirm/${result.id}`
       const resendApiKey = process.env.RESEND_API_KEY
       if (!resendApiKey) {
         console.error('[subscribe] RESEND_API_KEY is not set')
@@ -28,13 +28,13 @@ export async function POST(request: NextRequest) {
 
       try {
         await getResend().emails.send({
-          from: 'Parkinson Research <research@clawplex.dev>',
+          from: 'AI Against Parkinson <research@clawplex.dev>',
           to: email,
-          subject: 'Confirm your Parkinson Research subscription',
+          subject: 'Confirm your AI Against Parkinson subscription',
           html: `
             <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 480px; margin: 0 auto; padding: 32px 16px;">
               <div style="background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%); padding: 24px 28px; border-radius: 12px 12px 0 0;">
-                <h1 style="margin: 0; color: #ffffff; font-size: 20px; font-weight: 600;">Parkinson Research Daily</h1>
+                <h1 style="margin: 0; color: #ffffff; font-size: 20px; font-weight: 600;">AI Against Parkinson's</h1>
                 <p style="margin: 8px 0 0; color: rgba(255,255,255,0.85); font-size: 14px;">Daily AI-powered research reports</p>
               </div>
               <div style="background: #ffffff; padding: 28px; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 12px 12px;">
@@ -50,11 +50,11 @@ export async function POST(request: NextRequest) {
                 </p>
               </div>
               <p style="margin: 16px 0 0; color: #9ca3af; font-size: 11px; text-align: center;">
-                You're receiving this because you signed up for Parkinson's Research Daily. No spam, ever.
+                You're receiving this because you signed up for AI Against Parkinson's. No spam, ever.
               </p>
             </div>
           `,
-          text: `Confirm your Parkinson Research subscription:\n\n${confirmUrl}\n\nOnce confirmed, you'll receive daily research reports every morning.`,
+          text: `Confirm your AI Against Parkinson subscription:\n\n${confirmUrl}\n\nOnce confirmed, you'll receive daily research reports every morning.`,
         })
         console.log('[subscribe] Confirmation email sent to', email)
       } catch (emailErr) {

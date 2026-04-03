@@ -28,7 +28,7 @@ export default function Footer({ dictionary, lang }: Props) {
                 </svg>
               </div>
               <span className="font-semibold text-sm" style={{ color: 'var(--color-charcoal)' }}>
-                Parkinson Research
+                AI Against Parkinson's
               </span>
             </div>
             <p className="text-sm leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>
@@ -106,7 +106,7 @@ export default function Footer({ dictionary, lang }: Props) {
           style={{ borderColor: 'var(--color-parchment)' }}
         >
           <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
-            © {new Date().getFullYear()} Parkinson Research. Free forever.
+            © {new Date().getFullYear()} AI Against Parkinson's. Free forever.
           </p>
         </div>
       </div>

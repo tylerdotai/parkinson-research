@@ -11,15 +11,16 @@
     "alreadyDesc": "This email is already on the list. You'll receive tomorrow's report automatically."
   },
   "metadata": {
-    "title": "Parkinson Research Daily",
-    "description": "Autonomous daily research agent aggregating Parkinson's disease clinical trials, breakthrough treatments, lifestyle interventions, and emerging research.",
+    "title": "AI Against Parkinson's — Daily Parkinson's Research",
+    "description": "Autonomous AI research agent aggregating Parkinson's disease clinical trials, breakthrough treatments, lifestyle interventions, and emerging science. Free daily email.",
     "keywords": [
       "parkinsons",
       "parkinson disease",
       "clinical trials",
       "research",
       "treatment",
-      "caregiver"
+      "caregiver",
+      "ai against parkinson"
     ]
   },
   "nav": {
@@ -31,8 +32,8 @@
   },
   "home": {
     "badge": "Autonomous AI Research",
-    "headline": "Daily Parkinson's",
-    "headlineAccent": "Research Reports",
+    "headline": "AI Against Parkinson's",
+    "headlineAccent": "Daily Research Reports",
     "whoItFor": "Built for people navigating a Parkinson's diagnosis and the caregivers who love them.",
     "subtitle": "Every morning, AI agents search clinical trials, medical journals, and research databases to bring you the latest breakthroughs, trials, and evidence-based tips.",
     "browseReports": "Browse All Reports",
@@ -107,7 +108,7 @@
     "apiAccessDesc": "This site provides a JSON API for AI agents and developers to consume research data programmatically.",
     "builtWith": "Built With",
     "disclaimer": "Disclaimer",
-    "disclaimerText": "The information provided by Parkinson Research Daily is for general informational purposes only. All information on the site is provided in good faith; however, we make no representation or warranty of any kind, express or implied, regarding the accuracy, adequacy, validity, reliability, availability, or completeness of any information on the site.",
+    "disclaimerText": "The information provided by AI Against Parkinson's is for general informational purposes only. All information on the site is provided in good faith; however, we make no representation or warranty of any kind, express or implied, regarding the accuracy, adequacy, validity, reliability, availability, or completeness of any information on the site.",
     "disclaimerText2": "Under no circumstance shall we have any liability to you for any loss or damage of any kind incurred as a result of the use of the site or reliance on any information provided on the site. Your use of the site and your reliance on any information on the site is solely at your own risk."
   },
   "categories": {
@@ -158,7 +159,7 @@
   },
   "confirmed": {
     "title": "You're confirmed!",
-    "description": "You'll receive your first Parkinson's Research Daily report tomorrow morning at 7:00 AM CDT. Expect it in your inbox.",
+    "description": "You'll receive your first AI Against Parkinson's report tomorrow morning at 7:00 AM CDT. Expect it in your inbox.",
     "viewReport": "View Latest Report",
     "backHome": "Back to Home",
     "noSpam": "No spam, ever. Unsubscribe anytime."

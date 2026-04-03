@@ -50,7 +50,7 @@ export default function Header({ dictionary, lang }: Props) {
             className="font-semibold text-sm hidden sm:block"
             style={{ color: 'var(--color-charcoal)' }}
           >
-            Parkinson Research
+            AI Against Parkinson's
           </span>
         </Link>
 

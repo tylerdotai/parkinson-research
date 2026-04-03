@@ -17,17 +17,17 @@ export async function POST(request: NextRequest) {
     const result = await subscribe(email.toLowerCase(), lang, body?.source || 'website')
 
     if (result.success && result.id) {
-      const confirmUrl = `https://parkinson-research.vercel.app/${lang}/api/confirm/${result.id}`
+      const confirmUrl = `https://aiagainstparkinson.com/${lang}/api/confirm/${result.id}`
 
       const resendApiKey = process.env.RESEND_API_KEY
       if (resendApiKey) {
         try {
           await getResend().emails.send({
-            from: 'Parkinson Research <research@clawplex.dev>',
+            from: 'AI Against Parkinson <research@clawplex.dev>',
             to: email,
             subject: lang === 'es'
-              ? 'Confirma tu suscripcion a Parkinson Research'
-              : 'Confirm your Parkinson Research subscription',
+              ? 'Confirma tu suscripcion a IA Contra el Parkinson'
+              : 'Confirm your AI Against Parkinson subscription',
             html: lang === 'es' ? buildSpanishConfirmEmail(confirmUrl) : buildEnglishConfirmEmail(confirmUrl),
             text: lang === 'es'
               ? `Confirma tu suscripcion:\n\n${confirmUrl}\n\nUna vez confirmado, recibiras informes diarios de investigacion.`
@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
 function buildEnglishConfirmEmail(confirmUrl: string): string {
   return `<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 480px; margin: 0 auto; padding: 32px 16px;">
   <div style="background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%); padding: 24px 28px; border-radius: 12px 12px 0 0;">
-    <h1 style="margin: 0; color: #ffffff; font-size: 20px; font-weight: 600;">Parkinson Research Daily</h1>
+    <h1 style="margin: 0; color: #ffffff; font-size: 20px; font-weight: 600;">AI Against Parkinson's</h1>
     <p style="margin: 8px 0 0; color: rgba(255,255,255,0.85); font-size: 14px;">Daily AI-powered research reports</p>
   </div>
   <div style="background: #ffffff; padding: 28px; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 12px 12px;">
@@ -81,7 +81,7 @@ function buildEnglishConfirmEmail(confirmUrl: string): string {
     </p>
   </div>
   <p style="margin: 16px 0 0; color: #9ca3af; font-size: 11px; text-align: center;">
-    You're receiving this because you signed up for Parkinson's Research Daily. No spam, ever.
+    You're receiving this because you signed up for AI Against Parkinson's. No spam, ever.
   </p>
 </div>`
 }
@@ -89,7 +89,7 @@ function buildEnglishConfirmEmail(confirmUrl: string): string {
 function buildSpanishConfirmEmail(confirmUrl: string): string {
   return `<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 480px; margin: 0 auto; padding: 32px 16px;">
   <div style="background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%); padding: 24px 28px; border-radius: 12px 12px 0 0;">
-    <h1 style="margin: 0; color: #ffffff; font-size: 20px; font-weight: 600;">Investigacion sobre Parkinson</h1>
+    <h1 style="margin: 0; color: #ffffff; font-size: 20px; font-weight: 600;">IA Contra el Parkinson</h1>
     <p style="margin: 8px 0 0; color: rgba(255,255,255,0.85); font-size: 14px;">Informes diarios generados por agentes de IA</p>
   </div>
   <div style="background: #ffffff; padding: 28px; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 12px 12px;">
@@ -105,7 +105,7 @@ function buildSpanishConfirmEmail(confirmUrl: string): string {
     </p>
   </div>
   <p style="margin: 16px 0 0; color: #9ca3af; font-size: 11px; text-align: center;">
-    Estas recibiendo esto porque te suscribiste a los informes diarios de Parkinson. Sin spam, nunca.
+    Estas recibiendo esto porque te suscribiste a IA Contra el Parkinson. Sin spam, nunca.
   </p>
 </div>`
 }

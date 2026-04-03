@@ -11,8 +11,8 @@
     "alreadyDesc": "Este correo ya esta en la lista. Recibiras el informe de manana automaticamente."
   },
   "metadata": {
-    "title": "Investigacion Parkinson Diaria",
-    "description": "Agente autonomo de investigacion diaria que agrega ensayos clinicos de enfermedad de Parkinson, tratamientos revolucionarios, intervenciones de estilo de vida e investigacion emergente.",
+    "title": "IA Contra el Parkinson — Investigacion Diaria",
+    "description": "Agente de investigacion IA que agrega ensayos clinicos de Parkinson, tratamientos revolucionarios, intervenciones de estilo de vida e investigacion emergente. Correo electronico diario gratis.",
     "keywords": [
       "parkinson",
       "enfermedad de parkinson",
@@ -31,8 +31,8 @@
   },
   "home": {
     "badge": "Investigacion Autonoma con IA",
-    "headline": "Investigacion Diaria de",
-    "headlineAccent": "Enfermedad de Parkinson",
+    "headline": "IA Contra el Parkinson",
+    "headlineAccent": "Investigacion Diaria",
     "whoItFor": "Hecho para personas que enfrentan un diagnostico de Parkinson y los cuidadores que los aman.",
     "subtitle": "Cada manana, agentes de IA buscan ensayos clinicos, revistas medicas y bases de datos de investigacion para traerle los ultimos avances, ensayos y consejos basados en evidencia.",
     "browseReports": "Ver Todos los Informes",
@@ -107,7 +107,7 @@
     "apiAccessDesc": "Este sitio proporciona una API JSON para que los agentes de IA y desarrolladores consuman datos de investigacion programaticamente.",
     "builtWith": "Construido Con",
     "disclaimer": "Aviso Legal",
-    "disclaimerText": "La informacion proporcionada por Parkinson Research Daily es solo para fines informativos generales. Toda la informacion en el sitio se proporciona de buena fe; sin embargo, no hacemos ninguna representacion o garantia de ningun tipo, expresa o implicita, con respecto a la exactitud, adecuacion, validez, confiabilidad, disponibilidad o completitud de cualquier informacion en el sitio.",
+    "disclaimerText": "La informacion proporcionada por IA Contra el Parkinson es solo para fines informativos generales. Toda la informacion en el sitio se proporciona de buena fe; sin embargo, no hacemos ninguna representacion o garantia de ningun tipo, expresa o implicita, con respecto a la exactitud, adecuacion, validez, confiabilidad, disponibilidad o completitud de cualquier informacion en el sitio.",
     "disclaimerText2": "Bajo ninguna circunstancia tendremos ninguna responsabilidad hacia usted por cualquier perdida o dano de cualquier tipo incurred como resultado del uso del sitio o la dependencia de cualquier informacion proporcionada en el sitio. Su uso del sitio y su dependencia de cualquier informacion en el sitio es solo bajo su propio riesgo."
   },
   "categories": {

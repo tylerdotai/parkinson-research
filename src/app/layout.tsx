@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Parkinson Research Daily',
+  title: 'AI Against Parkinson',
 }
 
 // Root layout - locale routing handled by proxy.ts
