@@ -1,201 +1,174 @@
-# Parkinson Research Daily
+# AI Against Parkinson's
 
-**Autonomous AI research agent delivering daily Parkinson's disease reports — in English and Spanish. Live at [aiagainstparkinson.com](https://aiagainstparkinson.com).**
+Daily AI-compiled research reports on Parkinson's disease — clinical trials, breakthrough treatments, lifestyle interventions, and emerging science. Free, bilingual (EN/ES), delivered to your inbox.
 
-Every morning at 7:00 AM CDT, AI agents search clinical trials, medical journals, and research databases to bring you the latest breakthroughs, recruiting trials, and evidence-based tips for Parkinson's disease — delivered straight to your inbox.
+**Live:** [parkinson-research.vercel.app](https://parkinson-research.vercel.app)
 
-## What's New
+---
 
-**New Domain** — Now live at [aiagainstparkinson.com](https://aiagainstparkinson.com)! Email delivery via Resend.
+## What It Does
 
-**Multilingual Support** — Full English and Spanish translations. Use the language switcher in the header to toggle between languages.
+Every morning, AI research agents search ClinicalTrials.gov, PubMed, and medical news sources to surface what's new in Parkinson's research. Reports are written in plain language, reviewed for accuracy, and delivered by email to subscribers. Reports are also published to the web in English and Spanish.
 
-## What We Track
+**Who it's for:** Patients, caregivers, and families navigating Parkinson's who want to stay current without wading through medical journals.
 
-### Clinical Trials
-Active recruiting trials, Phase 2/3 results, eligibility criteria — with plain-language explanations of what each trial means for patients and families.
-
-### Breakthrough Treatments
-FDA approvals, drug mechanisms, clinical evidence, and emerging therapeutic approaches — explained in terms of how they could help daily life.
-
-### Lifestyle Interventions
-Exercise protocols, dietary recommendations, sleep optimization, and stress management strategies — with specific, actionable advice.
-
-### Emerging Research
-Novel therapeutic targets, biomarker discoveries, diagnostic advances, and preprint findings — with context on what these breakthroughs could mean for the future of treatment.
-
-### Community & Support
-Local support groups, advocacy opportunities, caregiver resources, and outreach programs to help patients and families connect with the Parkinson's community.
-
-## How It Works
-
-```
-OpenClaw Cron (7:00 AM CDT)
-    |
-    v
-Parkinson Research Skill
-    |
-    v
-4 Parallel AI Subagents --> Aggregate Report
-    |
-    v
-Email to Subscribers
-    |
-    v
-Commit to GitHub + Vercel Deploy
-```
+---
 
 ## Tech Stack
 
 | Layer | Technology |
 |-------|------------|
-| Research Agent | OpenClaw + MiniMax M2.7 |
-| Scheduling | OpenClaw native cron |
-| Email Delivery | iCloud SMTP (curl) |
-| Frontend | Next.js 16, TypeScript, Tailwind CSS 4 |
+| Frontend | Next.js 15, TypeScript, Tailwind CSS 4 |
+| Email | Resend (transactional API) |
+| Database | Supabase (PostgreSQL) — subscribers + report reviews |
+| Research | MiniMax M2.7 via OpenClaw subagents |
+| Scheduling | OpenClaw native cron (7:00 AM CDT daily) |
 | Deployment | Vercel |
-| Data Storage | Markdown files (GitHub) |
-| i18n | Next.js App Router [lang] dynamic segment |
+| i18n | Next.js App Router `[lang]` route groups (EN + ES) |
 
-## Internationalization
-
-The site supports **English** and **Spanish** with automatic locale detection.
-
-- English: `/en/`
-- Spanish: `/es/`
-
-The middleware automatically detects browser language and redirects appropriately. Use the language switcher in the header to toggle languages.
-
-## API Endpoints
-
-All endpoints return JSON:
-
-```
-GET /[lang]/api/reports          # List all reports
-GET /[lang]/api/reports/[date]   # Get specific report (YYYY-MM-DD)
-GET /sitemap.xml                 # Sitemap for AI indexing
-GET /robots.txt                  # Allows GPTBot, CCBot, anthropic-ai
-```
-
-Example response:
-```json
-{
-  "count": 1,
-  "reports": [
-    {
-      "date": "2026-03-31",
-      "title": "Parkinson's Research Daily Report",
-      "preview": "...",
-      "url": "https://aiagainstparkinson.com/en/report/2026-03-31"
-    }
-  ],
-  "_meta": {
-    "source": "Parkinson Research Daily",
-    "generated": "2026-03-31T12:00:00Z",
-    "nextUpdate": "Daily at 7:00 AM CDT",
-    "language": "en"
-  }
-}
-```
+---
 
 ## Setup
 
 ### Prerequisites
+
 - Node.js 18+
-- OpenClaw CLI
-- iCloud SMTP access (or any SMTP provider)
+- npm or pnpm
+- Supabase project (free tier works)
+- Resend API key (free tier: 100 emails/day)
 
-### Email Configuration
+### Environment Variables
 
-Email delivery is handled by **Resend**. To configure:
+Create `.env.local` in the project root:
 
-1. Add your Resend API key to `.env.local`:
 ```bash
-RESEND_API_KEY=re_your_api_key
+# Supabase — found in Project Settings > API
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+
+# Resend — found at resend.com/api-keys
+RESEND_API_KEY=re_your_key
 ```
-2. Verify your sending domain in [Resend](https://resend.com/domains)
-3. Update the cron agent with your Resend credentials
 
-The cron agent constructs HTML emails directly and sends via the Resend API.
-
-### Running Locally
+### Install and Run
 
 ```bash
 npm install
 npm run dev
 ```
 
-Visit `http://localhost:3000` — the site will redirect to `/en/` based on your browser language.
+Visit `http://localhost:3000` — English homepage loads by default; use the language switcher in the header to toggle Spanish.
 
-### Running Tests
+### Database Setup
+
+Run the Supabase schema in your project SQL Editor:
 
 ```bash
-npm test
+# Subscribers table
+cat supabase_schema.sql
+
+# Reports + reviews tables
+cat supabase_schema_reports.sql
 ```
+
+### Build for Production
+
+```bash
+npm run build
+npm start
+```
+
+---
 
 ## Project Structure
 
 ```
 parkinson-research/
 ├── dictionaries/
-│   ├── en.json          # English translations
-│   └── es.json          # Spanish translations
+│   ├── en.json              # English strings
+│   └── es.json              # Spanish strings
 ├── public/
-│   └── reports/         # Daily report markdown files
+│   └── reports/
+│       ├── YYYY-MM-DD.md     # English daily reports
+│       └── es/
+│           └── YYYY-MM-DD.md # Spanish daily reports
 ├── src/
 │   ├── app/
-│   │   ├── [lang]/      # Locale-specific routes
+│   │   ├── [lang]/           # Locale routes (en/ + es/)
 │   │   │   ├── about/
-│   │   │   ├── api/reports/
+│   │   │   ├── api/
+│   │   │   │   ├── reports/  # GET reports list or by date
+│   │   │   │   ├── subscribe/
+│   │   │   │   └── unsubscribe/
+│   │   │   ├── privacy/
 │   │   │   ├── report/[date]/
-│   │   │   └── reports/
-│   │   ├── layout.tsx   # Root layout (redirects to /en)
-│   │   ├── sitemap.ts
-│   │   └── robots.ts
+│   │   │   ├── reports/
+│   │   │   ├── resources/
+│   │   │   └── terms/
+│   │   ├── api/              # Root API routes
+│   │   │   ├── reports/store # Cron: store generated report
+│   │   │   └── reports/review # Cron: AI review stored report
+│   │   ├── layout.tsx
+│   │   ├── robots.ts
+│   │   └── sitemap.ts
 │   ├── components/
-│   │   ├── Header.tsx   # Includes LanguageSwitcher
-│   │   └── Footer.tsx
-│   ├── lib/
-│   │   ├── dictionary.ts # i18n dictionary loader
-│   │   └── reports.ts   # Report file utilities
-│   └── middleware.ts     # Locale detection & redirect
-├── __tests__/
-│   ├── dictionary.test.ts
-│   └── reports.test.ts
-├── EMAIL_SETUP.md
-├── SPEC.md
+│   │   ├── Header.tsx
+│   │   ├── Footer.tsx
+│   │   ├── SubscribeForm.tsx
+│   │   └── report/           # Report rendering components
+│   └── lib/
+│       ├── dictionary.ts     # i18n loader
+│       ├── parseReport.ts    # Markdown → structured sections
+│       ├── reports.ts        # Report file utilities
+│       └── supabase.ts       # DB + subscriber operations
+├── supabase_schema.sql               # Subscribers table
+├── supabase_schema_reports.sql        # Reports + reviews tables
+├── EMAIL_SETUP.md            # Email delivery configuration guide
 └── package.json
 ```
 
-## Deployment
+---
 
-Reports are published automatically via Vercel:
+## How Reports Work
 
-- **Live site:** https://aiagainstparkinson.com
-- **English:** https://aiagainstparkinson.com/en
-- **Spanish:** https://aiagainstparkinson.com/es
-- **Reports archive:** https://aiagainstparkinson.com/en/reports
-
-## For Patients & Families
-
-This project exists to make cutting-edge Parkinson's research accessible to patients, caregivers, and families seeking actionable information.
-
-**Disclaimer:** This site provides informational content only. Always consult healthcare providers before making treatment decisions.
-
-## Contributing
-
-This is an open-source public benefit project. Contributions welcome:
-
-- Improve report readability and accessibility
-- Add new research categories or sources
-- Translate into other languages
-- Suggest additional community resources
-- Help families navigate the research
-
-## License
-
-MIT License — built with AI agents by Flume SaaS Factory
+1. **Cron fires** at 7:00 AM CDT via OpenClaw
+2. **4 research subagents** run in parallel (Clinical Trials, Breakthroughs, Lifestyle, Emerging Research)
+3. Each agent queries public medical sources and returns structured findings
+4. Results are assembled into a bilingual Markdown report
+5. Report is stored in **Supabase** (`reports` table)
+6. Report is AI-reviewed for medical accuracy via `/api/reports/review`
+7. Report is committed to `public/reports/` and pushed to GitHub
+8. Vercel auto-deploys the updated site
+9. Report is emailed to EN and ES subscriber lists via Resend
 
 ---
 
-*Built for everyone affected by Parkinson's. Not affiliated with any medical institution.*
+## API Endpoints
+
+```
+GET  /[lang]/api/reports           # List all reports (JSON)
+GET  /[lang]/api/reports/[date]    # Single report by date (YYYY-MM-DD)
+GET  /[lang]/api/reports?lang=es   # Spanish reports only
+GET  /sitemap.xml                   # Sitemap
+GET  /robots.txt                   # Allows AI crawlers
+```
+
+---
+
+## Contributing
+
+This is a public benefit project. Contributions welcome:
+
+- Improve plain-language writing in reports
+- Add new research categories or source databases
+- Expand language support (Spanish is first non-English)
+- Strengthen the AI review pipeline
+- Suggest credible sources the agents should search
+
+Open an issue or submit a PR.
+
+---
+
+## Disclaimer
+
+Content is for informational purposes only. It is not medical advice. Always consult a healthcare provider before making treatment decisions.
