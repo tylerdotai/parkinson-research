@@ -1,10 +1,12 @@
 # Parkinson Research Daily
 
-**Autonomous AI research agent delivering daily Parkinson's disease reports — now in English and Spanish.**
+**Autonomous AI research agent delivering daily Parkinson's disease reports — in English and Spanish. Live at [aiagainstparkinson.com](https://aiagainstparkinson.com).**
 
 Every morning at 7:00 AM CDT, AI agents search clinical trials, medical journals, and research databases to bring you the latest breakthroughs, recruiting trials, and evidence-based tips for Parkinson's disease — delivered straight to your inbox.
 
 ## What's New
+
+**New Domain** — Now live at [aiagainstparkinson.com](https://aiagainstparkinson.com)! Email delivery via Resend.
 
 **Multilingual Support** — Full English and Spanish translations. Use the language switcher in the header to toggle between languages.
 
@@ -71,6 +73,8 @@ All endpoints return JSON:
 ```
 GET /[lang]/api/reports          # List all reports
 GET /[lang]/api/reports/[date]   # Get specific report (YYYY-MM-DD)
+GET /sitemap.xml                 # Sitemap for AI indexing
+GET /robots.txt                  # Allows GPTBot, CCBot, anthropic-ai
 ```
 
 Example response:
@@ -82,7 +86,7 @@ Example response:
       "date": "2026-03-31",
       "title": "Parkinson's Research Daily Report",
       "preview": "...",
-      "url": "https://parkinson-research.vercel.app/en/report/2026-03-31"
+      "url": "https://aiagainstparkinson.com/en/report/2026-03-31"
     }
   ],
   "_meta": {
@@ -103,16 +107,16 @@ Example response:
 
 ### Email Configuration
 
-The agent uses iCloud SMTP by default. To configure:
+Email delivery is handled by **Resend**. To configure:
 
-1. Generate an App-Specific Password from [appleid.apple.com](https://appleid.apple.com)
-2. Save to keychain:
+1. Add your Resend API key to `.env.local`:
 ```bash
-security add-generic-password -s "icloud-parkinson-agent" -a "your@icloud.com" -w "your-app-password"
+RESEND_API_KEY=re_your_api_key
 ```
-3. Update the cron message with your credentials
+2. Verify your sending domain in [Resend](https://resend.com/domains)
+3. Update the cron agent with your Resend credentials
 
-See [EMAIL_SETUP.md](EMAIL_SETUP.md) for detailed setup instructions.
+The cron agent constructs HTML emails directly and sends via the Resend API.
 
 ### Running Locally
 
@@ -167,10 +171,10 @@ parkinson-research/
 
 Reports are published automatically via Vercel:
 
-- **Live site:** https://parkinson-research.vercel.app
-- **English:** https://parkinson-research.vercel.app/en
-- **Spanish:** https://parkinson-research.vercel.app/es
-- **Reports archive:** https://parkinson-research.vercel.app/en/reports
+- **Live site:** https://aiagainstparkinson.com
+- **English:** https://aiagainstparkinson.com/en
+- **Spanish:** https://aiagainstparkinson.com/es
+- **Reports archive:** https://aiagainstparkinson.com/en/reports
 
 ## For Patients & Families
 
