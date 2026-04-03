@@ -40,14 +40,19 @@ export function parseReportSections(content: string): ReportSection[] {
       let sourceUrl = ''
       let snippet = currentBody.trim()
 
-      // Look for "From: domain.com" or "Source: domain.com" or "*From: domain.com*" (markdown italic)
+      // Look for "From: domain.com (https://...)" or "*From: domain.com (https://...)*" (markdown italic)
       const sourceLine = currentBody.match(/(?:\*From:|From|Source):\s*(.+?)(?:\n|$)/i)
       if (sourceLine) {
-        source = sourceLine[1].replace(/\*+/g, '').trim()
-        const urlMatch = currentBody.match(/https?:\/\/[^\s]+/)
-        if (urlMatch) sourceUrl = urlMatch[0]
-        source = cleanDomain(sourceUrl || source)
-        snippet = snippet.replace(/(?:\*From:|From|Source):\s*https?:\/\/[^\s]+\s*/gi, '').replace(/(?:\*From:|From|Source):\s*[^\n]+/gi, '').trim()
+        const raw = sourceLine[1].replace(/\*+/g, '').trim()
+        // Extract URL from parenthetical: "domain.com (https://...)"
+        const urlMatch = raw.match(/\(https?:\/\/[^\)]+\)/)
+        if (urlMatch) {
+          sourceUrl = urlMatch[0].replace(/[()]/g, '')
+          source = cleanDomain(sourceUrl)
+        } else {
+          source = cleanDomain(raw)
+        }
+        snippet = snippet.replace(/(?:\*From:|From|Source):\s*\(?https?:\/\/[^\)]+\)?\s*/gi, '').replace(/(?:\*From:|From|Source):\s*[^\n]+/gi, '').trim()
       }
 
       // Clean markdown from snippet
