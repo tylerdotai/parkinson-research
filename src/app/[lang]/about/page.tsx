@@ -222,57 +222,35 @@ export default async function AboutPage({ params }: Props) {
 
         {/* The Founder */}
         <section
-          className="card overflow-hidden"
+          className="card"
           style={{
-            padding: '0',
+            padding: '2rem',
             background: 'linear-gradient(135deg, #1b1938 0%, #2d2252 100%)',
             border: '1px solid rgba(203, 183, 251, 0.15)'
           }}
         >
-          <div className="grid md:grid-cols-2" style={{ minHeight: '320px' }}>
-            {/* Image */}
-            <div
-              className="relative overflow-hidden"
-              style={{ minHeight: '280px' }}
+          <h2
+            className="text-base font-semibold mb-5 flex items-center gap-3"
+            style={{ color: 'rgba(255,255,255,0.95)' }}
+          >
+            <span
+              className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+              style={{ background: 'rgba(203, 183, 251, 0.12)' }}
             >
-              <img
-                src="/images/founder-hockey.png"
-                alt="Tyler and his father at Fort Worth Panthers hockey"
-                className="absolute inset-0 w-full h-full object-cover"
-                style={{ objectPosition: 'center 20%' }}
-              />
-              <div
-                className="absolute inset-0"
-                style={{ background: 'linear-gradient(to right, rgba(27,25,56,0) 60%, rgba(27,25,56,0.6) 100%)' }}
-              />
-            </div>
-
-            {/* Text */}
-            <div className="p-8 flex flex-col justify-center">
-              <h2
-                className="text-base font-semibold mb-5 flex items-center gap-3"
-                style={{ color: 'rgba(255,255,255,0.95)' }}
-              >
-                <span
-                  className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
-                  style={{ background: 'rgba(203, 183, 251, 0.12)' }}
-                >
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--color-lavender)' }}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                  </svg>
-                </span>
-                {t.founderLabel}
-              </h2>
-              {t.founderText.split('\n\n').map((para, i) => (
-                <p key={i} className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.65)' }}>
-                  {para}
-                </p>
-              ))}
-              <p className="text-xs mt-5" style={{ color: 'rgba(255,255,255,0.40)' }}>
-                {t.founderSig}
-              </p>
-            </div>
-          </div>
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--color-lavender)' }}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+              </svg>
+            </span>
+            {t.founderLabel}
+          </h2>
+          {t.founderText.split('\n\n').map((para, i) => (
+            <p key={i} className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.65)' }}>
+              {para}
+            </p>
+          ))}
+          <p className="text-xs mt-5" style={{ color: 'rgba(255,255,255,0.40)' }}>
+            {t.founderSig}
+          </p>
         </section>
       </div>
     </div>
