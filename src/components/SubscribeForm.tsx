@@ -99,7 +99,7 @@ export default function SubscribeForm({ lang = 'en', dictionary }: Props) {
 
   return (
     <div className="card" style={{ padding: '2rem 2.25rem' }}>
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-start md:justify-between gap-8">
         <div className="flex-1 min-w-0">
           <h3
             className="mb-2"
@@ -111,19 +111,20 @@ export default function SubscribeForm({ lang = 'en', dictionary }: Props) {
             {t.subtitle}
           </p>
         </div>
-        <form onSubmit={handleSubmit} className="flex w-full md:w-auto gap-3 flex-shrink-0">
+        <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
           <input
             type="email"
             value={email}
             onChange={e => setEmail(e.target.value)}
             placeholder={t.placeholder}
             required
-            style={{ width: '220px', fontSize: '0.9375rem', padding: '0.75rem 1.125rem' }}
+            className="w-full sm:w-56"
+            style={{ fontSize: '0.9375rem', padding: '0.75rem 1.125rem' }}
           />
           <button
             type="submit"
             disabled={status === 'loading'}
-            className="btn-primary whitespace-nowrap disabled:opacity-50 flex-shrink-0"
+            className="btn-primary whitespace-nowrap disabled:opacity-50 flex-shrink-0 w-full sm:w-auto"
             style={{ fontSize: '0.9375rem', padding: '0.75rem 1.75rem' }}
           >
             {status === 'loading' ? (
