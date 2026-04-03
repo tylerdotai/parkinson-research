@@ -61,26 +61,6 @@ export default async function HomePage({ params }: Props) {
 
         {/* Content — centered, constrained */}
         <div className="relative z-10 max-w-3xl mx-auto px-5 sm:px-6 text-center">
-          <ScrollReveal>
-            <div
-              className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full mb-10"
-              style={{
-                background: 'rgba(203, 183, 251, 0.08)',
-                border: '1px solid rgba(203, 183, 251, 0.18)',
-              }}
-            >
-              <span className="data-pulse">
-                <span className="data-pulse-dot" />
-              </span>
-              <span
-                className="text-[11px] font-semibold uppercase tracking-widest"
-                style={{ color: 'var(--color-lavender)' }}
-              >
-                {t.badge}
-              </span>
-            </div>
-          </ScrollReveal>
-
           <ScrollReveal delay={80}>
             <h1
               className="mb-8"
