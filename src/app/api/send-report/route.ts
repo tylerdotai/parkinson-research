@@ -6,7 +6,6 @@ marked.setOptions({ gfm: true, breaks: true })
 
 const HTML_TEMPLATE = (
   title: string,
-  date: string,
   body: string,
   siteUrl: string,
   unsubscribeUrl: string
@@ -73,7 +72,7 @@ export async function POST(req: NextRequest) {
     const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
     const subsRes = await fetch(
-      `${supabaseUrl}/rest/v1/subscribers?confirmed_at=not.is.null&unsubscribed_at=is.null&select=email,language`,
+      `${supabaseUrl}/rest/v1/subscribers?confirmed_at=not.is.null&unsubscribed_at=is.null&select=email,id,language`,
       {
         headers: {
           'apikey': supabaseKey,
@@ -97,7 +96,7 @@ export async function POST(req: NextRequest) {
     }
 
     const fromAddress = 'Parkinson Research <research@clawplex.dev>'
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://parkinson-research.vercel.app'
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://aiagainstparkinson.com'
 
     const subjectPrefix = lang === 'es' ? 'Investigación sobre Parkinson' : "Parkinson's Research"
     const pageTitle = lang === 'es' ? 'Investigación sobre Parkinson' : "Parkinson's Research"
@@ -115,8 +114,8 @@ export async function POST(req: NextRequest) {
       if (lang === 'en' && sub.language === 'es') continue
 
       const subject = `${subjectPrefix} — ${formattedDate}`
-      const unsubUrl = `${siteUrl}/api/unsubscribe?email=${encodeURIComponent(sub.email)}`
-      const htmlContent = HTML_TEMPLATE(pageTitle, formattedDate, bodyHtml, siteUrl, unsubUrl)
+      const unsubUrl = `${siteUrl}/api/unsubscribe/${sub.id}`
+      const htmlContent = HTML_TEMPLATE(pageTitle, bodyHtml, siteUrl, unsubUrl)
 
       const emailRes = await fetch('https://api.resend.com/emails', {
         method: 'POST',
