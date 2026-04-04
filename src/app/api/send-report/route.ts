@@ -4,7 +4,13 @@ import { marked } from 'marked'
 // Configure marked for safe HTML output
 marked.setOptions({ gfm: true, breaks: true })
 
-const HTML_TEMPLATE = (title: string, date: string, body: string, siteUrl: string, unsubscribeUrl: string) => `<!DOCTYPE html>
+const HTML_TEMPLATE = (
+  title: string,
+  date: string,
+  body: string,
+  siteUrl: string,
+  unsubscribeUrl: string
+) => `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -55,9 +61,9 @@ export async function POST(req: NextRequest) {
       ? path.join(reportsDir, 'es', `${date}.md`)
       : path.join(reportsDir, `${date}.md`)
 
-    let content: string
+    let rawContent: string
     try {
-      content = fs.readFileSync(filePath, 'utf8')
+      rawContent = fs.readFileSync(filePath, 'utf8')
     } catch {
       return Response.json({ error: `Report not found: ${date} (${lang})` }, { status: 404 })
     }
@@ -67,7 +73,7 @@ export async function POST(req: NextRequest) {
     const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
     const subsRes = await fetch(
-      `${supabaseUrl}/rest/v1/subscribers?confirmed_at=not.is.null&unsubscribed_at=is.null&select=email,language`,
+      `${supabaseUrl}/rest/v1/subscribers?confirmed_at=not.is.null&unsubscribed_at=is.null&select=email,language,token`,
       {
         headers: {
           'apikey': supabaseKey,
@@ -88,14 +94,16 @@ export async function POST(req: NextRequest) {
       return Response.json({ error: 'RESEND_API_KEY not configured' }, { status: 500 })
     }
 
-    const fromAddress = lang === 'es'
-      ? 'Investigación Parkinson <research@clawplex.dev>'
-      : 'Parkinson Research <research@clawplex.dev>'
-
+    const fromAddress = 'Parkinson Research <research@clawplex.dev>'
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://parkinson-research.vercel.app'
 
     const subjectPrefix = lang === 'es' ? 'Investigación sobre Parkinson' : "Parkinson's Research"
-    const formattedDate = new Date(date).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })
+    const pageTitle = lang === 'es' ? 'Investigación sobre Parkinson' : "Parkinson's Research"
+    const formattedDate = new Date(date).toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+
+    // Strip frontmatter and convert markdown to HTML (done once, reused per subscriber)
+    const contentWithoutFrontmatter = rawContent.replace(/^---[\s\S]*?---\n*/m, '').trim()
+    const bodyHtml = await marked.parse(contentWithoutFrontmatter)
 
     const sent: string[] = []
     const failed: string[] = []
@@ -108,7 +116,7 @@ export async function POST(req: NextRequest) {
       const unsubUrl = sub.token
         ? `${siteUrl}/api/unsubscribe?token=${sub.token}`
         : `${siteUrl}/api/unsubscribe?email=${encodeURIComponent(sub.email)}`
-      const subscriberHtmlContent = HTML_TEMPLATE(pageTitle, formattedDate, bodyHtml, siteUrl, unsubUrl)
+      const htmlContent = HTML_TEMPLATE(pageTitle, formattedDate, bodyHtml, siteUrl, unsubUrl)
 
       const emailRes = await fetch('https://api.resend.com/emails', {
         method: 'POST',
@@ -120,14 +128,15 @@ export async function POST(req: NextRequest) {
           from: fromAddress,
           to: [sub.email],
           subject,
-          text: content,
+          html: htmlContent,
         }),
       })
 
       if (emailRes.ok) {
         sent.push(sub.email)
       } else {
-        failed.push(`${sub.email}: ${emailRes.status}`)
+        const errBody = await emailRes.text()
+        failed.push(`${sub.email}: ${emailRes.status} ${errBody}`)
       }
     }
 
