@@ -1,4 +1,40 @@
 import { NextRequest } from 'next/server'
+import { marked } from 'marked'
+
+// Configure marked for safe HTML output
+marked.setOptions({ gfm: true, breaks: true })
+
+const HTML_TEMPLATE = (title: string, date: string, body: string, siteUrl: string, unsubscribeUrl: string) => `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${title}</title>
+  <style>
+    body { font-family: Georgia, serif; max-width: 680px; margin: 0 auto; padding: 2rem; background: #faf9f7; color: #292827; line-height: 1.7; }
+    h1 { font-size: 2rem; font-weight: 400; color: #1b1938; margin-bottom: 0.25rem; }
+    .subtitle { color: #6b6560; font-size: 0.9rem; margin-bottom: 2rem; }
+    h2 { font-size: 1.35rem; color: #1b1938; margin-top: 2.5rem; border-bottom: 1px solid #d4cfc9; padding-bottom: 0.4rem; margin-bottom: 1rem; font-weight: 400; }
+    h3 { font-size: 1.05rem; color: #1b1938; margin-top: 1.5rem; margin-bottom: 0.5rem; font-weight: 400; }
+    p { margin: 0.75rem 0; }
+    a { color: #714cb6; }
+    blockquote { border-left: 3px solid #714cb6; margin: 1rem 0; padding: 0.25rem 1rem; color: #4a4541; font-style: italic; }
+    hr { border: none; border-top: 1px solid #d4cfc9; margin: 2rem 0; }
+    .footer { font-size: 0.8rem; color: #8a847d; margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #d4cfc9; }
+    @media only screen and (max-width: 600px) {
+      body { padding: 1rem; }
+      h1 { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+${body}
+<div class="footer">
+  <strong>Disclaimer:</strong> This content is for informational purposes only and is not medical advice. Always consult your healthcare provider before making treatment decisions.<br>
+  <a href="${siteUrl}">Visit AI Against Parkinson's</a> | <a href="${unsubscribeUrl}">Unsubscribe</a>
+</div>
+</body>
+</html>`
 
 export async function POST(req: NextRequest) {
   try {
@@ -56,6 +92,8 @@ export async function POST(req: NextRequest) {
       ? 'Investigación Parkinson <research@clawplex.dev>'
       : 'Parkinson Research <research@clawplex.dev>'
 
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://parkinson-research.vercel.app'
+
     const subjectPrefix = lang === 'es' ? 'Investigación sobre Parkinson' : "Parkinson's Research"
     const formattedDate = new Date(date).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })
 
@@ -67,6 +105,10 @@ export async function POST(req: NextRequest) {
       if (lang === 'en' && sub.language === 'es') continue
 
       const subject = `${subjectPrefix} — ${formattedDate}`
+      const unsubUrl = sub.token
+        ? `${siteUrl}/api/unsubscribe?token=${sub.token}`
+        : `${siteUrl}/api/unsubscribe?email=${encodeURIComponent(sub.email)}`
+      const subscriberHtmlContent = HTML_TEMPLATE(pageTitle, formattedDate, bodyHtml, siteUrl, unsubUrl)
 
       const emailRes = await fetch('https://api.resend.com/emails', {
         method: 'POST',
