@@ -83,7 +83,9 @@ export async function POST(req: NextRequest) {
     )
 
     if (!subsRes.ok) {
-      return Response.json({ error: 'Failed to fetch subscribers' }, { status: 500 })
+      const errText = await subsRes.text()
+      console.error('[send-report] Supabase fetch failed:', subsRes.status, errText)
+      return Response.json({ error: 'Failed to fetch subscribers', detail: errText }, { status: 500 })
     }
 
     const subscribers = await subsRes.json()
