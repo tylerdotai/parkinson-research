@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
     const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
     const subsRes = await fetch(
-      `${supabaseUrl}/rest/v1/subscribers?confirmed_at=not.is.null&unsubscribed_at=is.null&select=email,language,token`,
+      `${supabaseUrl}/rest/v1/subscribers?confirmed_at=not.is.null&unsubscribed_at=is.null&select=email,language`,
       {
         headers: {
           'apikey': supabaseKey,
@@ -113,9 +113,7 @@ export async function POST(req: NextRequest) {
       if (lang === 'en' && sub.language === 'es') continue
 
       const subject = `${subjectPrefix} — ${formattedDate}`
-      const unsubUrl = sub.token
-        ? `${siteUrl}/api/unsubscribe?token=${sub.token}`
-        : `${siteUrl}/api/unsubscribe?email=${encodeURIComponent(sub.email)}`
+      const unsubUrl = `${siteUrl}/api/unsubscribe?email=${encodeURIComponent(sub.email)}`
       const htmlContent = HTML_TEMPLATE(pageTitle, formattedDate, bodyHtml, siteUrl, unsubUrl)
 
       const emailRes = await fetch('https://api.resend.com/emails', {
