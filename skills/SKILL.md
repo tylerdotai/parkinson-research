@@ -237,3 +237,28 @@ If the pipeline fails after 2 retries:
 - Paywalled journals without accessible abstracts
 - Supplement or "natural cure" sites
 - Single-patient case studies
+
+---
+
+## Architecture (IMPORTANT — Read First)
+
+The pipeline runs in TWO places:
+
+1. **Hoss Heartbeat (Primary Executor)** — Runs every 30 min during active hours (08:00–22:00 CDT) from Hoss's main session. Has full tool access (web_search, exec, git). Checks if today's report exists. If not, runs the full pipeline directly. Observable and debuggable.
+
+2. **OpenClaw Cron (Backup Trigger)** — Fires at 7:00 AM CDT. Runs in `isolated` mode — cannot spawn sub-agents. May produce output, may not. Do NOT rely on it for the heavy lifting.
+
+**Flow:**
+- Cron fires at 7 AM → isolated agent tries → might work, might not
+- Heartbeat at ~7:30 AM → checks if report exists → if missing, runs pipeline directly in main session
+- Flag file `/tmp/parkinson-ran-YYYY-MM-DD` prevents duplicate runs
+
+**Why this architecture?**
+- Isolated sessions can't receive sub-agent results (fire-and-forget)
+- Main session has full tool access and is observable
+- Heartbeat is the reliable executor, cron is a potential head start
+
+**If the pipeline fails:**
+1. Check if flag file exists: `ls /tmp/parkinson-ran-*.md`
+2. Check git log for today's commit: `cd ~/parkinson-research && git log --oneline --since="7:00" | grep daily`
+3. Run manually if needed: spawn a research sub-agent and assemble the report
