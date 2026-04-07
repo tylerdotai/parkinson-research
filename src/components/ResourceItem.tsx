@@ -75,6 +75,7 @@ export default function ResourceItem({ name, phone, description, href, external 
         target="_blank"
         rel="noopener noreferrer"
         className="card-lift block py-4"
+        aria-label={`${name}${phone ? `, ${phone}` : ''}`}
         style={{ borderBottom: '1px solid var(--color-parchment)', paddingLeft: '0', paddingRight: '0', borderRadius: '0', background: 'transparent', boxShadow: 'none' }}
       >
         <div style={{ padding: '0 0.25rem' }}>
@@ -88,6 +89,7 @@ export default function ResourceItem({ name, phone, description, href, external 
     <Link
       href={href}
       className="card-lift block py-4"
+      aria-label={`${name}${phone ? `, ${phone}` : ''}`}
       style={{ borderBottom: '1px solid var(--color-parchment)', paddingLeft: '0', paddingRight: '0', borderRadius: '0', background: 'transparent', boxShadow: 'none' }}
     >
       <div style={{ padding: '0 0.25rem' }}>
