@@ -50,19 +50,19 @@ export default function Header({ dictionary, lang }: Props) {
         <div className="hidden md:flex items-center gap-1">
           <Link
             href={`/${lang}/reports`}
-            className={`nav-link nav-link-light ${pathname === `/${lang}/reports` ? 'active' : ''}`}
+            className={`nav-link nav-link-light py-3 ${pathname === `/${lang}/reports` ? 'active' : ''}`}
           >
             {dictionary.nav.reports}
           </Link>
           <Link
             href={`/${lang}/resources`}
-            className={`nav-link nav-link-light ${pathname === `/${lang}/resources` ? 'active' : ''}`}
+            className={`nav-link nav-link-light py-3 ${pathname === `/${lang}/resources` ? 'active' : ''}`}
           >
             {dictionary.nav.resources}
           </Link>
           <Link
             href={`/${lang}/about`}
-            className={`nav-link nav-link-light ${pathname === `/${lang}/about` ? 'active' : ''}`}
+            className={`nav-link nav-link-light py-3 ${pathname === `/${lang}/about` ? 'active' : ''}`}
           >
             {dictionary.nav.about}
           </Link>
@@ -101,7 +101,7 @@ export default function Header({ dictionary, lang }: Props) {
           {/* Mobile menu button */}
           <button
             onClick={toggleMenu}
-            className="md:hidden p-2 rounded-lg transition-colors"
+            className="md:hidden p-2.5 rounded-lg transition-colors"
             style={{ color: 'var(--color-text-secondary)' }}
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={menuOpen}
@@ -125,6 +125,17 @@ export default function Header({ dictionary, lang }: Props) {
           className="md:hidden border-t bg-white"
           style={{ borderColor: 'var(--color-parchment)' }}
         >
+          <div className="flex items-center justify-end px-4 py-2">
+            <button
+              onClick={toggleMenu}
+              className="p-2 rounded-lg text-[var(--color-text-secondary)]"
+              aria-label="Close menu"
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
           <div className="px-4 py-3 space-y-1">
             <Link
               href={`/${lang}/reports`}

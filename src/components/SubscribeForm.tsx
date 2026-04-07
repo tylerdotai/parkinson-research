@@ -114,8 +114,12 @@ export default function SubscribeForm({ lang = 'en', dictionary }: Props) {
           </p>
         </div>
         <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+          <label htmlFor="email-input" className="sr-only">
+            {t.placeholder}
+          </label>
           <input
             type="email"
+            id="email-input"
             value={email}
             onChange={e => setEmail(e.target.value)}
             placeholder={t.placeholder}
@@ -131,7 +135,7 @@ export default function SubscribeForm({ lang = 'en', dictionary }: Props) {
           >
             {status === 'loading' ? (
               <span className="flex items-center gap-2">
-                <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 animate-spin" aria-label="Loading" fill="none" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                 </svg>

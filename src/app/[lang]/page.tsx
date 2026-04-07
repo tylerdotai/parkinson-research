@@ -33,7 +33,7 @@ export default async function HomePage({ params }: Props) {
       {/* ── Hero — full-bleed deep purple ─────────────────────────────── */}
       <section
         className="hero-gradient relative overflow-hidden"
-        style={{ paddingTop: '7rem', paddingBottom: '7rem' }}
+        style={{ paddingTop: '5rem', paddingBottom: '5rem' }}
       >
         {/* Restraint orbs */}
         <div
