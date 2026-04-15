@@ -1,5 +1,6 @@
 import { NextRequest } from 'next/server'
 import { getReport, storeReportReview, updateReportReviewStatus, getReportReviews } from '@/lib/supabase'
+import { Logger } from '@/lib/logger'
 
 const REVIEW_PROMPT = `You are a medical review agent evaluating a Parkinson's disease research report.
 The report content is provided below.
@@ -109,7 +110,7 @@ export async function POST(req: NextRequest) {
       }
     })
   } catch (err) {
-    console.error('[review-report]', err)
+    Logger.error('review-report', 'Review failed', err)
     return Response.json({ error: 'Internal server error' }, { status: 500 })
   }
 }

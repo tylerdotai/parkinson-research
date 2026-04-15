@@ -10,10 +10,11 @@ type Props = {
   params: Promise<{ lang: string }>
 }
 
-const validLocales = ['en', 'es'] as const
+type Locale = 'en' | 'es';
+const VALID_LOCALES: Locale[] = ['en', 'es'];
 
 export async function generateStaticParams() {
-  return validLocales.map((lang) => ({ lang }))
+  return VALID_LOCALES.map((lang) => ({ lang }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -68,7 +69,7 @@ export default async function LangLayout({ children, params }: Props) {
   const { lang } = await params
   
   // Validate locale
-  if (!validLocales.includes(lang as any)) {
+  if (!VALID_LOCALES.includes(lang as Locale)) {
     notFound()
   }
   
