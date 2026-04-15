@@ -17,7 +17,7 @@ jobs:
           node-version: '22'
           cache: 'npm'
       - run: npm ci
-      - run: eslint .
+      - run: npx eslint . --max-warnings 999
       - run: npm run typecheck
       - run: jest --passWithNoTests
       - run: npm run build
