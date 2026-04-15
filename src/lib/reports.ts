@@ -171,12 +171,6 @@ export async function getReportSections(date: string, lang = 'en'): Promise<Repo
   return parseReportSections(report.content)
 }
 
-export async function getLatestReport(lang = 'en'): Promise<Report | null> {
-  const dates = await getAllReportDates(lang)
-  if (dates.length === 0) return null
-  return getReport(dates[0], lang)
-}
-
 export interface ReportSummary {
   date: string
   title: string

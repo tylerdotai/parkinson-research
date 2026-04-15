@@ -84,25 +84,6 @@ export async function unsubscribe(id: string): Promise<{ success: boolean; error
   return { success: false, error: errorText }
 }
 
-export async function getActiveSubscribers(language?: 'en' | 'es'): Promise<Subscriber[]> {
-  let query = `${SUPABASE_URL}/rest/v1/subscribers?confirmed_at=not.is.null&unsubscribed_at=is.null`
-  if (language) {
-    query += `&language=eq.${language}`
-  }
-  query += '&select=id,email,language'
-
-  const res = await fetch(query, {
-    headers: {
-      'apikey': SUPABASE_ANON_KEY,
-      'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-    },
-  })
-
-  if (!res.ok) return []
-  const data = await res.json()
-  return data
-}
-
 // ─── Reports ──────────────────────────────────────────────────────────────────
 
 export interface Report {
