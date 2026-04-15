@@ -28,7 +28,7 @@ function stripEmojis(text: string): string {
 
 function simpleMarkdownToHtml(md: string): string {
   // Strip emojis for web display
-  let html = stripEmojis(md)
+  const html = stripEmojis(md)
   
   // Extract sections and build structured HTML
   const lines = html.split('\n')
@@ -230,7 +230,7 @@ export async function getLatestReportSummary(lang = 'en'): Promise<ReportSummary
 
 function extractSummary(text: string): string {
   // Remove markdown formatting
-  let cleaned = text
+  const cleaned = text
     .replace(/\*\*(.*?)\*\*/g, '$1')
     .replace(/\*(.*?)\*/g, '$1')
     .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
