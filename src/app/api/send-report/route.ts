@@ -1,5 +1,6 @@
 import { NextRequest } from 'next/server'
 import { marked } from 'marked'
+import { Logger } from '@/lib/logger'
 
 // Configure marked for safe HTML output
 marked.setOptions({ gfm: true, breaks: true })
@@ -83,7 +84,7 @@ export async function POST(req: NextRequest) {
 
     if (!subsRes.ok) {
       const errText = await subsRes.text()
-      console.error('[send-report] Supabase fetch failed:', subsRes.status, errText)
+      Logger.error('send-report', 'Supabase fetch failed', { status: subsRes.status, errText })
       return Response.json({ error: 'Failed to fetch subscribers', detail: errText }, { status: 500 })
     }
 
@@ -146,7 +147,7 @@ export async function POST(req: NextRequest) {
       total: subscribers.length,
     })
   } catch (err) {
-    console.error('[send-report]', err)
+    Logger.error('send-report', 'Request failed', err)
     return Response.json({ error: 'Internal error' }, { status: 500 })
   }
 }

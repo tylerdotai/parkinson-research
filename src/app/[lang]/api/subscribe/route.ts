@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { subscribe } from '@/lib/supabase'
 import { Resend } from 'resend'
+import { Logger } from '@/lib/logger'
 
 const getResend = () => new Resend(process.env.RESEND_API_KEY)
 
@@ -34,7 +35,7 @@ export async function POST(request: NextRequest) {
               : `Confirm your subscription:\n\n${confirmUrl}\n\nOnce confirmed, you'll receive daily research reports.`,
           })
         } catch (emailErr) {
-          console.error('[subscribe] Failed to send confirmation email:', emailErr)
+          Logger.error('subscribe', 'Failed to send confirmation email', emailErr)
         }
       }
 
@@ -57,7 +58,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ error: result.error || 'Subscription failed' }, { status: 500 })
   } catch (err) {
-    console.error('[subscribe]', err)
+    Logger.error('subscribe', 'Request failed', err)
     return NextResponse.json({ error: 'Server error' }, { status: 500 })
   }
 }

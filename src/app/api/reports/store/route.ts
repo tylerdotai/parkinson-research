@@ -1,5 +1,6 @@
 import { NextRequest } from 'next/server'
 import { storeReport } from '@/lib/supabase'
+import { Logger } from '@/lib/logger'
 
 // This endpoint is called by the cron script on Hoss to store generated reports.
 // The cron script also stores directly via Supabase REST as a fallback.
@@ -26,7 +27,7 @@ export async function POST(req: NextRequest) {
 
     return Response.json({ success: true, id: result.id })
   } catch (err) {
-    console.error('[store-report]', err)
+    Logger.error('store-report', 'Failed to store report', err)
     return Response.json({ error: 'Internal server error' }, { status: 500 })
   }
 }

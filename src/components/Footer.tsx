@@ -21,12 +21,12 @@ export default function Footer({ dictionary, lang }: Props) {
             <div className="flex items-center gap-2.5 mb-4">
               <img
                 src="/images/logo-cropped.png"
-                alt="AI Against Parkinson's"
+                alt="AI Against Parkinson&apos;s"
                 className="h-9 w-auto rounded-lg"
                 style={{ height: '2.25rem', width: 'auto' }}
               />
               <span className="font-semibold text-sm" style={{ color: 'var(--color-charcoal)' }}>
-                AI Against Parkinson's
+                AI Against Parkinson&apos;s
               </span>
             </div>
             <p className="text-sm leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>
@@ -122,7 +122,7 @@ export default function Footer({ dictionary, lang }: Props) {
           style={{ borderColor: 'var(--color-parchment)' }}
         >
           <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
-            © {new Date().getFullYear()} AI Against Parkinson's. Free forever.
+            © {new Date().getFullYear()} AI Against Parkinson&apos;s. Free forever.
           </p>
         </div>
       </div>

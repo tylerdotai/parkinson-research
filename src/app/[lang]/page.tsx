@@ -30,445 +30,436 @@ export default async function HomePage({ params }: Props) {
 
   return (
     <div>
-      {/* ── Hero — full-bleed deep purple ─────────────────────────────── */}
+      {/* ── Hero — warm editorial split layout ─────────────────────────── */}
       <section
         className="hero-gradient relative overflow-hidden"
-        style={{ paddingTop: '5rem', paddingBottom: '5rem' }}
+        style={{ paddingTop: '4rem', paddingBottom: '4rem' }}
       >
-        {/* Restraint orbs */}
-        <div
-          className="gradient-orb"
-          style={{
-            width: '500px',
-            height: '500px',
-            background: 'radial-gradient(circle, rgba(203, 183, 251, 0.25) 0%, transparent 70%)',
-            top: '-200px',
-            left: '-150px',
-            animation: 'float-slow 22s ease-in-out infinite',
-          }}
-        />
-        <div
-          className="gradient-orb"
-          style={{
-            width: '350px',
-            height: '350px',
-            background: 'radial-gradient(circle, rgba(113, 76, 182, 0.25) 0%, transparent 70%)',
-            bottom: '-100px',
-            right: '0',
-            animation: 'float-slow 16s ease-in-out infinite reverse',
-          }}
-        />
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
-        {/* Content — centered, constrained */}
-        <div className="relative z-10 max-w-3xl mx-auto px-5 sm:px-6 text-center">
-          <ScrollReveal delay={80}>
-            <h1
-              className="mb-8"
-              style={{
-                fontFamily: 'Instrument Serif, serif',
-                fontSize: 'clamp(3rem, 8vw, 5.5rem)',
-                lineHeight: 1.0,
-                fontWeight: 400,
-                letterSpacing: '-0.035em',
-                color: 'rgba(255,255,255,0.97)',
-              }}
-            >
-              {t.headline}
-            </h1>
-          </ScrollReveal>
+            {/* LEFT — Warm lifestyle photo */}
+            <ScrollReveal>
+              <div className="relative">
+                <div
+                  className="relative overflow-hidden"
+                  style={{
+                    borderRadius: '24px',
+                    aspectRatio: '4/3',
+                    boxShadow: '0 8px 40px rgba(44,40,37,0.16)',
+                  }}
+                >
+                  <img
+                    src="https://images.unsplash.com/photo-1493836512294-502baa1986e2?w=900&q=80&auto=format&fit=crop"
+                    alt="A person reading in warm natural light — representing families staying informed"
+                    className="w-full h-full object-cover"
+                    loading="eager"
+                  />
+                  {/* Warm overlay gradient */}
+                  <div
+                    className="absolute inset-0"
+                    style={{ background: 'linear-gradient(to bottom, rgba(250,248,245,0) 60%, rgba(250,248,245,0.3) 100%)' }}
+                  />
+                </div>
+                {/* Trust badge */}
+                <div
+                  className="absolute -bottom-4 -right-4 flex items-center gap-2 px-4 py-2.5 rounded-full"
+                  style={{
+                    background: 'var(--color-white)',
+                    boxShadow: '0 4px 16px rgba(44,40,37,0.12)',
+                    border: '1px solid var(--color-parchment)',
+                  }}
+                >
+                  <span
+                    className="inline-block w-2 h-2 rounded-full"
+                    style={{ background: 'var(--color-amber)', animation: 'pulse-amber 2.5s ease-in-out infinite' }}
+                  />
+                  <span className="text-sm font-medium" style={{ color: 'var(--color-charcoal)' }}>
+                    Daily · 7:00 AM CDT
+                  </span>
+                </div>
+              </div>
+            </ScrollReveal>
 
-          <ScrollReveal delay={160}>
-            <p
-              className="text-sm sm:text-base max-w-xl mx-auto mb-10 leading-relaxed"
-              style={{ color: 'rgba(255,255,255,0.55)' }}
-            >
-              {t.whoItFor}
-            </p>
-          </ScrollReveal>
+            {/* RIGHT — Content */}
+            <div className="flex flex-col justify-center text-left">
+              <ScrollReveal delay={80}>
+                {/* Badge */}
+                <div className="inline-flex items-center gap-2 mb-6">
+                  <span
+                    className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold"
+                    style={{
+                      background: 'rgba(196,127,60,0.12)',
+                      color: 'var(--color-amber-dark)',
+                      letterSpacing: '0.02em',
+                    }}
+                  >
+                    <span
+                      className="inline-block w-1.5 h-1.5 rounded-full"
+                      style={{ background: 'var(--color-amber)' }}
+                    />
+                    Daily Research · Parkinson&apos;s
+                  </span>
+                </div>
+              </ScrollReveal>
 
-          <ScrollReveal delay={320}>
-            <p
-              className="text-lg sm:text-xl max-w-2xl mx-auto mb-12 leading-relaxed"
-              style={{ color: 'rgba(255,255,255,0.70)' }}
-            >
-              {t.subtitle}
-            </p>
-          </ScrollReveal>
+              <ScrollReveal delay={160}>
+                <h1
+                  className="mb-6"
+                  style={{
+                    fontFamily: 'Instrument Serif, serif',
+                    fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
+                    lineHeight: 1.05,
+                    fontWeight: 400,
+                    letterSpacing: '-0.025em',
+                    color: 'var(--color-espresso)',
+                  }}
+                >
+                  {t.headline}
+                </h1>
+              </ScrollReveal>
 
-          <ScrollReveal delay={400}>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link
-                href={`/${lang}/reports`}
-                className="btn-primary"
-                style={{ fontSize: '0.9375rem', padding: '0.875rem 2.25rem' }}
-              >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
-                </svg>
-                Browse Reports
-              </Link>
-              <Link
-                href={`/${lang}/resources`}
-                className="text-sm font-medium"
-                style={{ color: 'rgba(255,255,255,0.60)', textDecoration: 'underline', textUnderlineOffset: '4px' }}
-              >
-                Find Resources
-              </Link>
+              <ScrollReveal delay={240}>
+                <p
+                  className="mb-4"
+                  style={{
+                    fontFamily: 'Instrument Serif, serif',
+                    fontSize: 'clamp(1.25rem, 2.5vw, 1.75rem)',
+                    lineHeight: 1.4,
+                    color: 'var(--color-amber)',
+                    fontStyle: 'italic',
+                  }}
+                >
+                  Every morning, I search so you don&apos;t have to.
+                </p>
+              </ScrollReveal>
+
+              <ScrollReveal delay={320}>
+                <p
+                  className="mb-10 leading-relaxed"
+                  style={{
+                    fontSize: '1.0625rem',
+                    color: 'var(--color-text-secondary)',
+                    maxWidth: '480px',
+                  }}
+                >
+                  Built for families navigating Parkinson&apos;s — by one of them. Daily breakthroughs, trials, and evidence-based guidance, written for people, not researchers.
+                </p>
+              </ScrollReveal>
+
+              <ScrollReveal delay={400}>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                  {latestDate ? (
+                    <Link
+                      href={`/${lang}/report/${latestDate}`}
+                      className="btn-primary"
+                    >
+                      See Today&apos;s Report
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                      </svg>
+                    </Link>
+                  ) : (
+                    <Link
+                      href={`/${lang}/reports`}
+                      className="btn-primary"
+                    >
+                      Browse Reports
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                      </svg>
+                    </Link>
+                  )}
+                  <Link
+                    href={`/${lang}/about`}
+                    className="btn-ghost"
+                    style={{ fontSize: '0.9375rem' }}
+                  >
+                    Our Story
+                  </Link>
+                </div>
+              </ScrollReveal>
             </div>
-          </ScrollReveal>
+          </div>
         </div>
       </section>
 
-      {/* ── Content — white canvas ────────────────────────────────────── */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6">
-
-        {/* Subscribe Form */}
-        <section className="py-14">
-          <ScrollReveal>
-            <div
-              style={{
-                background: 'var(--color-white)',
-                border: '1px solid var(--color-parchment)',
-                borderTop: '3px solid var(--color-amethyst)',
-                borderRadius: '8px',
-                boxShadow: 'var(--shadow-xs)',
-                padding: '2rem 2.25rem',
-              }}
-            >
-              <SubscribeForm lang={lang} dictionary={dictionary.subscribe} />
-            </div>
-          </ScrollReveal>
-        </section>
-
-        {/* Why Subscribe */}
-        <section className="pb-16">
-          <ScrollReveal>
-            <div
-              className="card text-center"
-              style={{
-                padding: '2.5rem 2rem',
-                borderTop: '3px solid var(--color-amethyst)',
-                background: 'linear-gradient(180deg, rgba(203,183,251,0.05) 0%, var(--color-white) 100%)',
-              }}
-            >
-              <h2
-                className="mb-4"
-                style={{
-                  fontFamily: 'Instrument Serif, serif',
-                  fontSize: '1.875rem',
-                  fontWeight: 400,
-                  color: 'var(--color-charcoal)',
-                  letterSpacing: '-0.01em',
-                }}
+      {/* ── Mission — 3-column amber band ─────────────────────────────── */}
+      <section
+        style={{ background: 'var(--color-amber-light)', borderTop: '1px solid rgba(196,127,60,0.15)', borderBottom: '1px solid rgba(196,127,60,0.15)' }}
+      >
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16">
+          <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
+            {/* Why */}
+            <ScrollReveal className="flex flex-col items-start">
+              <div
+                className="w-12 h-12 rounded-2xl flex items-center justify-center mb-5"
+                style={{ background: 'rgba(196,127,60,0.15)' }}
               >
-                {t.whySubscribe}
-              </h2>
-              <p
-                className="text-base max-w-xl mx-auto leading-relaxed"
-                style={{ color: 'var(--color-text-secondary)' }}
-              >
-                {t.whySubscribeDesc}
-              </p>
-            </div>
-          </ScrollReveal>
-        </section>
-
-        {/* Latest Report */}
-        {summary ? (
-          <section className="pb-20">
-            <ScrollReveal>
-              <div className="flex items-center justify-between mb-6">
-                <span className="section-label">{t.latestReport}</span>
-                <span className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
-                  {new Date(latestDate!).toLocaleDateString(
-                    lang === 'es' ? 'es-ES' : 'en-US',
-                    { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
-                  )}
-                </span>
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--color-amber)' }}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                </svg>
               </div>
-            </ScrollReveal>
-
-            <ScrollReveal delay={80}>
-              <div className="bento-grid">
-                {/* Main card */}
-                <div className="bento-item-large card" style={{ padding: '1.75rem', borderTop: '3px solid var(--color-amethyst)' }}>
-                  <div className="flex items-center gap-4 mb-5">
-                    <div
-                      className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
-                      style={{ background: 'rgba(203, 183, 251, 0.10)' }}
-                    >
-                      <svg
-                        className="w-5 h-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={1.5}
-                        style={{ color: 'var(--color-amethyst)' }}
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3
-                        className="font-medium text-base"
-                        style={{ fontFamily: 'Instrument Serif, serif', color: 'var(--color-charcoal)' }}
-                      >
-                        {summary.title}
-                      </h3>
-                      <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>{latestDate}</p>
-                    </div>
-                  </div>
-
-                  <div className="space-y-5">
-                    {summary.sections.slice(0, 3).map((section, i) => (
-                      <div key={i} className="border-l-2 pl-4" style={{ borderColor: 'rgba(203, 183, 251, 0.35)' }}>
-                        <h4 className="text-sm font-medium mb-1" style={{ color: 'var(--color-charcoal)' }}>
-                          {section.title}
-                        </h4>
-                        <p className="text-sm leading-relaxed line-clamp-2" style={{ color: 'var(--color-text-secondary)' }}>
-                          {section.summary}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Quick actions */}
-                <div className="bento-item-tall card flex flex-col justify-between" style={{ padding: '1.5rem' }}>
-                  <div>
-                    <h3
-                      className="text-sm font-medium mb-5"
-                      style={{ fontFamily: 'Instrument Serif, serif', color: 'var(--color-charcoal)' }}
-                    >
-                      {t.quickActions}
-                    </h3>
-                    <div className="space-y-2.5">
-                      <Link
-                        href={`/${lang}/report/${latestDate}`}
-                        className="flex items-center gap-3 p-3 rounded-xl transition-colors"
-                        style={{ background: 'var(--color-surface-muted)' }}
-                      >
-                        <svg
-                          className="w-4 h-4 flex-shrink-0"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          strokeWidth={1.5}
-                          style={{ color: 'var(--color-amethyst)' }}
-                        >
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                        </svg>
-                        <span className="text-sm" style={{ color: 'var(--color-charcoal)' }}>{t.readFullReport}</span>
-                      </Link>
-                      <Link
-                        href={`/${lang}/resources`}
-                        className="flex items-center gap-3 p-3 rounded-xl transition-colors"
-                        style={{ background: 'var(--color-surface-muted)' }}
-                      >
-                        <svg
-                          className="w-4 h-4 flex-shrink-0"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          strokeWidth={1.5}
-                          style={{ color: 'var(--color-amethyst)' }}
-                        >
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716 6.273M12 21a9.004 9.004 0 01-8.716-6.273m0 0a8.997 8.997 0 01-2.312-.656M3 12a8.997 8.997 0 012.312-.656" />
-                        </svg>
-                        <span className="text-sm" style={{ color: 'var(--color-charcoal)' }}>{t.findResources}</span>
-                      </Link>
-                    </div>
-                  </div>
-                  <div
-                    className="flex items-center gap-2 text-xs mt-5 pt-5"
-                    style={{ color: 'var(--color-text-muted)', borderTop: '1px solid var(--color-parchment)' }}
-                  >
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span>{t.dailyAt}</span>
-                  </div>
-                </div>
-
-                {/* Category cards */}
-                <CategoryCard title={tc.clinicalTrials.title} description={tc.clinicalTrials.desc} icon="flask" />
-                <CategoryCard title={tc.breakthroughs.title} description={tc.breakthroughs.desc} icon="beaker" />
-                <CategoryCard title={tc.lifestyle.title} description={tc.lifestyle.desc} icon="heart" />
-                <CategoryCard title={tc.emergingResearch.title} description={tc.emergingResearch.desc} icon="sparkles" />
-              </div>
-            </ScrollReveal>
-          </section>
-        ) : (
-          <section className="pb-20">
-            <div className="card text-center py-16" style={{ padding: '3rem' }}>
-              <svg
-                className="w-12 h-12 mx-auto mb-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={1}
-                style={{ color: 'var(--color-border)' }}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
-              </svg>
-              <h3 className="text-lg mb-2" style={{ fontFamily: 'Instrument Serif, serif', color: 'var(--color-charcoal)' }}>
-                {t.firstReportComing}
-              </h3>
-              <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>{t.firstReportDesc}</p>
-            </div>
-          </section>
-        )}
-
-        {/* What's Tracked */}
-        <section className="pb-16">
-          <ScrollReveal>
-            <div
-              className="card"
-              style={{
-                padding: '2rem',
-                borderTop: '3px solid var(--color-amethyst)',
-                background: 'linear-gradient(180deg, rgba(203,183,251,0.05) 0%, var(--color-white) 100%)',
-              }}
-            >
               <h3
-                className="text-sm font-medium mb-5"
-                style={{ fontFamily: 'Instrument Serif, serif', color: 'var(--color-charcoal)' }}
+                className="mb-3"
+                style={{ fontFamily: 'Instrument Serif, serif', fontSize: '1.375rem', fontWeight: 400, color: 'var(--color-espresso)' }}
               >
-                {t.whatsTracked}
+                Built for Families
               </h3>
-              <div className="flex flex-wrap gap-2.5">
+              <p className="leading-relaxed" style={{ color: 'var(--color-text-secondary)', fontSize: '0.9375rem' }}>
+                When a parent is diagnosed, families become researchers overnight. We turn the chaos of medical information into clarity — every day.
+              </p>
+            </ScrollReveal>
+
+            {/* How */}
+            <ScrollReveal delay={100} className="flex flex-col items-start">
+              <div
+                className="w-12 h-12 rounded-2xl flex items-center justify-center mb-5"
+                style={{ background: 'rgba(196,127,60,0.15)' }}
+              >
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--color-amber)' }}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
+                </svg>
+              </div>
+              <h3
+                className="mb-3"
+                style={{ fontFamily: 'Instrument Serif, serif', fontSize: '1.375rem', fontWeight: 400, color: 'var(--color-espresso)' }}
+              >
+                AI-Powered, Human-Reviewed
+              </h3>
+              <p className="leading-relaxed" style={{ color: 'var(--color-text-secondary)', fontSize: '0.9375rem' }}>
+                Every morning, autonomous agents search ClinicalTrials.gov, NEJM, Lancet, and emerging science — then we translate it into plain language.
+              </p>
+            </ScrollReveal>
+
+            {/* What */}
+            <ScrollReveal delay={200} className="flex flex-col items-start">
+              <div
+                className="w-12 h-12 rounded-2xl flex items-center justify-center mb-5"
+                style={{ background: 'rgba(196,127,60,0.15)' }}
+              >
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--color-amber)' }}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                </svg>
+              </div>
+              <h3
+                className="mb-3"
+                style={{ fontFamily: 'Instrument Serif, serif', fontSize: '1.375rem', fontWeight: 400, color: 'var(--color-espresso)' }}
+              >
+                What Matters Now
+              </h3>
+              <p className="leading-relaxed" style={{ color: 'var(--color-text-secondary)', fontSize: '0.9375rem' }}>
+                Clinical trials recruiting near you. FDA decisions. Lifestyle interventions backed by evidence. Emerging science before it hits the mainstream.
+              </p>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Personal Story — full-width warm band ────────────────────── */}
+      <section
+        style={{
+          background: 'linear-gradient(180deg, #FAF8F5 0%, #F0E9DF 100%)',
+          borderTop: '1px solid var(--color-parchment)',
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 lg:py-20">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Photo — larger, warmer presentation */}
+            <ScrollReveal>
+              <div
+                className="relative overflow-hidden"
+                style={{ borderRadius: '20px', aspectRatio: '3/2' }}
+              >
+                <img
+                  src="/images/founder-hockey.png"
+                  alt="Tyler and his father, Fort Worth Panthers — a family navigating Parkinson's together"
+                  className="w-full h-full object-cover"
+                  style={{ objectPosition: 'center 20%' }}
+                  loading="lazy"
+                />
+                <div
+                  className="absolute inset-0"
+                  style={{ background: 'linear-gradient(135deg, rgba(196,127,60,0.05) 0%, transparent 60%)' }}
+                />
+              </div>
+            </ScrollReveal>
+
+            {/* Quote */}
+            <ScrollReveal delay={120}>
+              <div>
+                <span
+                  className="inline-block mb-6"
+                  style={{
+                    fontSize: '0.8125rem',
+                    fontWeight: 700,
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    color: 'var(--color-amber)',
+                  }}
+                >
+                  From the Founder
+                </span>
+                <blockquote
+                  className="mb-8"
+                  style={{
+                    fontFamily: 'Instrument Serif, serif',
+                    fontSize: 'clamp(1.25rem, 2.5vw, 1.625rem)',
+                    lineHeight: 1.55,
+                    color: 'var(--color-espresso)',
+                    fontStyle: 'italic',
+                  }}
+                >
+                  &ldquo;{t.testimonial}&rdquo;
+                </blockquote>
+                <div className="flex items-center gap-3">
+                  <div
+                    className="w-10 h-10 rounded-full flex items-center justify-center"
+                    style={{ background: 'rgba(196,127,60,0.12)' }}
+                  >
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--color-amber)' }}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold" style={{ color: 'var(--color-charcoal)' }}>
+                      Tyler Delano
+                    </p>
+                    <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
+                      Creator, AI Against Parkinson&apos;s
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Latest Report ─────────────────────────────────────────────── */}
+      {summary ? (
+        <section className="py-16 lg:py-20">
+          <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+            <ScrollReveal>
+              <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+                <div>
+                  <span className="section-label mb-3 block">Today&apos;s Report</span>
+                  <h2
+                    style={{
+                      fontFamily: 'Instrument Serif, serif',
+                      fontSize: 'clamp(1.75rem, 4vw, 2.5rem)',
+                      fontWeight: 400,
+                      color: 'var(--color-espresso)',
+                      letterSpacing: '-0.01em',
+                    }}
+                  >
+                    {summary.title}
+                  </h2>
+                  <p className="text-sm mt-2" style={{ color: 'var(--color-text-muted)' }}>
+                    {new Date(latestDate!).toLocaleDateString(
+                      lang === 'es' ? 'es-ES' : 'en-US',
+                      { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+                    )}
+                  </p>
+                </div>
+                <Link
+                  href={`/${lang}/report/${latestDate}`}
+                  className="btn-ghost flex-shrink-0"
+                >
+                  Read full report
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                  </svg>
+                </Link>
+              </div>
+            </ScrollReveal>
+
+            {/* Report sections preview */}
+            <div className="grid md:grid-cols-2 gap-4 mb-8">
+              {summary.sections.map((section, i) => (
+                <ScrollReveal key={i} delay={i * 80}>
+                  <div
+                    className="card p-6"
+                    style={{ borderTop: '3px solid var(--color-amber)' }}
+                  >
+                    <div className="flex items-center gap-3 mb-4">
+                      <span className="pill-clinical">
+                        {section.title}
+                      </span>
+                    </div>
+                    <p className="leading-relaxed" style={{ color: 'var(--color-text)', fontSize: '0.9375rem' }}>
+                      {section.summary}
+                    </p>
+                  </div>
+                </ScrollReveal>
+              ))}
+            </div>
+
+            {/* Categories row */}
+            <ScrollReveal>
+              <div className="flex flex-wrap gap-2.5 items-center">
+                <span className="text-xs font-semibold mr-1" style={{ color: 'var(--color-text-muted)' }}>Also tracked:</span>
                 <span className="pill-clinical">Clinical Trials</span>
                 <span className="pill-breakthrough">Breakthroughs</span>
                 <span className="pill-lifestyle">Lifestyle</span>
                 <span className="pill-emerging">Emerging Research</span>
-                <span className="pill-tech">Tech Tools</span>
+                <span className="pill-tech">Tech</span>
               </div>
-            </div>
-          </ScrollReveal>
+            </ScrollReveal>
+          </div>
         </section>
+      ) : (
+        <section className="py-16">
+          <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+            <div className="card text-center py-16">
+              <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>First report coming soon.</p>
+            </div>
+          </div>
+        </section>
+      )}
 
-        {/* Testimonial */}
-        <section className="pb-20">
+      {/* ── Subscribe ─────────────────────────────────────────────────── */}
+      <section
+        className="py-16"
+        style={{ background: 'var(--color-cream)', borderTop: '1px solid var(--color-parchment)' }}
+      >
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
           <ScrollReveal>
             <div
-              className="overflow-hidden"
+              className="card mx-auto"
               style={{
-                background: 'linear-gradient(160deg, #1b1938 0%, #2d2252 100%)',
+                maxWidth: '680px',
+                borderTop: '4px solid var(--color-amber)',
                 borderRadius: '20px',
+                padding: '3rem',
+                textAlign: 'center',
               }}
             >
-              <div className="grid md:grid-cols-5" style={{ minHeight: '280px' }}>
-                {/* Photo */}
-                <div className="md:col-span-2 relative overflow-hidden" style={{ minHeight: '240px' }}>
-                  <img
-                    src="/images/founder-hockey.png"
-                    alt="Tyler and his father — Fort Worth Panthers"
-                    className="absolute inset-0 w-full h-full object-cover"
-                    style={{ objectPosition: 'center 15%' }}
-                  />
-                  <div
-                    className="absolute inset-0"
-                    style={{ background: 'linear-gradient(to right, rgba(27,25,56,0) 40%, rgba(27,25,56,0.7) 100%)' }}
-                  />
-                </div>
-
-                {/* Quote */}
-                <div
-                  className="md:col-span-3 p-8 flex flex-col justify-center"
-                  style={{ background: 'linear-gradient(160deg, #1b1938 0%, #2d2252 100%)' }}
-                >
-                  <p
-                    className="mb-6"
-                    style={{
-                      fontFamily: 'Instrument Serif, Georgia, serif',
-                      fontSize: '1.1rem',
-                      lineHeight: 1.6,
-                      color: 'rgba(255,255,255,0.90)',
-                      fontStyle: 'italic',
-                    }}
-                  >
-                    "{t.testimonial}"
-                  </p>
-                  <div className="flex items-center gap-3">
-                    <div
-                      className="w-10 h-10 rounded-full flex items-center justify-center"
-                      style={{ background: 'rgba(203, 183, 251, 0.15)' }}
-                    >
-                      <svg
-                        className="w-5 h-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={1.5}
-                        style={{ color: 'rgba(203, 183, 251, 0.80)' }}
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <p
-                        className="text-sm font-medium"
-                        style={{ color: 'rgba(255,255,255,0.80)' }}
-                      >
-                        Tyler Delano
-                      </p>
-                      <p className="text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>
-                        {t.testimonialLabel}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <h2
+                className="mb-3"
+                style={{
+                  fontFamily: 'Instrument Serif, serif',
+                  fontSize: 'clamp(1.5rem, 3vw, 2rem)',
+                  fontWeight: 400,
+                  color: 'var(--color-espresso)',
+                }}
+              >
+                Stay ahead of Parkinson&apos;s research
+              </h2>
+              <p
+                className="mb-8"
+                style={{ color: 'var(--color-text-secondary)', fontSize: '1rem' }}
+              >
+                Free. Daily. Written for families, not researchers.
+              </p>
+              <SubscribeForm lang={lang} dictionary={dictionary.subscribe} />
+              <p className="mt-4 text-xs" style={{ color: 'var(--color-text-muted)' }}>
+                No spam. Unsubscribe anytime. Powered by daily AI research.
+              </p>
             </div>
           </ScrollReveal>
-        </section>
-      </div>
+        </div>
+      </section>
     </div>
-  )
-}
-
-function CategoryCard({ title, description, icon }: {
-  title: string
-  description: string
-  icon: string
-}) {
-  const icons: Record<string, React.ReactNode> = {
-    flask: (
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 8.625l-5.053 5.053a3.75 3.75 0 000 5.303l.97.97a3.75 3.75 0 005.303 0l5.053-5.053m4.5-4.5a3.75 3.75 0 00-5.303 0l-5.053 5.053m4.5 4.5l-5.053 5.053a3.75 3.75 0 000 5.303l.97.97a3.75 3.75 0 005.303 0l5.053-5.053" />
-      </svg>
-    ),
-    beaker: (
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
-      </svg>
-    ),
-    heart: (
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-      </svg>
-    ),
-    sparkles: (
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
-      </svg>
-    ),
-  }
-
-  return (
-    <ScrollReveal className="card group cursor-pointer" style={{ padding: '1.5rem' }}>
-      <div className="mb-4" style={{ color: 'var(--color-amethyst)' }}>
-        {icons[icon]}
-      </div>
-      <h3
-        className="font-medium mb-2 text-sm"
-        style={{ fontFamily: 'Instrument Serif, serif', color: 'var(--color-charcoal)' }}
-      >
-        {title}
-      </h3>
-      <p className="text-xs leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>
-        {description}
-      </p>
-    </ScrollReveal>
   )
 }
