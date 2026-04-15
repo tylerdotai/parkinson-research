@@ -19,5 +19,5 @@ jobs:
       - run: npm ci
       - run: npx eslint . --max-warnings 999
       - run: npm run typecheck
-      - run: jest --passWithNoTests
+      - run: npx jest --passWithNoTests
       - run: npm run build
