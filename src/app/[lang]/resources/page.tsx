@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { getDictionary } from '@/lib/dictionary'
 import ResourceItem from '@/components/ResourceItem'
 
@@ -66,11 +67,12 @@ export default async function ResourcesPage({ params }: Props) {
               className="block rounded-xl overflow-hidden transition-transform duration-200 hover:scale-[1.02]"
               style={{ boxShadow: 'var(--shadow-sm)', height: '320px' }}
             >
-              <img
+              <Image
                 src="/images/what-is-parkinson.png"
                 alt="What is Parkinson's? Infographic from Michael J. Fox Foundation"
+                width={600}
+                height={320}
                 className="w-full h-full object-contain"
-                loading="lazy"
                 style={{ background: '#f5f4f2' }}
               />
             </a>
@@ -81,11 +83,12 @@ export default async function ResourcesPage({ params }: Props) {
               className="block rounded-xl overflow-hidden transition-transform duration-200 hover:scale-[1.02]"
               style={{ boxShadow: 'var(--shadow-sm)', height: '320px' }}
             >
-              <img
+              <Image
                 src="/images/parkinsons-symptoms.jpg"
                 alt="Parkinson's Disease Main Symptoms infographic"
+                width={600}
+                height={320}
                 className="w-full h-full object-contain"
-                loading="lazy"
                 style={{ background: '#f5f4f2' }}
               />
             </a>

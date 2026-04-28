@@ -1,4 +1,4 @@
-import type { ReportSection, ReportEntry } from './types'
+import type { ReportSection } from './types'
 
 const CATEGORY_MAP: Record<string, string> = {
   'Clinical Trials': 'clinical',

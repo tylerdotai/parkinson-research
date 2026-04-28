@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import type { Dictionary } from '@/lib/dictionary'
 
 type Props = {
@@ -19,11 +20,12 @@ export default function Footer({ dictionary, lang }: Props) {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2.5 mb-4">
-              <img
+              <Image
                 src="/images/logo-cropped.png"
-                alt="AI Against Parkinson&apos;s"
-                className="h-9 w-auto rounded-lg"
-                style={{ height: '2.25rem', width: 'auto' }}
+                alt="AI Against Parkinson's"
+                width={36}
+                height={36}
+                className="rounded-lg"
               />
               <span className="font-semibold text-sm" style={{ color: 'var(--color-charcoal)' }}>
                 AI Against Parkinson&apos;s

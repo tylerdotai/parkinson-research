@@ -4,7 +4,6 @@ import matter from 'gray-matter'
 import { parseReportSections } from './parseReport'
 import type { ReportSection } from './types'
 
-const REPORTS_DIR = path.join(process.cwd(), 'public', 'reports')
 
 function getLangReportsDir(lang: string): string {
   if (lang === 'es') {
@@ -33,7 +32,6 @@ function simpleMarkdownToHtml(md: string): string {
   // Extract sections and build structured HTML
   const lines = html.split('\n')
   const elements: string[] = []
-  let inList = false
   let listItems: string[] = []
   
   const closeList = () => {
@@ -41,7 +39,6 @@ function simpleMarkdownToHtml(md: string): string {
       elements.push(`<ul class="list-disc ml-5 mb-4 space-y-1">${listItems.join('')}</ul>`)
       listItems = []
     }
-    inList = false
   }
   
   for (let i = 0; i < lines.length; i++) {
@@ -67,7 +64,6 @@ function simpleMarkdownToHtml(md: string): string {
     }
     // List items
     else if (trimmed.startsWith('- ') || trimmed.match(/^[\d]+\.\s/)) {
-      inList = true
       const content = trimmed.replace(/^[\d]+\.\s/, '').replace(/^- /, '')
       listItems.push(`<li class="text-slate-600">${content}</li>`)
     }
@@ -123,7 +119,7 @@ export function getReportMetadata(date: string, lang = 'en'): { preview: string 
     if (!fs.existsSync(filePath)) return null
 
     const rawContent = fs.readFileSync(filePath, 'utf-8')
-    const { data, content } = matter(rawContent)
+    const { content } = matter(rawContent)
 
     // Find the intro paragraph (first non-header, non-empty paragraph after frontmatter)
     const lines = content.split('\n')

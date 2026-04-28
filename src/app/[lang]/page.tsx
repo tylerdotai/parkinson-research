@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { getDictionary } from '@/lib/dictionary'
 import { getLatestReportSummary, getAllReportDates } from '@/lib/reports'
 import ScrollReveal from '@/components/ScrollReveal'
@@ -26,7 +27,6 @@ export default async function HomePage({ params }: Props) {
   const summary = latestDate ? await getLatestReportSummary(lang) : null
 
   const t = dictionary.home
-  const tc = dictionary.categories
 
   return (
     <div>
@@ -49,11 +49,13 @@ export default async function HomePage({ params }: Props) {
                     boxShadow: '0 8px 40px rgba(44,40,37,0.16)',
                   }}
                 >
-                  <img
+                  <Image
                     src="https://images.unsplash.com/photo-1493836512294-502baa1986e2?w=900&q=80&auto=format&fit=crop"
                     alt="A person reading in warm natural light — representing families staying informed"
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
                     loading="eager"
+                    sizes="(max-width: 768px) 100vw, 50vw"
                   />
                   {/* Warm overlay gradient */}
                   <div
@@ -271,12 +273,14 @@ export default async function HomePage({ params }: Props) {
                 className="relative overflow-hidden"
                 style={{ borderRadius: '20px', aspectRatio: '3/2' }}
               >
-                <img
+                <Image
                   src="/images/founder-hockey.png"
                   alt="Tyler and his father, Fort Worth Panthers — a family navigating Parkinson's together"
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
                   style={{ objectPosition: 'center 20%' }}
                   loading="lazy"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
                 <div
                   className="absolute inset-0"
