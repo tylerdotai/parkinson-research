@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import type { Dictionary } from '@/lib/dictionary'
@@ -38,11 +39,13 @@ export default function Header({ dictionary, lang }: Props) {
       <nav className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href={`/${lang}`} className="flex items-center gap-2.5 group">
-          <img
+          <Image
             src="/images/logo-cropped.png"
             alt="AI Against Parkinson's"
-            className="h-12 w-auto rounded-xl transition-transform duration-200 group-hover:scale-105"
-            style={{ height: '3rem', width: 'auto' }}
+            width={48}
+            height={48}
+            className="rounded-xl transition-transform duration-200 group-hover:scale-105"
+            priority
           />
         </Link>
 
