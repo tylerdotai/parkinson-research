@@ -20,6 +20,16 @@ Produces a daily bilingual (EN/ES) research report on Parkinson's disease and de
 
 ---
 
+## Backup Trigger
+
+If OpenClaw cron fails, GitHub Actions provides a reliable daily backup at 12:00 UTC (7 AM CDT).
+
+Check run history: https://github.com/tylerdotai/parkinson-research/actions/workflows/generate-report.yml
+
+Manual trigger: Use `workflow_dispatch` on the same workflow page.
+
+---
+
 ## Prerequisites
 
 - Access to the parkinson-research workspace: `~/parkinson-research/`
