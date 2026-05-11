@@ -14,6 +14,12 @@
     --color-misted: rgba(255,255,255,0.8);  /* Text on dark */
     --color-translucent: rgba(255,255,255,0.95); /* Text on dark emphasis */
 
+    /* Warm editorial palette — amber/espresso for homepage sections */
+    --color-amber: #c47f3c;           /* Warm amber — icons, badges, accents */
+    --color-amber-dark: #8b5a2b;       /* Darker amber — text on light bg */
+    --color-amber-light: #fdf6ee;      /* Light amber tint — section backgrounds */
+    --color-espresso: #2c2825;         /* Deep warm brown — h2/h3 on light bg */
+
     /* Semantic mappings */
     --color-primary: #1b1938;
     --color-primary-dark: #0f0d21;
