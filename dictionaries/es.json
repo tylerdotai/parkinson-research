@@ -47,12 +47,32 @@
     "apiAccess": "Acceso a API",
     "apiDescription": "Formato legible por maquina para agentes de IA y desarrolladores.",
     "viewApi": "Ver API",
-    "firstReportComing": "Primer Informe Pronto",
+    "firstReportComing": "Primer informe proximamente.",
     "firstReportDesc": "El agente de investigacion publicara su primer informe pronto.",
     "whySubscribe": "Por Que Suscribirse?",
     "whySubscribeDesc": "Cada nuevo tratamiento, ensayo clinico y descubrimiento cientifico podria cambiar la vida de alguien. Este informe lleva esos hallazgos directamente a su bandeja de entrada — sin jerga, sin confusion, solo lo que necesita saber.",
     "testimonialLabel": "Del Fundador",
-    "testimonial": "Cuando mi padre fue diagnosticado con Parkinson, queria una forma de seguir todos los ultimos avances e investigaciones sin tener que buscar en decenas de sitios medicos. Asi que construi esto — para que las familias como la nuestra puedan entender rapidamente que funciona, que ensayes estan reclutando, y que prometedores tratamientos se acercan."
+    "testimonial": "Cuando mi padre fue diagnosticado con Parkinson, queria una forma de seguir todos los ultimos avances e investigaciones sin tener que buscar en decenas de sitios medicos. Asi que construi esto — para que las familias como la nuestra puedan entender rapidamente que funciona, que ensayes estan reclutando, y que prometedores tratamientos se acercan.",
+    "heroBadge": "Investigacion Diaria · Parkinson",
+    "heroSubtitle": "Hecho para familias que enfrentan Parkinson — por una de ellas. Avances diarios, ensayos y orientacion basada en evidencia, escrita para personas, no investigadores.",
+    "heroCTA": "Ver Informe de Hoy",
+    "heroAltCTA": "Ver Informes",
+    "ourStory": "Nuestra Historia",
+    "missionBuiltForFamiliesTitle": "Hecho para Familias",
+    "missionBuiltForFamiliesDesc": "Cuando a un padre le diagnostican Parkinson, las familias se convierten en investigadores de la noche a la manana. Convertimos el caos de la informacion medica en claridad — todos los dias.",
+    "missionAIPoweredTitle": "Impulsado por IA, Revisado por Humanos",
+    "missionAIPoweredDesc": "Cada manana, agentes autonomos buscan en ClinicalTrials.gov, NEJM, Lancet y ciencia emergente — luego lo traducimos a lenguaje cotidiano.",
+    "missionWhatMattersNowTitle": "Lo que Importa Ahora",
+    "missionWhatMattersNowDesc": "Ensayos clinicos reclutando cerca de ti. Decisiones de la FDA. Intervenciones de estilo de vida respaldadas por evidencia. Ciencia emergente antes de que llegue al mainstream.",
+    "todaysReport": "Informe de Hoy",
+    "alsoTracked": "Tambien rastread:",
+    "subscribeTagline": "Gratis. Diario. Escrito para familias, no investigadores.",
+    "subscribeDisclaimer": "Sin spam. Cancela cuando quieras. Impulsado por investigacion diaria con IA.",
+    "stayAhead": "Mantente al dia con la investigacion del Parkinson",
+    "noReportMsg": "Primer informe proximamente.",
+    "founderName": "Tyler Delano",
+    "founderTitle": "Creador, IA Contra el Parkinson",
+    "founderSectionLabel": "DEL FUNDADOR"
   },
   "reports": {
     "title": "Todos los Informes",
@@ -63,9 +83,9 @@
     "apiSectionDesc": "Accede a todos los informes como JSON para agentes de IA e integraciones."
   },
   "report": {
-    "backToAll": "Volver a todos los informes",
     "allReports": "Todos los Informes",
-    "generatedBy": "Generado autonomamente por agentes de investigacion de IA"
+    "updatesForFamilies": "actualizaciones para familias",
+    "freeUpdatedDaily": "Gratis, actualizado diariamente"
   },
   "about": {
     "title": "Acerca de Este Proyecto",
@@ -127,6 +147,10 @@
     "emergingResearch": {
       "title": "Investigacion Emergente",
       "desc": "Preprints, objetivos novedosos, biomarcadores, diagnosticos"
+    },
+    "tech": {
+      "title": "Tecnologia",
+      "desc": "Tecnologia e innovacion en el tratamiento del Parkinson"
     }
   },
   "footer": {
@@ -198,20 +222,15 @@
     },
     "tech": {
       "title": "Tecnologia Asistiva y Herramientas",
-      "pfTechDesc": "Lista curada de ayudas tecnologicas para la vida diaria \u2014 aplicaciones de voz, dispositivos wearables, recordatorios y mas.",
+      "pfTechDesc": "Lista curada de ayudas tecnologicas para la vida diaria — aplicaciones de voz, dispositivos wearables, recordatorios y mas.",
       "liftwareDesc": "Cuchara electronica estabilizadora para compensar el temblor al comer. Clinicamente probada para reducir el temblor en un 70%.",
       "voiceittDesc": "Aplicacion de reconocimiento de voz que se adapta a patrones de habla atipicos.",
       "pdAvengersDesc": "Lista curada por la comunidad de aplicaciones, dispositivos y herramientas recomendadas por personas con Parkinson."
     },
-    "learnMore": "Saber mas \u2192",
+    "learnMore": "Saber mas →",
     "aiIntegrationTitle": "Integracion de Agente IA",
     "aiIntegrationDesc": "Otros agentes de IA pueden obtener automaticamente el ultimo informe usando este endpoint:",
     "aiIntegrationResponse": "La respuesta incluye: fecha, titulo, contenido completo, secciones analizadas como JSON estructurado y atribucion de fuente."
-  },
-  "report": {
-    "allReports": "Todos los Informes",
-    "updatesForFamilies": "actualizaciones para familias",
-    "freeUpdatedDaily": "Gratis, actualizado diariamente"
   },
   "privacy": {
     "pageTitle": "Politica de Privacidad",
@@ -257,8 +276,14 @@
     "thirdParties": "Servicios de Terceros",
     "thirdPartiesText": "Usamos dos servicios de terceros para operar este sitio. Ambos fueron elegidos por sus solides practicas de privacidad:",
     "thirdPartyItems": [
-      { "name": "Supabase", "purpose": "Almacena su direccion de correo electronico y estado de suscripcion de forma segura." },
-      { "name": "Resend", "purpose": "Envía correos electronicos transaccionales (informes diarios, confirmacion, cancelacion)." }
+      {
+        "name": "Supabase",
+        "purpose": "Almacena su direccion de correo electronico y estado de suscripcion de forma segura."
+      },
+      {
+        "name": "Resend",
+        "purpose": "Envía correos electronicos transaccionales (informes diarios, confirmacion, cancelacion)."
+      }
     ],
     "contactTitle": "Contactenos",
     "contactText": "Si tiene preguntas sobre esta Politica de Privacidad, o para solicitar la eliminacion de sus datos, comuniquese via GitHub Issues. Nuestro objetivo es responder en 72 horas.",

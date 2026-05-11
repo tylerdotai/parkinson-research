@@ -100,7 +100,7 @@ export default async function HomePage({ params }: Props) {
                       className="inline-block w-1.5 h-1.5 rounded-full"
                       style={{ background: 'var(--color-amber)' }}
                     />
-                    Daily Research · Parkinson&apos;s
+                    {t.heroBadge}
                   </span>
                 </div>
               </ScrollReveal>
@@ -132,7 +132,7 @@ export default async function HomePage({ params }: Props) {
                     fontStyle: 'italic',
                   }}
                 >
-                  Every morning, I search so you don&apos;t have to.
+                  {t.testimonial}
                 </p>
               </ScrollReveal>
 
@@ -145,7 +145,7 @@ export default async function HomePage({ params }: Props) {
                     maxWidth: '480px',
                   }}
                 >
-                  Built for families navigating Parkinson&apos;s — by one of them. Daily breakthroughs, trials, and evidence-based guidance, written for people, not researchers.
+                  {t.heroSubtitle}
                 </p>
               </ScrollReveal>
 
@@ -156,7 +156,7 @@ export default async function HomePage({ params }: Props) {
                       href={`/${lang}/report/${latestDate}`}
                       className="btn-primary"
                     >
-                      See Today&apos;s Report
+                      {t.heroCTA}
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                       </svg>
@@ -166,7 +166,7 @@ export default async function HomePage({ params }: Props) {
                       href={`/${lang}/reports`}
                       className="btn-primary"
                     >
-                      Browse Reports
+                      {t.heroAltCTA}
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                       </svg>
@@ -177,7 +177,7 @@ export default async function HomePage({ params }: Props) {
                     className="btn-ghost"
                     style={{ fontSize: '0.9375rem' }}
                   >
-                    Our Story
+                    {t.ourStory}
                   </Link>
                 </div>
               </ScrollReveal>
@@ -206,10 +206,10 @@ export default async function HomePage({ params }: Props) {
                 className="mb-3"
                 style={{ fontFamily: 'Instrument Serif, serif', fontSize: '1.375rem', fontWeight: 400, color: 'var(--color-espresso)' }}
               >
-                Built for Families
+                {t.missionBuiltForFamiliesTitle}
               </h3>
               <p className="leading-relaxed" style={{ color: 'var(--color-text-secondary)', fontSize: '0.9375rem' }}>
-                When a parent is diagnosed, families become researchers overnight. We turn the chaos of medical information into clarity — every day.
+                {t.missionBuiltForFamiliesDesc}
               </p>
             </ScrollReveal>
 
@@ -227,10 +227,10 @@ export default async function HomePage({ params }: Props) {
                 className="mb-3"
                 style={{ fontFamily: 'Instrument Serif, serif', fontSize: '1.375rem', fontWeight: 400, color: 'var(--color-espresso)' }}
               >
-                AI-Powered, Human-Reviewed
+                {t.missionAIPoweredTitle}
               </h3>
               <p className="leading-relaxed" style={{ color: 'var(--color-text-secondary)', fontSize: '0.9375rem' }}>
-                Every morning, autonomous agents search ClinicalTrials.gov, NEJM, Lancet, and emerging science — then we translate it into plain language.
+                {t.missionAIPoweredDesc}
               </p>
             </ScrollReveal>
 
@@ -248,10 +248,10 @@ export default async function HomePage({ params }: Props) {
                 className="mb-3"
                 style={{ fontFamily: 'Instrument Serif, serif', fontSize: '1.375rem', fontWeight: 400, color: 'var(--color-espresso)' }}
               >
-                What Matters Now
+                {t.missionWhatMattersNowTitle}
               </h3>
               <p className="leading-relaxed" style={{ color: 'var(--color-text-secondary)', fontSize: '0.9375rem' }}>
-                Clinical trials recruiting near you. FDA decisions. Lifestyle interventions backed by evidence. Emerging science before it hits the mainstream.
+                {t.missionWhatMattersNowDesc}
               </p>
             </ScrollReveal>
           </div>
@@ -302,7 +302,7 @@ export default async function HomePage({ params }: Props) {
                     color: 'var(--color-amber)',
                   }}
                 >
-                  From the Founder
+                  {t.founderSectionLabel}
                 </span>
                 <blockquote
                   className="mb-8"
@@ -327,10 +327,10 @@ export default async function HomePage({ params }: Props) {
                   </div>
                   <div>
                     <p className="text-sm font-semibold" style={{ color: 'var(--color-charcoal)' }}>
-                      Tyler Delano
+                      {t.founderName}
                     </p>
                     <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
-                      Creator, AI Against Parkinson&apos;s
+                      {t.founderTitle}
                     </p>
                   </div>
                 </div>
@@ -347,7 +347,7 @@ export default async function HomePage({ params }: Props) {
             <ScrollReveal>
               <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
                 <div>
-                  <span className="section-label mb-3 block">Today&apos;s Report</span>
+                  <span className="section-label mb-3 block">{t.todaysReport}</span>
                   <h2
                     style={{
                       fontFamily: 'Instrument Serif, serif',
@@ -370,7 +370,7 @@ export default async function HomePage({ params }: Props) {
                   href={`/${lang}/report/${latestDate}`}
                   className="btn-ghost flex-shrink-0"
                 >
-                  Read full report
+                  {t.readFullReport}
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                   </svg>
@@ -402,12 +402,14 @@ export default async function HomePage({ params }: Props) {
             {/* Categories row */}
             <ScrollReveal>
               <div className="flex flex-wrap gap-2.5 items-center">
-                <span className="text-xs font-semibold mr-1" style={{ color: 'var(--color-text-muted)' }}>Also tracked:</span>
-                <span className="pill-clinical">Clinical Trials</span>
-                <span className="pill-breakthrough">Breakthroughs</span>
-                <span className="pill-lifestyle">Lifestyle</span>
-                <span className="pill-emerging">Emerging Research</span>
-                <span className="pill-tech">Tech</span>
+                <span className="text-xs font-semibold mr-1" style={{ color: 'var(--color-text-muted)' }}>{t.alsoTracked}</span>
+                <span className="pill-clinical">{dictionary.categories.clinicalTrials.title}</span>
+                <span className="pill-breakthrough">{dictionary.categories.breakthroughs.title}</span>
+                <span className="pill-lifestyle">{dictionary.categories.lifestyle.title}</span>
+                <span className="pill-emerging">{dictionary.categories.emergingResearch.title}</span>
+                {dictionary.categories.tech && (
+                  <span className="pill-tech">{dictionary.categories.tech.title}</span>
+                )}
               </div>
             </ScrollReveal>
           </div>
@@ -416,7 +418,7 @@ export default async function HomePage({ params }: Props) {
         <section className="py-16">
           <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
             <div className="card text-center py-16">
-              <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>First report coming soon.</p>
+              <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>{t.firstReportComing}</p>
             </div>
           </div>
         </section>
@@ -448,17 +450,17 @@ export default async function HomePage({ params }: Props) {
                   color: 'var(--color-espresso)',
                 }}
               >
-                Stay ahead of Parkinson&apos;s research
+                {t.stayAhead}
               </h2>
               <p
                 className="mb-8"
                 style={{ color: 'var(--color-text-secondary)', fontSize: '1rem' }}
               >
-                Free. Daily. Written for families, not researchers.
+                {t.subscribeTagline}
               </p>
               <SubscribeForm lang={lang} dictionary={dictionary.subscribe} />
               <p className="mt-4 text-xs" style={{ color: 'var(--color-text-muted)' }}>
-                No spam. Unsubscribe anytime. Powered by daily AI research.
+                {t.subscribeDisclaimer}
               </p>
             </div>
           </ScrollReveal>
