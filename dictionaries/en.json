@@ -48,12 +48,32 @@
     "apiAccess": "API Access",
     "apiDescription": "Machine-readable format for AI agents and developers.",
     "viewApi": "View API",
-    "firstReportComing": "First Report Coming Soon",
+    "firstReportComing": "First report coming soon.",
     "firstReportDesc": "The research agent will publish its first report soon.",
     "whySubscribe": "Why Subscribe?",
     "whySubscribeDesc": "Every new treatment, clinical trial, and scientific discovery could change someone's life. This report brings those findings straight to your inbox — no jargon, no confusion, just what you need to know.",
     "testimonialLabel": "From the Founder",
-    "testimonial": "When my dad was diagnosed with Parkinson's, I wanted a way to keep up with all the latest breakthroughs and research without having to search through dozens of medical websites. So I built this — so families like ours can quickly understand what works, which trials are recruiting, and what promising treatments are on the horizon."
+    "testimonial": "When my dad was diagnosed with Parkinson's, I wanted a way to keep up with all the latest breakthroughs and research without having to search through dozens of medical websites. So I built this — so families like ours can quickly understand what works, which trials are recruiting, and what promising treatments are on the horizon.",
+    "heroBadge": "Autonomous AI Research",
+    "heroSubtitle": "Built for families navigating Parkinson's — by one of them. Daily breakthroughs, trials, and evidence-based guidance, written for people, not researchers.",
+    "heroCTA": "See Today's Report",
+    "heroAltCTA": "Browse Reports",
+    "ourStory": "Our Story",
+    "missionBuiltForFamiliesTitle": "Built for Families",
+    "missionBuiltForFamiliesDesc": "When a parent is diagnosed, families become researchers overnight. We turn the chaos of medical information into clarity — every day.",
+    "missionAIPoweredTitle": "AI-Powered, Human-Reviewed",
+    "missionAIPoweredDesc": "Every morning, autonomous agents search ClinicalTrials.gov, NEJM, Lancet, and emerging science — then we translate it into plain language.",
+    "missionWhatMattersNowTitle": "What Matters Now",
+    "missionWhatMattersNowDesc": "Clinical trials recruiting near you. FDA decisions. Lifestyle interventions backed by evidence. Emerging science before it hits the mainstream.",
+    "todaysReport": "Today's Report",
+    "alsoTracked": "Also tracked:",
+    "subscribeTagline": "Free. Daily. Written for families, not researchers.",
+    "subscribeDisclaimer": "No spam. Unsubscribe anytime. Powered by daily AI research.",
+    "stayAhead": "Stay ahead of Parkinson's research",
+    "noReportMsg": "First report coming soon.",
+    "founderName": "Tyler Delano",
+    "founderTitle": "Creator, AI Against Parkinson's",
+    "founderSectionLabel": "FROM THE FOUNDER"
   },
   "reports": {
     "title": "All Reports",
@@ -64,9 +84,9 @@
     "apiSectionDesc": "Access all reports as JSON for AI agents and integrations."
   },
   "report": {
-    "backToAll": "Back to all reports",
     "allReports": "All Reports",
-    "generatedBy": "Generated autonomously by AI research agents"
+    "updatesForFamilies": "updates for families",
+    "freeUpdatedDaily": "Free, updated daily"
   },
   "about": {
     "title": "About This Project",
@@ -100,10 +120,10 @@
     },
     "privacy": "Privacy and Safety",
     "privacyItems": [
-      "No personal data \u2014 reports contain zero patient or personal information",
-      "Aggregate research only \u2014 we compile public research, not private data",
-      "Medical disclaimers \u2014 every report includes clear disclaimers",
-      "Transparent methodology \u2014 all research sources are cited"
+      "No personal data — reports contain zero patient or personal information",
+      "Aggregate research only — we compile public research, not private data",
+      "Medical disclaimers — every report includes clear disclaimers",
+      "Transparent methodology — all research sources are cited"
     ],
     "apiAccess": "API Access",
     "apiAccessDesc": "This site provides a JSON API for AI agents and developers to consume research data programmatically.",
@@ -128,6 +148,10 @@
     "emergingResearch": {
       "title": "Emerging Research",
       "desc": "Preprints, novel targets, biomarkers, diagnostics"
+    },
+    "tech": {
+      "title": "Tech",
+      "desc": "Technology and innovation in Parkinson's treatment"
     }
   },
   "footer": {
@@ -187,32 +211,27 @@
     "financial": {
       "title": "Financial & Insurance Assistance",
       "medicareDesc": "Federal health insurance for 65+. Covers some Parkinson medications, therapy, and equipment.",
-      "ssdiDesc": "Apply early \u2014 takes 2-3 years for approval. Provides monthly benefits for eligible disabled individuals.",
+      "ssdiDesc": "Apply early — takes 2-3 years for approval. Provides monthly benefits for eligible disabled individuals.",
       "pfAssistDesc": "Helps navigate insurance, find co-pay assistance, and access medication assistance programs.",
       "needyMedsDesc": "Find patient assistance programs for free or reduced-cost medications. Search by drug name."
     },
     "mental": {
       "title": "Mental Health & Counseling",
       "crisisTextDesc": "Free 24/7 crisis counseling via text. Mental health support when you need it most.",
-      "caregiverMentalDesc": "Caregiver depression is common. Seek your own counselor \u2014 you cannot pour from an empty cup.",
-      "pfMentalDesc": "Depression and anxiety are common in Parkinson. Help is available \u2014 ask your neurologist for referrals."
+      "caregiverMentalDesc": "Caregiver depression is common. Seek your own counselor — you cannot pour from an empty cup.",
+      "pfMentalDesc": "Depression and anxiety are common in Parkinson. Help is available — ask your neurologist for referrals."
     },
     "tech": {
       "title": "Tech Tools & Assistive Technology",
-      "pfTechDesc": "Curated list of technology aids for daily living \u2014 speech apps, wearables, reminder systems, and more.",
+      "pfTechDesc": "Curated list of technology aids for daily living — speech apps, wearables, reminder systems, and more.",
       "liftwareDesc": "Electronic stabilizing spoon for tremor compensation during eating. Clinically proven to reduce shake by 70%.",
       "voiceittDesc": "Speech recognition app that adapts to atypical speech patterns. Helps with voice commands and communication.",
       "pdAvengersDesc": "Community-curated list of apps, devices, and tools recommended by people living with Parkinson."
     },
-    "learnMore": "Learn more \u2192",
+    "learnMore": "Learn more →",
     "aiIntegrationTitle": "AI Agent Integration",
     "aiIntegrationDesc": "Other AI agents can automatically pull the latest report using this endpoint:",
     "aiIntegrationResponse": "Response includes: date, title, full content, sections parsed as structured JSON, and source attribution."
-  },
-  "report": {
-    "allReports": "All Reports",
-    "updatesForFamilies": "updates for families",
-    "freeUpdatedDaily": "Free, updated daily"
   },
   "privacy": {
     "pageTitle": "Privacy Policy",
@@ -258,8 +277,14 @@
     "thirdParties": "Third-Party Services",
     "thirdPartiesText": "We use two third-party services to operate this site. Both are chosen for their strong privacy practices:",
     "thirdPartyItems": [
-      { "name": "Supabase", "purpose": "Stores your email address and subscription status securely." },
-      { "name": "Resend", "purpose": "Sends transactional emails (daily reports, confirmation, unsubscribe)." }
+      {
+        "name": "Supabase",
+        "purpose": "Stores your email address and subscription status securely."
+      },
+      {
+        "name": "Resend",
+        "purpose": "Sends transactional emails (daily reports, confirmation, unsubscribe)."
+      }
     ],
     "contactTitle": "Contact Us",
     "contactText": "If you have any questions about this Privacy Policy, or to request deletion of your data, please reach out via GitHub Issues. We aim to respond within 72 hours.",

@@ -27,7 +27,7 @@ async function waitForServer(url: string, timeout = 30000): Promise<void> {
   throw new Error(`Server did not become ready at ${url} within ${timeout}ms`)
 }
 
-async function validatePage(server: ReturnType<typeof createServer>, locale: string): Promise<void> {
+async function validatePage(locale: string): Promise<void> {
   const url = `http://localhost:${PORT}/${locale}`
   const res = await fetch(url)
   if (!res.ok) {
@@ -38,7 +38,6 @@ async function validatePage(server: ReturnType<typeof createServer>, locale: str
 }
 
 function validateReports(): void {
-  // Check both possible report locations
   const candidates = [
     path.join(process.cwd(), 'public', 'reports'),
     path.join(process.cwd(), '.next', 'standalone', 'public', 'reports'),
@@ -107,7 +106,7 @@ async function main() {
   await waitForServer(`http://localhost:${PORT}/en`)
 
   for (const locale of LOCALES) {
-    await validatePage(server, locale)
+    await validatePage(locale)
   }
 
   validateReports()

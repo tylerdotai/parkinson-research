@@ -97,6 +97,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: next-build
+          path: .next
+
       - name: Install tsx
         run: npm install --save-dev tsx
 
