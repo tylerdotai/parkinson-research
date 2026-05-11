@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: 'website',
       locale: lang === 'es' ? 'es_ES' : 'en_US',
       alternateLocale: lang === 'es' ? 'en_US' : 'es_ES',
-      url: `https://parkinson-research.vercel.app/${lang}`,
+      url: `https://aiagainstparkinson.com/${lang}`,
       siteName: dictionary.metadata.title,
       title: dictionary.metadata.title,
       description: dictionary.metadata.description,
@@ -45,10 +45,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: dictionary.metadata.description,
     },
     alternates: {
-      canonical: `https://parkinson-research.vercel.app/${lang}`,
+      canonical: `https://aiagainstparkinson.com/${lang}`,
       languages: {
-        'en': 'https://parkinson-research.vercel.app/en',
-        'es': 'https://parkinson-research.vercel.app/es',
+        'en': 'https://aiagainstparkinson.com/en',
+        'es': 'https://aiagainstparkinson.com/es',
       },
     },
     robots: {
@@ -86,7 +86,7 @@ export default async function LangLayout({ children, params }: Props) {
               '@context': 'https://schema.org',
               '@type': 'WebSite',
               name: dictionary.metadata.title,
-              url: `https://parkinson-research.vercel.app/${lang}`,
+              url: `https://aiagainstparkinson.com/${lang}`,
               description: dictionary.metadata.description,
               publisher: {
                 '@type': 'Organization',
@@ -95,7 +95,7 @@ export default async function LangLayout({ children, params }: Props) {
               inLanguage: lang,
               potentialAction: {
                 '@type': 'SearchAction',
-                target: `https://parkinson-research.vercel.app/${lang}/reports`,
+                target: `https://aiagainstparkinson.com/${lang}/reports`,
                 'query-input': 'required name=search_term_string',
               },
             }),

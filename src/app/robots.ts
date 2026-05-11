@@ -21,6 +21,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
       },
     ],
-    sitemap: 'https://parkinson-research.vercel.app/sitemap.xml',
+    sitemap: 'https://aiagainstparkinson.com/sitemap.xml',
   }
 }
