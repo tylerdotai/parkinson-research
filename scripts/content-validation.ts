@@ -14,7 +14,12 @@ import path from 'path'
 
 const PORT = parseInt(process.env.PORT ?? '3001', 10)
 const LOCALES = ['en', 'es'] as const
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://aiagainstparkinson.com'
+// In CI (NODE_ENV=production), the Next.js server runs locally on PORT.
+// Locally, use localhost. In production (Vercel), NEXT_PUBLIC_SITE_URL takes over.
+const BASE_URL =
+  process.env.NODE_ENV === 'production' && !process.env.NEXT_PUBLIC_SITE_URL?.startsWith('http')
+    ? `http://localhost:${PORT}`
+    : (process.env.NEXT_PUBLIC_SITE_URL ?? `http://localhost:${PORT}`)
 
 async function waitForServer(url: string, timeout = 30000): Promise<void> {
   const start = Date.now()
@@ -34,7 +39,7 @@ async function waitForServer(url: string, timeout = 30000): Promise<void> {
 }
 
 async function validatePage(locale: string): Promise<void> {
-  const url = `${SITE_URL.replace('https://', 'http://')}:${PORT}/${locale}`
+  const url = `${BASE_URL}/${locale}`
   console.log(`  Checking ${locale} page at ${url}`)
   let res: Response
   try {
@@ -96,10 +101,10 @@ async function main() {
   const dev = process.env.NODE_ENV !== 'production'
 
   // Build output is at .next/ (root of repo)
-  const nextDir = path.join(process.cwd(), '.next')
-  console.log(`Using Next.js build from: ${nextDir}`)
+  const repoRoot = process.cwd()
+  console.log(`Using Next.js build from: ${repoRoot}/.next`)
 
-  const app = next({ dev, dir: nextDir })
+  const app = next({ dev, dir: repoRoot })
   const handle = app.getRequestHandler()
 
   await app.prepare()
