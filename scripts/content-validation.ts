@@ -88,7 +88,9 @@ function validateReports(): void {
 
 async function main() {
   const dev = process.env.NODE_ENV !== 'production'
-  const app = next({ dev, dir: process.cwd() })
+  // Standalone build lives in .next/standalone/ — point Next.js at it directly
+  const nextDir = dev ? process.cwd() : path.join(process.cwd(), '.next', 'standalone')
+  const app = next({ dev, dir: nextDir })
   const handle = app.getRequestHandler()
 
   await app.prepare()
