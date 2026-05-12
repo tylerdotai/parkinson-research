@@ -11,6 +11,7 @@
     "test:coverage": "jest --coverage",
     "typecheck": "tsc --noEmit"
   },
+  "postinstall": "next prepare",
   "dependencies": {
     "framer-motion": "^12.38.0",
     "gray-matter": "^4.0.3",

@@ -9,6 +9,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: production
+    # Wait for CI to complete — don't rebuild, use Vercel's prebuilt artifact from CI
+    needs: [ci]
 
     steps:
       - uses: actions/checkout@v4
@@ -21,9 +23,6 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-
-      - name: Build
-        run: npm run build
 
       - name: Deploy to Vercel
         run: |

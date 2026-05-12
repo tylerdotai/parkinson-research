@@ -31,7 +31,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: report.title,
       description: report.preview,
-      url: `https://parkinson-research.vercel.app/${lang}/report/${date}`,
+      url: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://aiagainstparkinson.com'}/${lang}/report/${date}`,
+      images: [`${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://aiagainstparkinson.com'}/og-default.png`],
     },
   }
 }

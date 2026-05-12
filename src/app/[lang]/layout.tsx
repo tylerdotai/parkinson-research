@@ -38,11 +38,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       siteName: dictionary.metadata.title,
       title: dictionary.metadata.title,
       description: dictionary.metadata.description,
+      images: [
+        {
+          url: 'https://aiagainstparkinson.com/og-default.png',
+          width: 1200,
+          height: 630,
+          alt: 'AI Against Parkinson\'s',
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title: dictionary.metadata.title,
       description: dictionary.metadata.description,
+      images: ['https://aiagainstparkinson.com/og-default.png'],
     },
     alternates: {
       canonical: `https://aiagainstparkinson.com/${lang}`,
