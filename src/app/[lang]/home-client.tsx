@@ -3,7 +3,6 @@
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Nav } from '@/components/nav'
-import { Footer } from '@/components/footer'
 import { type Locale } from '@/lib/i18n/config'
 import type { Dictionary } from '@/lib/dictionary'
 
@@ -125,7 +124,7 @@ export function HomeClient({ locale, dictionary }: HomeClientProps) {
                   }}
                 >
                   <Image
-                    src="https://images.unsplash.com/photo-1493836512294-502baa1986e2?w=900&q=80&auto=format&fit=crop"
+                    src="/images/founder-hockey.png"
                     alt="A person reading in warm natural light — representing families staying informed"
                     fill
                     priority
@@ -233,7 +232,6 @@ export function HomeClient({ locale, dictionary }: HomeClientProps) {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   )
 }
