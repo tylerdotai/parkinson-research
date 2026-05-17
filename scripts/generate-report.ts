@@ -15,7 +15,7 @@
  */
 
 import { execSync } from 'child_process'
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs'
+import { writeFileSync, mkdirSync, existsSync } from 'fs'
 import { join } from 'path'
 
 const SITE_URL = 'https://aiagainstparkinson.com'
@@ -30,18 +30,6 @@ function run(cmd: string): string {
 
 function today(): string {
   return new Date().toISOString().split('T')[0]
-}
-
-function formatDate(date: string): string {
-  return new Date(date).toLocaleDateString('en-US', {
-    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-  })
-}
-
-function formatDateES(date: string): string {
-  return new Date(date).toLocaleDateString('es-ES', {
-    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-  })
 }
 
 // ── research agent ────────────────────────────────────────────────────────────
@@ -84,7 +72,6 @@ async function researchAgent(category: string, query: string): Promise<Finding[]
 // ── report assembly ───────────────────────────────────────────────────────────
 
 function assembleReport(date: string, clinical: Finding[], breakthroughs: Finding[], lifestyle: Finding[], emerging: Finding[]): string {
-  const formatted = formatDate(date)
   const lines: string[] = [
     '---',
     `title: "Parkinson's Research — ${date}"`,
@@ -127,7 +114,6 @@ function assembleReport(date: string, clinical: Finding[], breakthroughs: Findin
 }
 
 function assembleReportES(date: string, clinical: Finding[], breakthroughs: Finding[], lifestyle: Finding[], emerging: Finding[]): string {
-  const formatted = formatDateES(date)
   const lines: string[] = [
     '---',
     `title: "Investigación sobre Parkinson — ${date}"`,
@@ -141,13 +127,6 @@ function assembleReportES(date: string, clinical: Finding[], breakthroughs: Find
     '## Ensayos Clínicos',
     '',
   ]
-
-  const translations: Record<string, string> = {
-    'Clinical Trials': 'Ensayos Clínicos',
-    'Breakthrough Treatments': 'Tratamientos Innovadores',
-    'Lifestyle Interventions': 'Intervenciones de Estilo de Vida',
-    'Emerging Research': 'Investigación Emergente',
-  }
 
   for (const f of clinical) {
     lines.push(`### ${f.headline}`, '', f.body || 'Desarrollos recientes en ensayos clínicos para la enfermedad de Parkinson.', '', `*Desde: ${f.source}*`, '')

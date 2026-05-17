@@ -66,8 +66,9 @@ async function main() {
     } else {
       console.log('❌ Email test FAILED — check response above')
     }
-  } catch (e: any) {
-    console.error('❌ Request failed:', e.message)
+  } catch (e: unknown) {
+    const message = e instanceof Error ? e.message : String(e)
+    console.error('❌ Request failed:', message)
     process.exit(1)
   }
 }

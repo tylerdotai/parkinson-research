@@ -1,5 +1,12 @@
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://gbzuvtzsezmfzgybryrs.supabase.co'
-const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'sb_publishable_zB0PHZUbawooCQY0k1QRNQ__siDSybB'
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
+const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+
+function getSupabaseVars() {
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+    throw new Error('Missing Supabase environment variables: NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY must be set')
+  }
+  return { SUPABASE_URL, SUPABASE_ANON_KEY }
+}
 
 export interface Subscriber {
   id: string
@@ -12,6 +19,7 @@ export interface Subscriber {
 }
 
 export async function subscribe(email: string, language = 'en', source = 'website'): Promise<{ success: boolean; error?: string; alreadySubscribed?: boolean; id?: string }> {
+  const { SUPABASE_URL, SUPABASE_ANON_KEY } = getSupabaseVars()
   const res = await fetch(`${SUPABASE_URL}/rest/v1/subscribers`, {
     method: 'POST',
     headers: {
@@ -42,6 +50,7 @@ export async function subscribe(email: string, language = 'en', source = 'websit
 }
 
 export async function confirmSubscription(id: string): Promise<{ success: boolean; error?: string }> {
+  const { SUPABASE_URL, SUPABASE_ANON_KEY } = getSupabaseVars()
   const res = await fetch(`${SUPABASE_URL}/rest/v1/subscribers?id=eq.${id}`, {
     method: 'PATCH',
     headers: {
@@ -64,6 +73,7 @@ export async function confirmSubscription(id: string): Promise<{ success: boolea
 }
 
 export async function unsubscribe(id: string): Promise<{ success: boolean; error?: string }> {
+  const { SUPABASE_URL, SUPABASE_ANON_KEY } = getSupabaseVars()
   const res = await fetch(`${SUPABASE_URL}/rest/v1/subscribers?id=eq.${id}`, {
     method: 'PATCH',
     headers: {

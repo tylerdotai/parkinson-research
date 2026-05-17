@@ -17,7 +17,8 @@ export async function POST(request: NextRequest) {
     const result = await subscribe(email.toLowerCase(), 'en', body?.source || 'website')
 
     if (result.success && result.id) {
-      const confirmUrl = `https://aiagainstparkinson.com/en/api/confirm/${result.id}`
+      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://aiagainstparkinson.com'
+      const confirmUrl = `${siteUrl}/en/api/confirm/${result.id}`
       const resendApiKey = process.env.RESEND_API_KEY
       if (!resendApiKey) {
         Logger.warn('subscribe', 'RESEND_API_KEY is not set')
