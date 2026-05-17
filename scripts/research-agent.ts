@@ -215,11 +215,6 @@ function assembleReport(
   return lines.join('\n')
 }
 
-function translateReport(_enReport: string, _date: string): string {
-  // Translation is handled inline in main() via Groq
-  return ''
-}
-
 // ── Email Trigger ───────────────────────────────────────────────────────────
 
 async function triggerEmail(date: string, language: string): Promise<void> {
