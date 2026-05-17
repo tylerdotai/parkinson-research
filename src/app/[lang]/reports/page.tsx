@@ -108,30 +108,6 @@ export default async function ReportsPage({ params }: Props) {
         </div>
       )}
 
-      {/* API Section */}
-      <div className="mt-12 pt-8" style={{ borderTop: '1px solid var(--color-parchment)' }}>
-        <div className="card" style={{ padding: '1.75rem' }}>
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div>
-              <h3
-                className="font-semibold mb-1"
-                style={{ fontFamily: 'Instrument Serif, serif', color: 'var(--color-charcoal)' }}
-              >
-                {t.apiSection}
-              </h3>
-              <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>{t.apiSectionDesc}</p>
-            </div>
-            <a
-              href={`/${lang}/api/reports`}
-              className="btn-secondary text-sm"
-              target="_blank"
-              rel="noopener"
-            >
-              {dictionary.home.viewApi}
-            </a>
-          </div>
-        </div>
       </div>
-    </div>
   )
 }

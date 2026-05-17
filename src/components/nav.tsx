@@ -38,7 +38,6 @@ export function Nav() {
     { label: 'Reports', href: '/reports' },
     { label: 'Resources', href: '/resources' },
     { label: 'About', href: '/about' },
-    { label: 'API', href: '/api/reports' },
   ]
 
   return (

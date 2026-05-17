@@ -165,36 +165,7 @@ export default async function AboutPage({ params }: Props) {
           </ul>
         </section>
 
-        {/* API Access */}
-        <section className="card" style={{ padding: '1.75rem' }}>
-          <h2
-            className="text-base font-semibold mb-5 flex items-center gap-3"
-            style={{ color: 'var(--color-charcoal)' }}
-          >
-            <span
-              className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
-              style={{ background: 'rgba(203, 183, 251, 0.10)' }}
-            >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--color-amethyst)' }}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
-              </svg>
-            </span>
-            {t.apiAccess}
-          </h2>
-          <p className="text-sm leading-relaxed mb-5" style={{ color: 'var(--color-text-secondary)' }}>
-            {t.apiAccessDesc}
-          </p>
-          <div
-            className="rounded-xl p-5 font-mono text-sm"
-            style={{ background: 'var(--color-mysteria)' }}
-          >
-            <code style={{ color: 'rgba(255,255,255,0.75)' }}>
-              GET <span style={{ color: '#86efac' }}>/{lang}/api/reports</span>
-              <br />
-              GET <span style={{ color: '#86efac' }}>/{lang}/api/reports/[date]</span>
-            </code>
-          </div>
-        </section>
+        
 
         {/* Disclaimer */}
         <section className="card" style={{ padding: '1.75rem' }}>
