@@ -25,13 +25,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang, date } = await params
   const report = await getReport(date, lang)
   if (!report) return { title: 'Report Not Found' }
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://aiagainstparkinson.com'
   return {
     title: report.title,
     description: report.preview,
     openGraph: {
       title: report.title,
       description: report.preview,
-      url: `https://parkinson-research.vercel.app/${lang}/report/${date}`,
+      url: `${siteUrl}/${lang}/report/${date}`,
     },
   }
 }
