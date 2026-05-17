@@ -19,6 +19,21 @@ This file is for AI agents working on or contributing to the project.
 
 ---
 
+## Developer Commands
+
+```bash
+npm run dev        # Local dev server → http://localhost:3000
+npm run lint       # ESLint
+npm run typecheck  # TypeScript (tsc --noEmit)
+npm test           # Jest (passWithNoTests)
+npm run build      # Next.js production build (required before every push)
+```
+
+**CI order (important):** lint → typecheck → test → build → content-validation
+Always run `npm run build` locally before pushing — it must exit code 0.
+
+---
+
 ## Architecture
 
 ```
@@ -40,38 +55,52 @@ OpenClaw Cron (7 AM CDT)
         POST /api/send-report (ES)
 ```
 
+**Backup trigger:** GitHub Actions `cron-report.yml` fires daily at 12:00 UTC (7 AM CDT) and runs `npm run research` if configured.
+
 ---
 
-## Important Conventions
+## Report Format
 
-### Report Format
-- Reports live at `public/reports/YYYY-MM-DD.md` (EN) and `public/reports/es/YYYY-MM-DD.md` (ES)
-- Must have YAML frontmatter: `title` and `date`
-- 4 sections exactly: Clinical Trials, Breakthrough Treatments, Lifestyle Interventions, Emerging Research
-- 2-3 findings per section
-- Finding format: `### [Headline — max 8 words]\n[2-3 sentences]\n*From: Source (URL)*`
+- Reports: `public/reports/YYYY-MM-DD.md` (EN), `public/reports/es/YYYY-MM-DD.md` (ES)
+- YAML frontmatter required: `title` and `date`
+- **Exactly 4 sections:** Clinical Trials, Breakthrough Treatments, Lifestyle Interventions, Emerging Research
+- **2–3 findings per section**
+- Finding format: `### [Headline — max 8 words]\n[2–3 sentences]\n*From: Source (URL)*`
 
-### Email System
-- Email sending is handled by `/api/send-report` on Vercel — NOT by calling Resend directly
+---
+
+## Email System
+
+- **Never call Resend directly** — always use the `/api/send-report` Vercel endpoint
 - The endpoint reads markdown, converts to HTML, fetches subscribers from Supabase, and sends via Resend
-- Always call the Vercel endpoint after a successful push, not Resend directly
 
-### Git Workflow
-- Reports are committed to `public/reports/` only
-- Source code changes go in separate commits
-- Commit message format for reports: `reports: YYYY-MM-DD daily update`
+```bash
+# Test email endpoint (any machine)
+curl -X POST "https://parkinson-research.vercel.app/api/send-report" \
+  -H "Content-Type: application/json" \
+  -d '{"date": "YYYY-MM-DD", "language": "en"}'
+```
 
-### Testing
-- Always build locally before pushing: `npm run build`
-- Test the email endpoint with: `curl -X POST "https://parkinson-research.vercel.app/api/send-report" -H "Content-Type: application/json" -d '{"date": "YYYY-MM-DD", "language": "en"}'`
-- All 5 subscribers confirmed in Supabase (all English)
+- ES sends return `sent: 0` until Spanish subscribers are added — this is normal, not an error
+- All 5 current subscribers are English-only
 
-### Content Standards
+---
+
+## Git Workflow
+
+- Report commits: `public/reports/` only — message: `reports: YYYY-MM-DD daily update`
+- Source code changes: separate commits from report commits
+- Branch naming: `fix/`, `feat/`, `chore/`, `refactor/` prefixes
+
+---
+
+## Content Standards (non-negotiable)
+
 - No invented facts, sources, or citations
 - No medical jargon without plain-language explanation
 - No cure/reversal/guarantee claims
-- No social media or paywalled sources
-- Source must be credible: PubMed, NIH, FDA, major universities, Parkinson's Foundation, MJFF
+- No social media, Reddit, or paywalled sources
+- Credible sources only: PubMed, NIH, FDA, major universities, Parkinson's Foundation, MJFF
 
 ---
 
@@ -79,40 +108,54 @@ OpenClaw Cron (7 AM CDT)
 
 | File | Purpose |
 |------|---------|
-| `src/app/api/send-report/route.ts` | Email delivery endpoint (HTML conversion + Resend) |
-| `src/lib/supabase.ts` | Supabase client, subscriber and report operations |
+| `src/app/api/send-report/route.ts` | Email endpoint (HTML conversion + Resend) |
+| `src/lib/supabase.ts` | Supabase client, subscriber/report queries |
 | `src/lib/parseReport.ts` | Markdown → structured report sections |
 | `public/reports/YYYY-MM-DD.md` | Daily EN report |
 | `public/reports/es/YYYY-MM-DD.md` | Daily ES report |
+| `scripts/content-validation.ts` | CI content validation (EN/ES pages + report schema) |
 | `supabase_schema.sql` | Subscribers table schema |
 | `supabase_schema_reports.sql` | Reports + reviews tables schema |
-| `skills/SKILL.md` | Research pipeline skill (read before working on reports) |
+| `skills/SKILL.md` | Research pipeline skill (detailed — read before working on reports) |
 
 ---
 
-## Working with the OpenClaw Cron
+## OpenClaw Cron
 
-The cron job ID: `8f562e97-5653-4f7a-a100-3d1e0ff79da7`
+Cron job ID: `8f562e97-5653-4f7a-a100-3d1e0ff79da7`
 
-To check status:
 ```bash
 openclaw cron list
 openclaw cron runs --id 8f562e97-5653-4f7a-a100-3d1e0ff79da7
 ```
 
-Cron fires at 7:00 AM CDT (13:00 UTC) daily. It runs as an `agentTurn` payload with a 600-second timeout.
+Cron fires at 7:00 AM CDT (13:00 UTC) daily. Runs as `agentTurn` with 600s timeout.
 
 ---
 
-## Adding New Skills
+## Environment Setup
 
-If you add a new skill for this project, place it in `skills/` and name it descriptively (e.g., `skills/research-pipeline.md`). Follow the skill template in `skills/SKILL.md`.
+```bash
+# Pull production env vars from Vercel
+vercel env pull .env.local
+
+# Required env vars
+NEXT_PUBLIC_SUPABASE_URL=https://gbzuvtzsezmfzgybryrs.supabase.co
+RESEND_API_KEY=re_...           # Vercel only — never commit
+SUPABASE_SERVICE_ROLE_KEY=...   # Vercel only — never commit
+```
+
+---
+
+## Adding Skills
+
+Place new skills in `skills/` with descriptive names (e.g., `skills/research-pipeline.md`). Follow the template in `skills/SKILL.md`.
 
 ---
 
 ## Getting Help
 
-- Project README: `README.md`
-- Full spec: `SPEC.md`
 - Research pipeline skill: `skills/SKILL.md`
+- Email system skill: `skills/email-system.md`
+- Local dev guide: `skills/development.md`
 - OpenClaw docs: https://docs.openclaw.ai

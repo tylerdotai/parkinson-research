@@ -85,10 +85,26 @@ export async function POST(req: NextRequest) {
     if (!subsRes.ok) {
       const errText = await subsRes.text()
       Logger.error('send-report', 'Supabase fetch failed', { status: subsRes.status, errText })
-      return Response.json({ error: 'Failed to fetch subscribers', detail: errText }, { status: 500 })
+      return Response.json({ error: 'Failed to fetch subscribers' }, { status: 500 })
     }
 
-    const subscribers = await subsRes.json()
+    // Subscriber shape from Supabase
+    interface Subscriber {
+      id: string
+      email: string
+      language: string
+    }
+
+    const subscribers = await subsRes.json() as Subscriber[]
+
+    // Filter subscribers by language once
+    const filteredSubs = subscribers.filter((sub) =>
+      lang === 'es' ? sub.language === 'es' : sub.language !== 'es'
+    )
+
+    if (filteredSubs.length === 0) {
+      return Response.json({ success: true, sent: 0, failed: [], total: 0 })
+    }
 
     // Send emails via Resend
     const resendKey = process.env.RESEND_API_KEY
@@ -110,10 +126,8 @@ export async function POST(req: NextRequest) {
     const sent: string[] = []
     const failed: string[] = []
 
-    for (const sub of subscribers) {
-      if (lang === 'es' && sub.language !== 'es') continue
-      if (lang === 'en' && sub.language === 'es') continue
-
+    // Send emails in parallel batches to avoid overwhelming the API
+    const sendEmail = async (sub: { email: string; id: string }) => {
       const subject = `${subjectPrefix} — ${formattedDate}`
       const unsubUrl = `${siteUrl}/api/unsubscribe/${sub.id}`
       const htmlContent = HTML_TEMPLATE(pageTitle, bodyHtml, siteUrl, unsubUrl)
@@ -133,10 +147,23 @@ export async function POST(req: NextRequest) {
       })
 
       if (emailRes.ok) {
-        sent.push(sub.email)
+        return { email: sub.email, ok: true }
       } else {
         const errBody = await emailRes.text()
-        failed.push(`${sub.email}: ${emailRes.status} ${errBody}`)
+        return { email: sub.email, ok: false, err: `${emailRes.status} ${errBody}` }
+      }
+    }
+
+    const BATCH_SIZE = 3
+    for (let i = 0; i < filteredSubs.length; i += BATCH_SIZE) {
+      const batch = filteredSubs.slice(i, i + BATCH_SIZE)
+      const results = await Promise.all(batch.map(s => sendEmail(s)))
+      for (const r of results) {
+        if (r.ok) {
+          sent.push(r.email)
+        } else {
+          failed.push(`${r.email}: ${(r as { err: string }).err}`)
+        }
       }
     }
 
@@ -144,7 +171,7 @@ export async function POST(req: NextRequest) {
       success: true,
       sent: sent.length,
       failed,
-      total: subscribers.length,
+      total: filteredSubs.length,
     })
   } catch (err) {
     Logger.error('send-report', 'Request failed', err)
