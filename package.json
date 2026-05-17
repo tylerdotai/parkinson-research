@@ -9,7 +9,8 @@
     "lint": "eslint --ext .ts,.tsx .",
     "test": "jest --passWithNoTests",
     "test:coverage": "jest --coverage",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "research": "npx tsx scripts/research-agent.ts"
   },
   "dependencies": {
     "framer-motion": "^12.38.0",
