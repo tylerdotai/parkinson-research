@@ -1,113 +1,33 @@
-import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { getDictionary } from '@/lib/dictionary'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
-import '../globals.css'
+import { Nav } from '@/components/nav'
+import { Footer } from '@/components/footer'
+import { isLocale, type Locale } from '@/lib/i18n/config'
 
 type Props = {
   children: React.ReactNode
   params: Promise<{ lang: string }>
 }
 
-type Locale = 'en' | 'es';
-const VALID_LOCALES: Locale[] = ['en', 'es'];
+const VALID_LOCALES: Locale[] = ['en', 'es']
 
 export async function generateStaticParams() {
   return VALID_LOCALES.map((lang) => ({ lang }))
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { lang } = await params
-  const dictionary = await getDictionary(lang)
-  
-  return {
-    title: {
-      default: dictionary.metadata.title,
-      template: `%s | ${dictionary.metadata.title}`,
-    },
-    description: dictionary.metadata.description,
-    keywords: dictionary.metadata.keywords,
-    authors: [{ name: 'Flume SaaS Factory' }],
-    creator: 'Flume SaaS Factory',
-    openGraph: {
-      type: 'website',
-      locale: lang === 'es' ? 'es_ES' : 'en_US',
-      alternateLocale: lang === 'es' ? 'en_US' : 'es_ES',
-      url: `https://aiagainstparkinson.com/${lang}`,
-      siteName: dictionary.metadata.title,
-      title: dictionary.metadata.title,
-      description: dictionary.metadata.description,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: dictionary.metadata.title,
-      description: dictionary.metadata.description,
-    },
-    alternates: {
-      canonical: `https://aiagainstparkinson.com/${lang}`,
-      languages: {
-        'en': 'https://aiagainstparkinson.com/en',
-        'es': 'https://aiagainstparkinson.com/es',
-      },
-    },
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        'max-video-preview': -1,
-        'max-image-preview': 'large',
-        'max-snippet': -1,
-      },
-    },
-  }
-}
-
 export default async function LangLayout({ children, params }: Props) {
   const { lang } = await params
-  
-  // Validate locale
-  if (!VALID_LOCALES.includes(lang as Locale)) {
+
+  if (!isLocale(lang)) {
     notFound()
   }
-  
-  const dictionary = await getDictionary(lang)
 
   return (
-    <html lang={lang}>
-      <head>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%231b1938' width='100' height='100' rx='12'/><text x='50' y='68' font-size='50' text-anchor='middle' fill='%23cbb7fb' font-family='system-ui'>P</text></svg>" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'WebSite',
-              name: dictionary.metadata.title,
-              url: `https://aiagainstparkinson.com/${lang}`,
-              description: dictionary.metadata.description,
-              publisher: {
-                '@type': 'Organization',
-                name: 'Flume SaaS Factory',
-              },
-              inLanguage: lang,
-              potentialAction: {
-                '@type': 'SearchAction',
-                target: `https://aiagainstparkinson.com/${lang}/reports`,
-                'query-input': 'required name=search_term_string',
-              },
-            }),
-          }}
-        />
-      </head>
-      <body className="min-h-screen flex flex-col">
-        <a href="#main-content" className="skip-link">Skip to main content</a>
-        <Header dictionary={dictionary} lang={lang} />
-        <main id="main-content" className="flex-1">{children}</main>
-        <Footer dictionary={dictionary} lang={lang} />
-      </body>
-    </html>
+    <>
+      <Nav />
+      <main id="main-content" className="flex-1">
+        {children}
+      </main>
+      <Footer />
+    </>
   )
 }
