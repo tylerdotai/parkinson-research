@@ -49,6 +49,12 @@
   --spacing-128: 32rem;
 }
 
+/* Legacy report component color mappings */
+--color-amethyst: var(--pap-lavender);
+--color-charcoal: var(--pap-text);
+--color-text-secondary: var(--pap-muted);
+--color-border: var(--pap-border);
+
 :root {
   /* AIAP light — clean, editorial, purple accents */
   --background: #ffffff;

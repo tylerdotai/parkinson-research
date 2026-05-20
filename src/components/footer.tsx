@@ -50,7 +50,7 @@ export function Footer() {
               Daily Research for Families
             </p>
             <div className="mt-3 flex items-center gap-2">
-              <span className="inline-block h-2 w-2 rounded-full bg-pap-purple" />
+              <span className="inline-block h-2 w-2 rounded-full bg-pap-lavender" />
               <span className="text-[12px] text-pap-dim">Daily at 7:00 AM CDT</span>
             </div>
             <p className="mt-4 text-[14px] sm:text-[15px] text-pap-muted leading-[1.6] max-w-sm">

@@ -88,7 +88,7 @@ export function Nav() {
             {/* Subscribe CTA */}
             <a
               href={withLocale('/subscribe', locale)}
-              className="ml-2 lg:ml-3 inline-flex items-center gap-1.5 rounded-full bg-pap-purple px-5 py-2 text-sm font-medium text-white hover:bg-[#8b5dc7] transition-colors"
+              className="ml-2 lg:ml-3 inline-flex items-center gap-1.5 rounded-full bg-pap-purple px-5 py-2 text-sm font-medium text-white hover:bg-pap-purple/90 transition-colors"
             >
               Subscribe
               <svg
@@ -201,7 +201,7 @@ export function Nav() {
                 <a
                   href={withLocale('/subscribe', locale)}
                   onClick={() => setOpen(false)}
-                  className="block w-full rounded-full bg-pap-purple py-4 text-center text-base font-medium text-white hover:bg-[#8b5dc7] transition-colors"
+                  className="block w-full rounded-full bg-pap-purple py-4 text-center text-base font-medium text-white hover:bg-pap-purple/90 transition-colors"
                 >
                   Subscribe
                 </a>

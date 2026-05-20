@@ -113,7 +113,7 @@ export function SubscribeClient({ locale, dictionary: t }: SubscribeClientProps)
           <button
             type="submit"
             disabled={status === 'loading'}
-            className="px-8 py-3.5 rounded-full bg-pap-purple text-white font-medium hover:bg-[#8b5dc7] transition-colors disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="px-8 py-3.5 rounded-full bg-pap-purple text-white font-medium hover:bg-pap-purple/90 transition-colors disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {status === 'loading' ? (
               <>

@@ -48,7 +48,7 @@ export default function ReportSection({ section, sectionIndex }: Props) {
       {/* Section header */}
       <div className="flex items-center gap-3 mb-6">
         <span
-          className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+          className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
           style={{
             background: 'rgba(203, 183, 251, 0.12)',
             color: 'var(--color-amethyst)',
@@ -57,8 +57,8 @@ export default function ReportSection({ section, sectionIndex }: Props) {
           {CATEGORY_ICONS[section.category] || CATEGORY_ICONS.emerging}
         </span>
         <h2
+          className="font-display"
           style={{
-            fontFamily: 'Instrument Serif, Georgia, serif',
             fontSize: '1.5rem',
             fontWeight: 400,
             color: 'var(--color-charcoal)',

@@ -14,7 +14,7 @@ export function CTASection({ headline, subline, buttonLabel, buttonHref, disclai
         <p className="text-pap-muted mb-8">{subline}</p>
         <a
           href={buttonHref}
-          className="inline-flex items-center gap-2 rounded-full bg-pap-purple px-8 py-4 text-base font-medium text-white hover:bg-[#8b5dc7] transition-colors"
+          className="inline-flex items-center gap-2 rounded-full bg-pap-purple px-8 py-4 text-base font-medium text-white hover:bg-pap-purple/90 transition-colors"
         >
           {buttonLabel}
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">

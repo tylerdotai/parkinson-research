@@ -14,7 +14,7 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  OPENCLAW CRON (daily 7:00 AM CDT)                         │
+│  OPENCLAW CRON (daily 6:30 AM CDT)                         │
 │  └── Parkinson Research Skill                               │
 │       ├── Clinical Trials Subagent                          │
 │       ├── Breakthrough Treatments Subagent                 │
@@ -54,26 +54,6 @@
 - Focus: Novel therapeutic targets, biomarkers, diagnostic advances
 - Include: Research stage, team/institution, novelty assessment
 - **NEW:** What this means for patients/families in 1-5 years
-
-### 5. Community & Support Resources
-- Source: Parkinson's Foundation, Michael J. Fox Foundation, local chapters
-- Include: Support groups, advocacy programs, caregiver resources, clinical trial matching tools
-- **NEW:** Outreach programs, volunteer opportunities, community events
-
-### 6. Caregiver & Family Resources
-- Source: Caregiving organizations, Parkinson's-specific programs
-- Include: Respite care, financial assistance, mental health support
-- Focus: What families need to know this week
-
-### 7. This Week's Action Items
-- Source: Derived from all research gathered
-- Format: Top 3 concrete actions patients/families can take based on this week's findings
-- Focus: Specific, timely, actionable — not vague suggestions
-
-### 8. Research Glossary
-- Source: Derived terms from each report
-- Format: Table explaining medical terms in plain language
-- Focus: Make reports accessible to non-medical readers
 
 ---
 
@@ -164,7 +144,7 @@ Each daily report is a structured Markdown file stored in `/public/reports/YYYY-
 ## OpenClaw Skill: `parkinson-research`
 
 ### Triggers
-- Cron job: daily at 07:00 AM CDT
+- Cron job: daily at 06:30 AM CDT
 - Manual: "run parkinson research" / "research parkinson's"
 
 ### Skill Flow
@@ -245,7 +225,7 @@ API responses include `_meta.language` field matching the requested locale.
 ## Deployment Flow
 
 ```
-OpenClaw Cron (7:00 AM CDT)
+OpenClaw Cron (6:30 AM CDT)
     ↓
 Parkinson Research Skill
     ↓

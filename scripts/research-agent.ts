@@ -366,6 +366,11 @@ async function main() {
     findings[cat.id] = results[i]
   })
 
+  const allFallback = results.every(r => r.includes('No significant developments'))
+  if (allFallback) {
+    console.warn('research-agent: All categories returned fallback — stub report generated. Email will be skipped.')
+  }
+
   // ── Assemble EN report ────────────────────────────────────────────────────
   console.log('\nAssembling EN report...')
   const enReport = assembleReport(date, findings)

@@ -30,6 +30,7 @@ export default async function ResourcesPage({ params }: Props) {
     { id: 'financial', label: 'Financial & Insurance' },
     { id: 'mental', label: 'Mental Health & Counseling' },
     { id: 'tech', label: 'Tech Tools & Assistive Technology' },
+    { id: 'espanol', label: 'En Español' },
   ] as const
 
   return (
@@ -310,6 +311,44 @@ export default async function ResourcesPage({ params }: Props) {
                 </div>
               </section>
             )}
+
+            <section id="espanol" className="border border-pap-border rounded-2xl p-6" style={{ padding: '1.75rem' }}>
+              <h2 className="text-base font-semibold mb-5 flex items-center gap-3 text-pap-text">
+                <span className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: 'var(--pap-purple-soft)' }}>
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--pap-purple)' }}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 21l5-9m-5 9l5 9m-11-3h12m-6 0a3 3 0 01-6 0" />
+                  </svg>
+                </span>
+                En Español
+              </h2>
+              <div className="space-y-1">
+                <ResourceItem
+                  name="Parkinson's Foundation — Recursos en Español"
+                  phone="1-800-4PD-INFO opción 3"
+                  description="Más de 50 páginas web en español con información clave sobre el Parkinson: manejo del estilo de vida, comprensión de la enfermedad, síntomas y más."
+                  href="https://www.parkinson.org/espanol"
+                  external
+                />
+                <ResourceItem
+                  name="EP Salud en Casa — Programas Virtuales"
+                  description="Programas virtuales de educación y bienestar en español: ejercicio, salud mental, nutrición y más. Vea programas grabados a su ritmo."
+                  href="https://www.parkinson.org/espanol/salud-en-casa"
+                  external
+                />
+                <ResourceItem
+                  name="Blog y Podcast en Español"
+                  description="Artículos sobre los últimos temas del Parkinson y episodios del podcast 'Temas Importantes: Vida y Ciencia del Parkinson' traducidos al español."
+                  href="https://www.parkinson.org/blog/espanol"
+                  external
+                />
+                <ResourceItem
+                  name="PD GENEration — Pruebas Genéticas"
+                  description="Iniciativa de la Parkinson's Foundation que ofrece pruebas genéticas y asesoramiento sin costo para personas con Parkinson. Inscripciones abiertas."
+                  href="https://www.parkinson.org/espanol/pd-generation"
+                  external
+                />
+              </div>
+            </section>
           </div>
         </div>
       </div>

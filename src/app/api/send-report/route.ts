@@ -224,6 +224,13 @@ function checkSendThreshold(rawContent: string): SendThresholdResult {
 
 export async function POST(req: NextRequest) {
   try {
+    // Auth check
+    const authHeader = req.headers.get('Authorization')
+    const CRON_SECRET = process.env.CRON_REPORT_SECRET
+    if (!CRON_SECRET || authHeader !== `Bearer ${CRON_SECRET}`) {
+      return Response.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
     const { date, language } = await req.json()
 
     if (!date) {

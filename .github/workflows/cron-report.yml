@@ -10,13 +10,22 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
+    env:
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+
     steps:
+      - name: Run research backup
+        run: |
+          DATE=$(date +%Y-%m-%d) REPORT_DATE=$DATE npx tsx scripts/research-agent.ts
+
       - name: Trigger email delivery
         run: |
           DATE=$(date +%Y-%m-%d)
           curl -s -X POST "https://parkinson-research.vercel.app/api/send-report" \
+            -H "Authorization: Bearer ${{ secrets.CRON_REPORT_SECRET }}" \
             -H "Content-Type: application/json" \
             -d "{\"date\": \"$DATE\", \"language\": \"en\"}"
           curl -s -X POST "https://parkinson-research.vercel.app/api/send-report" \
+            -H "Authorization: Bearer ${{ secrets.CRON_REPORT_SECRET }}" \
             -H "Content-Type: application/json" \
             -d "{\"date\": \"$DATE\", \"language\": \"es\"}"

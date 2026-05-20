@@ -55,7 +55,7 @@ OpenClaw Cron (6:30 AM CDT)
         POST /api/send-report (ES)
 ```
 
-**Backup trigger:** GitHub Actions `cron-report.yml` fires daily at 12:00 UTC (7 AM CDT) and runs `npm run research` if configured.
+**Backup trigger:** GitHub Actions `cron-report.yml` fires daily at 11:30 UTC (5:30 AM CDT) and runs `npm run research` if configured.
 
 ---
 
@@ -82,7 +82,7 @@ curl -X POST "https://parkinson-research.vercel.app/api/send-report" \
 ```
 
 - ES sends return `sent: 0` until Spanish subscribers are added — this is normal, not an error
-- All 5 current subscribers are English-only
+- Subscriber language preferences are stored in Supabase and respected during send
 
 ---
 

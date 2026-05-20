@@ -20,9 +20,10 @@ create policy "anyone_can_subscribe"
   with check (true);
 
 -- Anyone can view confirmed, non-unsubscribed (for checking if already subscribed)
-create policy "anyone_can_view_subscribers"
+drop policy if exists "anyone_can_view_subscribers" on public.subscribers;
+create policy "service_role_view_subscribers"
   on public.subscribers for select
-  using (confirmed_at is not null and unsubscribed_at is null);
+  using (auth.role() = 'service_role');
 
 -- Service role (for cron sending)
 create policy "service_role_full_access"

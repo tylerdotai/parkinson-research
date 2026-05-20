@@ -83,8 +83,8 @@ export default async function ReportPage({ params }: Props) {
             </Link>
 
             <h1
+              className="font-display"
               style={{
-                fontFamily: 'Instrument Serif, Georgia, serif',
                 fontSize: 'clamp(1.75rem, 5vw, 2.75rem)',
                 fontWeight: 400,
                 lineHeight: 1.15,

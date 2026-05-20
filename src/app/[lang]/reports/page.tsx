@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { getDictionary } from '@/lib/dictionary'
-import { getAllReportDates, getReportMetadata } from '@/lib/reports'
+import { getAllReportDates, getReportMetadata, getReportSections } from '@/lib/reports'
 import { Badge } from '@/components/Badge'
 
 type Props = {
@@ -30,6 +30,24 @@ export default async function ReportsPage({ params }: Props) {
       day: 'numeric'
     })
   }
+
+  const categoryLabels: Record<string, string> = {
+    clinical: 'Clinical Trials',
+    breakthrough: 'Breakthroughs',
+    lifestyle: 'Lifestyle',
+    emerging: 'Emerging',
+  }
+
+  const reportData = await Promise.all(
+    dates.map(async (date) => {
+      const sections = await getReportSections(date, lang)
+      const meta = getReportMetadata(date, lang)
+      if (!sections.length) return null
+      const categoriesWithContent = sections.map(s => s.category).filter(c => categoryLabels[c])
+      return { date, categoriesWithContent, preview: meta?.preview }
+    })
+  )
+  const validReports = reportData.filter(Boolean)
 
   return (
     <div className="py-20 md:py-28 lg:py-32">
@@ -69,7 +87,7 @@ export default async function ReportsPage({ params }: Props) {
             <div className="max-w-5xl mb-6">
               <Link
                 href={`/${lang}/subscribe`}
-                className="inline-flex items-center gap-2 rounded-full bg-pap-purple px-5 py-2.5 text-sm font-medium text-white hover:bg-[#8b5dc7] transition-colors"
+                className="inline-flex items-center gap-2 rounded-full bg-pap-purple px-5 py-2.5 text-sm font-medium text-white hover:bg-pap-purple/90 transition-colors"
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
@@ -78,8 +96,9 @@ export default async function ReportsPage({ params }: Props) {
               </Link>
             </div>
             <div className="max-w-5xl space-y-3">
-              {dates.map((date) => {
-                const meta = getReportMetadata(date, lang)
+              {validReports.map((report) => {
+                if (!report) return null
+                const { date, categoriesWithContent } = report
 
                 return (
                   <div key={date}>
@@ -92,14 +111,14 @@ export default async function ReportsPage({ params }: Props) {
                           <p className="font-display text-pap-text mb-1.5" style={{ fontSize: '1.0625rem' }}>
                             {formatDate(date)}
                           </p>
-                          {meta?.preview && (
+                          {report.preview && (
                             <p className="text-sm line-clamp-2 text-pap-muted">
-                              {meta.preview}
+                              {report.preview}
                             </p>
                           )}
                           <div className="flex gap-2 mt-2">
-                            {['Clinical Trials', 'Breakthroughs', 'Lifestyle', 'Emerging'].map((cat) => (
-                              <Badge key={cat} label={cat} variant="outline" />
+                            {categoriesWithContent.map((cat) => (
+                              <Badge key={cat} label={categoryLabels[cat]} variant="outline" />
                             ))}
                           </div>
                         </div>

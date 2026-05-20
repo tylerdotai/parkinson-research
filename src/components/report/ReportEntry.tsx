@@ -34,10 +34,10 @@ export default function ReportEntry({ entry, index }: Props) {
         <div className="flex-1 min-w-0">
           {/* Title */}
           {entry.title && (
-            <h3
-              style={{
-                fontFamily: 'Instrument Serif, Georgia, serif',
-                fontSize: '1.125rem',
+          <h3
+            className="font-display"
+            style={{
+              fontSize: '1.125rem',
                 fontWeight: 400,
                 lineHeight: 1.35,
                 color: 'var(--color-charcoal)',
