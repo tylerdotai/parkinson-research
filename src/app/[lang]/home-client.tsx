@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Nav } from '@/components/nav'
 import { Badge } from '@/components/Badge'
@@ -30,6 +31,7 @@ interface HomeClientProps {
 
 export function HomeClient({ locale, dictionary, latestReport }: HomeClientProps) {
   const t = dictionary.home
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   return (
     <>
@@ -106,10 +108,7 @@ export function HomeClient({ locale, dictionary, latestReport }: HomeClientProps
                   {...stagger(4)}
                   className="mt-10 flex items-center gap-3 text-sm text-pap-dim"
                 >
-                  <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-pap-purple opacity-60" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-pap-purple" />
-                  </span>
+                  <span className="inline-block h-2 w-2 rounded-full bg-pap-purple" />
                   <span>Daily at 7:00 AM CDT</span>
                 </motion.div>
               </div>
@@ -244,6 +243,45 @@ export function HomeClient({ locale, dictionary, latestReport }: HomeClientProps
                   <h3 className="font-display text-[1.375rem] text-pap-text mb-3">{item.title}</h3>
                   <p className="leading-relaxed text-pap-muted">{item.body}</p>
                 </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="border-t border-pap-border px-5 md:px-8 py-20 md:py-28 lg:py-32">
+          <div className="mx-auto max-w-2xl">
+            <div className="mb-12 text-center">
+              <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-pap-purple block mb-3">FAQ</span>
+              <h2 className="font-display text-3xl sm:text-4xl text-pap-text">{dictionary.faq.title}</h2>
+            </div>
+            <div className="divide-y divide-pap-border">
+              {dictionary.faq.items.map((item, i) => (
+                <div key={i}>
+                  <button
+                    onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                    className="w-full flex items-center justify-between gap-4 py-5 text-left group"
+                  >
+                    <span className="font-display text-base text-pap-text group-hover:text-pap-purple transition-colors">
+                      {item.q}
+                    </span>
+                    <span className="flex-shrink-0 text-pap-purple">
+                      {openIndex === i ? (
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M20 12H4" />
+                        </svg>
+                      ) : (
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                        </svg>
+                      )}
+                    </span>
+                  </button>
+                  {openIndex === i && (
+                    <div className="pb-5 text-sm text-pap-muted leading-relaxed">
+                      {item.a}
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
           </div>

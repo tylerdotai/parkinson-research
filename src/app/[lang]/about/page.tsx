@@ -28,15 +28,48 @@ export default async function AboutPage({ params }: Props) {
             <span className="inline-block h-px w-6 bg-pap-purple/60" />
             About
           </p>
-          <h1 className="font-display text-[clamp(2rem,5vw,3rem)] font-normal leading-[1.1] tracking-tight text-pap-text mb-4">
+          <h1 className="font-display text-[clamp(2rem,5vw,3rem)] font-normal leading-[1.1] tracking-tight text-pap-text">
             {t.title}
           </h1>
-          <p className="text-base text-pap-muted">
-            Built by a caregiver, for families navigating Parkinson&apos;s.
-          </p>
         </header>
 
         <div className="max-w-4xl space-y-6" id="about-content">
+          <p className="text-base text-pap-muted mb-2">
+            Our story started with a diagnosis.
+          </p>
+
+          <div
+            className="border rounded-2xl p-6 overflow-hidden relative"
+            style={{
+              background: 'linear-gradient(135deg, #1b1938 0%, #2d2252 100%)',
+              border: '1px solid rgba(203, 183, 251, 0.15)'
+            }}
+          >
+            <div className="flex items-start gap-4">
+              <span
+                className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0"
+                style={{ background: 'rgba(203, 183, 251, 0.12)' }}
+              >
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--pap-lavender)' }}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                </svg>
+              </span>
+              <div className="flex-1">
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] mb-3" style={{ color: 'var(--pap-lavender)' }}>
+                  {t.founderLabel}
+                </p>
+                {t.founderText.split('\n\n').map((para, i) => (
+                  <p key={i} className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.65)' }}>
+                    {para}
+                  </p>
+                ))}
+                <p className="text-xs mt-5" style={{ color: 'rgba(255,255,255,0.40)' }}>
+                  {t.founderSig}
+                </p>
+              </div>
+            </div>
+          </div>
+
           <SectionCard
             icon={
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -122,38 +155,6 @@ export default async function AboutPage({ params }: Props) {
               {t.disclaimerText2}
             </p>
           </SectionCard>
-
-          <div
-            className="border rounded-2xl p-6 overflow-hidden relative"
-            style={{
-              background: 'linear-gradient(135deg, #1b1938 0%, #2d2252 100%)',
-              border: '1px solid rgba(203, 183, 251, 0.15)'
-            }}
-          >
-            <div className="flex items-start gap-4">
-              <span
-                className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0"
-                style={{ background: 'rgba(203, 183, 251, 0.12)' }}
-              >
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--pap-lavender)' }}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                </svg>
-              </span>
-              <div className="flex-1">
-                <p className="font-mono text-[10px] uppercase tracking-[0.22em] mb-3" style={{ color: 'var(--pap-lavender)' }}>
-                  {t.founderLabel}
-                </p>
-                {t.founderText.split('\n\n').map((para, i) => (
-                  <p key={i} className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.65)' }}>
-                    {para}
-                  </p>
-                ))}
-                <p className="text-xs mt-5" style={{ color: 'rgba(255,255,255,0.40)' }}>
-                  {t.founderSig}
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
 
         

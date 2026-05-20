@@ -331,5 +331,34 @@
     "termsChangesText": "We reserve the right to modify these Terms of Service at any time. Changes will be posted on this page with an updated \"Last updated\" date. Continued use of the service after any change constitutes your acceptance of the new terms.",
     "governingLaw": "Governing Law",
     "governingLawText": "These Terms of Service are governed by and construed in accordance with the laws of the State of Texas, United States of America, without regard to its conflict of law provisions. Any disputes arising from these terms shall be resolved in the courts of Texas."
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "items": [
+      {
+        "q": "What is AI Against Parkinson's?",
+        "a": "It's a free daily email that aggregates the latest Parkinson's research — clinical trials, breakthroughs, lifestyle tips, and emerging science — into plain-language reports."
+      },
+      {
+        "q": "Is it really free?",
+        "a": "Yes, completely free. No account required, no paywall, no subscription fees. Built and maintained by a caregiver for families like his own."
+      },
+      {
+        "q": "How often do reports arrive?",
+        "a": "Reports are sent when there's meaningful new research to share — typically a few times per week. You'll never get spammed with empty updates."
+      },
+      {
+        "q": "Is my email address safe?",
+        "a": "Your email is stored in Supabase (our database) and only used to send you reports. We never sell or share your data."
+      },
+      {
+        "q": "Can I unsubscribe anytime?",
+        "a": "Yes, every email has an unsubscribe link at the bottom. One click and you're off the list — no questions asked."
+      },
+      {
+        "q": "Is this medical advice?",
+        "a": "No. Content is for informational purposes only. Always consult your healthcare provider before making treatment decisions."
+      }
+    ]
   }
 }

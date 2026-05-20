@@ -330,5 +330,34 @@
     "termsChangesText": "Nos reservamos el derecho de modificar estos Terminos de Servicio en cualquier momento. Los cambios se publicaran en esta pagina con una fecha de 'Ultima actualizacion' actualizada. El uso continuo del servicio despues de cualquier cambio constituye su aceptacion de los nuevos terminos.",
     "governingLaw": "Ley Aplicable",
     "governingLawText": "Estos Terminos de Servicio se rigen e interpretan de acuerdo con las leyes del Estado de Texas, Estados Unidos de America, sin referencia a su disposicion de conflicto de leyes. Cualquier disputa que surja de estos terminos se resolvera en los tribunales de Texas."
+  },
+  "faq": {
+    "title": "Preguntas Frecuentes",
+    "items": [
+      {
+        "q": "¿Qué es AI Against Parkinson's?",
+        "a": "Es un correo electrónico diario gratuito que聚合最新的 Parkinson's 研究——临床试验、突破、生活方式提示和新兴科学——制成通俗语言的报告。"
+      },
+      {
+        "q": "¿Es realmente gratis?",
+        "a": "Sí, completamente gratis. No se requiere cuenta, no hay muro de pago, sin tarifas de suscripción. Construido y mantenido por un cuidador para familias como la suya."
+      },
+      {
+        "q": "¿Con qué frecuencia llegan los informes?",
+        "a": "Los informes se envían cuando hay nueva investigación significativa para compartir — típicamente unas pocas veces por semana. Nunca te enviaremos spam con actualizaciones vacías."
+      },
+      {
+        "q": "¿Mi dirección de correo electrónico está segura?",
+        "a": "Tu correo se almacena en Supabase (nuestra base de datos) y solo se usa para enviarte informes. Nunca vendemos ni compartimos tus datos."
+      },
+      {
+        "q": "¿Puedo darme de baja en cualquier momento?",
+        "a": "Sí, cada correo tiene un enlace para cancelar la suscripción al final. Un clic y sales de la lista, sin preguntas."
+      },
+      {
+        "q": "¿Esto es consejo médico?",
+        "a": "No. El contenido es solo para fines informativos. Consulta siempre a tu proveedor de salud antes de tomar decisiones de tratamiento."
+      }
+    ]
   }
 }
