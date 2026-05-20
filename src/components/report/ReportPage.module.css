@@ -2,7 +2,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  color: rgba(203, 183, 251, 0.80);
+  color: var(--pap-purple);
   font-size: 1rem;
   min-height: 48px;
   margin-bottom: 1.5rem;

@@ -65,7 +65,8 @@ export default async function ReportPage({ params }: Props) {
       <div style={{ background: 'var(--pap-void)', minHeight: '100vh' }}>
         <header
           style={{
-            background: 'linear-gradient(160deg, #1b1938 0%, #2d2252 100%)',
+            background: '#ffffff',
+            borderBottom: '1px solid var(--pap-border)',
             paddingTop: '3.5rem',
             paddingBottom: '3rem',
           }}
@@ -88,7 +89,7 @@ export default async function ReportPage({ params }: Props) {
                 fontWeight: 400,
                 lineHeight: 1.15,
                 letterSpacing: '-0.02em',
-                color: 'rgba(255,255,255,0.97)',
+                color: 'var(--pap-text)',
                 marginBottom: '1rem',
               }}
             >
@@ -96,15 +97,15 @@ export default async function ReportPage({ params }: Props) {
             </h1>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
-              <p style={{ color: 'rgba(255,255,255,0.50)', fontSize: '1rem' }}>
+              <p style={{ color: 'var(--pap-muted)', fontSize: '1rem' }}>
                 {formatDate(date)}
               </p>
-              <span style={{ color: 'rgba(255,255,255,0.25)', fontSize: '1rem' }}>•</span>
-              <p style={{ color: 'rgba(255,255,255,0.50)', fontSize: '1rem' }}>
+              <span style={{ color: 'var(--pap-border)', fontSize: '1rem' }}>•</span>
+              <p style={{ color: 'var(--pap-muted)', fontSize: '1rem' }}>
                 {sections.length} {sections.length === 1 ? 'section' : 'sections'}
               </p>
-              <span style={{ color: 'rgba(255,255,255,0.25)', fontSize: '1rem' }}>•</span>
-              <p style={{ color: 'rgba(255,255,255,0.50)', fontSize: '1rem' }}>
+              <span style={{ color: 'var(--pap-border)', fontSize: '1rem' }}>•</span>
+              <p style={{ color: 'var(--pap-muted)', fontSize: '1rem' }}>
                 {totalEntries} {totalEntries === 1 ? 'finding' : 'findings'}
               </p>
             </div>

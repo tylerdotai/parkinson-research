@@ -90,45 +90,28 @@
   },
   "about": {
     "title": "About This Project",
-    "founderLabel": "The Founder",
-    "founderText": "I built this after a family member was diagnosed with Parkinson's. After spending hours searching clinical trials, treatment research, and care resources — I realized there wasn't a single place that aggregated all of it, updated daily, and was written for patients instead of researchers.\n\nSo I built one. Every morning, AI research agents search clinical trials, medical journals, and emerging science — so you don't have to.",
-    "founderSig": "— Tyler Delano, Creator",
-    "researchAgent": "The Research Agent",
-    "researchAgentDesc": "Every morning at 7:00 AM CDT, an autonomous AI research agent springs to life. It spawns multiple specialized sub-agents that simultaneously search:",
-    "searchTargets": [
-      "ClinicalTrials.gov for recruiting clinical trials",
-      "Medical journals (NEJM, Lancet Neurology, JAMA) for breakthrough findings",
-      "Research databases for lifestyle intervention studies",
-      "Preprint servers and conference proceedings for emerging science"
-    ],
-    "whatsTracked": "What's Tracked",
+    "founderLabel": "Tyler Delano",
+    "founderPhotoAlt": "Tyler and his dad",
+    "whatItsAbout": "Every morning, AI agents search clinical trials, medical journals, and research databases to bring you the latest Parkinson's findings — in plain language, updated daily, free forever.",
+    "whyItMatters": "When my dad was diagnosed with Parkinson's, I wanted a way to keep up with all the latest research without digging through dozens of medical websites. So I built this — so families like mine can stay informed without the noise.",
+    "whatsTracked": "Four areas, every day:",
     "clinicalTrials": {
       "title": "Clinical Trials",
-      "desc": "Active recruiting trials, Phase 2/3 results, eligibility requirements, intervention types, and locations."
+      "desc": "Who's recruiting, what phases, eligibility"
     },
     "breakthroughs": {
-      "title": "Breakthrough Treatments",
-      "desc": "FDA approvals, drug mechanisms, clinical evidence summaries, and emerging therapeutic targets."
+      "title": "Breakthroughs",
+      "desc": "FDA approvals, drug news, evidence"
     },
     "lifestyle": {
-      "title": "Lifestyle Interventions",
-      "desc": "Exercise protocols, dietary recommendations, sleep optimization, and stress management strategies."
+      "title": "Lifestyle",
+      "desc": "Exercise, diet, sleep, stress"
     },
     "emerging": {
       "title": "Emerging Research",
-      "desc": "Novel therapeutic targets, biomarker discoveries, diagnostic advances, and preliminary findings from preprint servers."
+      "desc": "Preprints, novel targets, diagnostics"
     },
-    "privacy": "Privacy and Safety",
-    "privacyItems": [
-      "No personal data — reports contain zero patient or personal information",
-      "Aggregate research only — we compile public research, not private data",
-      "Medical disclaimers — every report includes clear disclaimers",
-      "Transparent methodology — all research sources are cited"
-    ],
-    "apiAccess": "API Access",
-    "apiAccessDesc": "This site provides a JSON API for AI agents and developers to consume research data programmatically.",
-    "builtWith": "Built With",
-    "disclaimer": "Disclaimer",
+    "disclaimer": "Not medical advice. Consult your doctor.",
     "disclaimerText": "The information provided by AI Against Parkinson's is for general informational purposes only. All information on the site is provided in good faith; however, we make no representation or warranty of any kind, express or implied, regarding the accuracy, adequacy, validity, reliability, availability, or completeness of any information on the site.",
     "disclaimerText2": "Under no circumstance shall we have any liability to you for any loss or damage of any kind incurred as a result of the use of the site or reliance on any information provided on the site. Your use of the site and your reliance on any information on the site is solely at your own risk."
   },

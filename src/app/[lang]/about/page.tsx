@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { getDictionary } from '@/lib/dictionary'
-import { SectionCard } from '@/components/SectionCard'
 
 type Props = {
   params: Promise<{ lang: string }>
@@ -21,143 +21,73 @@ export default async function AboutPage({ params }: Props) {
   const t = dictionary.about
 
   return (
-    <div className="py-20 md:py-28 lg:py-32">
+    <div className="py-16 md:py-24 lg:py-28">
       <div className="mx-auto max-w-6xl px-5 md:px-8">
-        <header className="max-w-4xl mb-16">
-          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-pap-purple mb-4 flex items-center gap-2">
-            <span className="inline-block h-px w-6 bg-pap-purple/60" />
-            About
-          </p>
-          <h1 className="font-display text-[clamp(2rem,5vw,3rem)] font-normal leading-[1.1] tracking-tight text-pap-text">
-            {t.title}
-          </h1>
-        </header>
-
-        <div className="max-w-4xl space-y-6" id="about-content">
-          <p className="text-base text-pap-muted mb-2">
-            Our story started with a diagnosis.
-          </p>
-
-          <div
-            className="border rounded-2xl p-6 overflow-hidden relative"
-            style={{
-              background: 'linear-gradient(135deg, #1b1938 0%, #2d2252 100%)',
-              border: '1px solid rgba(203, 183, 251, 0.15)'
-            }}
-          >
-            <div className="flex items-start gap-4">
-              <span
-                className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0"
-                style={{ background: 'rgba(203, 183, 251, 0.12)' }}
-              >
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--pap-lavender)' }}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                </svg>
-              </span>
-              <div className="flex-1">
-                <p className="font-mono text-[10px] uppercase tracking-[0.22em] mb-3" style={{ color: 'var(--pap-lavender)' }}>
-                  {t.founderLabel}
-                </p>
-                {t.founderText.split('\n\n').map((para, i) => (
-                  <p key={i} className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.65)' }}>
-                    {para}
-                  </p>
-                ))}
-                <p className="text-xs mt-5" style={{ color: 'rgba(255,255,255,0.40)' }}>
-                  {t.founderSig}
-                </p>
+        <section className="mb-16">
+          <div className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12">
+            <div className="flex-shrink-0">
+              <div className="relative w-64 h-64 rounded-2xl overflow-hidden shadow-xl shadow-pap-purple/10">
+                <Image
+                  src="/images/founder-hockey.png"
+                  alt={t.founderPhotoAlt}
+                  fill
+                  className="object-cover"
+                  priority
+                />
               </div>
             </div>
-          </div>
-
-          <SectionCard
-            icon={
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 8.646m-5.5 0l3 3m0 0l2.148 2.148A12.061 12.061 0 008.5 15.354m6.5-6.5l3 3" />
-              </svg>
-            }
-            title={t.researchAgent}
-          >
-            <p className="text-sm leading-relaxed mb-5 text-pap-muted">
-              {t.researchAgentDesc}
-            </p>
-            <ul className="space-y-2">
-              {t.searchTargets.map((target, i) => (
-                <li key={i} className="text-sm flex items-start gap-2 text-pap-muted">
-                  <span style={{ color: 'var(--pap-purple)' }}>—</span>
-                  {target}
-                </li>
-              ))}
-            </ul>
-          </SectionCard>
-
-          <SectionCard
-            icon={
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z" />
-              </svg>
-            }
-            title={t.whatsTracked}
-          >
-            <div className="grid md:grid-cols-2 gap-3 mt-2">
-              {[
-                { title: t.clinicalTrials.title, desc: t.clinicalTrials.desc },
-                { title: t.breakthroughs.title, desc: t.breakthroughs.desc },
-                { title: t.lifestyle.title, desc: t.lifestyle.desc },
-                { title: t.emerging.title, desc: t.emerging.desc },
-              ].map((item) => (
-                <div
-                  key={item.title}
-                  className="rounded-xl p-4 border border-pap-border hover:border-pap-purple/30 transition-colors cursor-default"
-                  style={{ background: 'var(--pap-surface)' }}
-                >
-                  <h3 className="font-medium text-sm mb-1.5 text-pap-text">
-                    {item.title}
-                  </h3>
-                  <p className="text-xs leading-relaxed text-pap-muted">
-                    {item.desc}
-                  </p>
-                </div>
-              ))}
+            <div className="text-center md:text-left">
+              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-pap-purple mb-4">
+                {t.founderLabel}
+              </p>
+              <h1 className="font-display text-[clamp(2rem,5vw,3rem)] font-normal leading-[1.1] tracking-tight text-pap-text mb-4">
+                Built by a caregiver, for families like mine
+              </h1>
+              <p className="text-base text-pap-muted max-w-xl">
+                {t.whyItMatters}
+              </p>
             </div>
-          </SectionCard>
+          </div>
+        </section>
 
-          <SectionCard
-            icon={
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-              </svg>
-            }
-            title={t.privacy}
-          >
-            <ul className="space-y-2.5">
-              {t.privacyItems.map((item, i) => (
-                <li key={i} className="text-sm flex items-start gap-2.5 text-pap-muted">
-                  <span style={{ color: 'var(--pap-purple)' }}>—</span>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </SectionCard>
+        <section className="mb-12 max-w-3xl">
+          <p className="text-lg text-pap-text leading-relaxed">
+            {t.whatItsAbout}
+          </p>
+        </section>
 
-          <SectionCard
-            icon={
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-              </svg>
-            }
-            title={t.disclaimer}
-          >
-            <p className="text-sm leading-relaxed text-pap-muted">
-              {t.disclaimerText}
-            </p>
-            <p className="text-sm leading-relaxed mt-3 text-pap-muted">
-              {t.disclaimerText2}
-            </p>
-          </SectionCard>
-        </div>
+        <section className="mb-12">
+          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-pap-purple mb-4">
+            {t.whatsTracked}
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              { title: t.clinicalTrials.title, desc: t.clinicalTrials.desc },
+              { title: t.breakthroughs.title, desc: t.breakthroughs.desc },
+              { title: t.lifestyle.title, desc: t.lifestyle.desc },
+              { title: t.emerging.title, desc: t.emerging.desc },
+            ].map((item) => (
+              <div
+                key={item.title}
+                className="rounded-xl p-4 border border-pap-border"
+                style={{ background: 'var(--pap-surface)' }}
+              >
+                <h3 className="font-medium text-sm mb-1 text-pap-text">
+                  {item.title}
+                </h3>
+                <p className="text-xs leading-relaxed text-pap-muted">
+                  {item.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
 
-        
+        <section className="max-w-3xl">
+          <p className="text-sm text-pap-dim">
+            {t.disclaimer}
+          </p>
+        </section>
       </div>
     </div>
   )
