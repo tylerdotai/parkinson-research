@@ -22,7 +22,7 @@ Every morning, AI research agents search ClinicalTrials.gov, PubMed, and medical
 | Email | Resend (transactional API) |
 | Database | Supabase (PostgreSQL) — subscribers + report reviews |
 | Research | MiniMax M2.7 via OpenClaw subagents |
-| Scheduling | OpenClaw native cron (7:00 AM CDT daily) |
+| Scheduling | OpenClaw native cron (6:30 AM CDT daily) |
 | Deployment | Vercel |
 | i18n | Next.js App Router `[lang]` route groups (EN + ES) |
 
@@ -131,7 +131,7 @@ parkinson-research/
 
 ## How Reports Work
 
-1. **Cron fires** at 7:00 AM CDT via OpenClaw
+1. **Cron fires** at 6:30 AM CDT via OpenClaw
 2. **4 research subagents** run in parallel (Clinical Trials, Breakthroughs, Lifestyle, Emerging Research)
 3. Each agent queries public medical sources and returns structured findings
 4. Results are assembled into a bilingual Markdown report

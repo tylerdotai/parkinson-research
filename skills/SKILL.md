@@ -24,7 +24,7 @@ Produces a daily bilingual (EN/ES) research report on Parkinson's disease and de
 
 If OpenClaw cron fails, GitHub Actions provides a reliable daily backup at 12:00 UTC (7 AM CDT).
 
-Check run history: https://github.com/tylerdotai/parkinson-research/actions/workflows/generate-report.yml
+Check run history: https://github.com/tylerdotai/parkinson-research/actions/workflows/cron-report.yml
 
 Manual trigger: Use `workflow_dispatch` on the same workflow page.
 
@@ -233,7 +233,10 @@ If the pipeline fails after 2 retries:
 
 **Primary sources (preferred):**
 - ClinicalTrials.gov — clinical trial registrations and results
-- PubMed.gov — peer-reviewed research abstracts
+- PubMed.gov — peer-reviewed research abstracts (via E-utilities API with 90-day freshness filter)
+- GP2 (Global Parkinson's Genetics Program) — genetic data and research (gp2.org)
+- AMP PD (Accelerating Medicines Partnership) — biomarker and therapeutic target data (amp-pd.org)
+- PPMI (Parkinson's Progression Markers Initiative) — longitudinal cohort data (ppmi-info.org)
 - NIH.gov / NINDS.nih.gov — Parkinson's Institute and related institutes
 - FDA.gov — drug approvals, clinical trial announcements
 - UCSF.edu — Parkinson's research, clinical trials

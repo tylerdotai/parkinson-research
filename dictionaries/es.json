@@ -89,45 +89,28 @@
   },
   "about": {
     "title": "Acerca de Este Proyecto",
-    "founderLabel": "El Fundador",
-    "founderText": "Construi esto despues de que un familiar fuera diagnosticado con Parkinson. Despues de pasar horas buscando ensayos clinicos, investigaciones de tratamientos y recursos de atencion — me di cuenta de que no habia un solo lugar que lo agregara todo, se actualizara diariamente, y estuviera escrito para pacientes en lugar de investigadores.\n\nAsi que construi uno. Cada manana, agentes de investigacion de IA buscan ensayos clinicos, revistas medicas y ciencia emergente — para que tu no tengas que hacerlo.",
-    "founderSig": "— Tyler Delano, Creador",
-    "researchAgent": "El Agente de Investigacion",
-    "researchAgentDesc": "Cada manana a las 7:00 AM CDT, un agente de investigacion de IA autonomo cobra vida. Genera multiples sub-agentes especializados que buscan simultaneamente:",
-    "searchTargets": [
-      "ClinicalTrials.gov para ensayos clinicos que reclutan",
-      "Revistas medicas (NEJM, Lancet Neurology, JAMA) para hallazgos revolucionarios",
-      "Bases de datos de investigacion para estudios de intervencion del estilo de vida",
-      "Servidores de preprint y actas de conferencias para ciencia emergente"
-    ],
-    "whatsTracked": "Lo Que Se Rastrea",
+    "founderLabel": "Tyler Delano",
+    "founderPhotoAlt": "Tyler y su padre",
+    "whatItsAbout": "Cada manana, agentes de IA buscan ensayos clinicos, revistas medicas y bases de datos de investigacion para traerle los ultimos hallazgos sobre Parkinson — en lenguaje sencillo, actualizado diariamente, gratis para siempre.",
+    "whyItMatters": "Cuando a mi padre le diagnosticaron Parkinson, queria una forma de seguir toda la investigacion sin tener que buscar en decenas de sitios medicos. Asi que construi esto — para que las familias como la nuestra puedan mantenerse informadas sin el ruido.",
+    "whatsTracked": "Cuatro areas, todos los dias:",
     "clinicalTrials": {
       "title": "Ensayos Clinicos",
-      "desc": "Ensayos activos que reclutan, resultados de Fase 2/3, requisitos de elegibilidad, tipos de intervencion y ubicaciones."
+      "desc": "Quienes reclutan, que fases, elegibilidad"
     },
     "breakthroughs": {
-      "title": "Tratamientos Revolucionarios",
-      "desc": "Aprobaciones de FDA, mecanismos de farmacos, resumenes de evidencia clinica y objetivos terapeuticos emergentes."
+      "title": "Avances",
+      "desc": "Aprobaciones de FDA, noticias de farmacos, evidencia"
     },
     "lifestyle": {
-      "title": "Intervenciones del Estilo de Vida",
-      "desc": "Protocolos de ejercicio, recomendaciones dieteticas, optimizacion del sueno y estrategias de manejo del estres."
+      "title": "Estilo de Vida",
+      "desc": "Ejercicio, dieta, sueno, estres"
     },
     "emerging": {
       "title": "Investigacion Emergente",
-      "desc": "Nuevos objetivos terapeuticos, descubrimientos de biomarcadores, avances diagnosticos y hallazgos preliminares de servidores de preprint."
+      "desc": "Preprints, objetivos innovadores, diagnosticos"
     },
-    "privacy": "Privacidad y Seguridad",
-    "privacyItems": [
-      "Sin datos personales — los informes no contienen informacion de pacientes o personal",
-      "Solo investigacion agregada — compilamos investigacion publica, no datos privados",
-      "Avisos de exencion de responsabilidad medica — cada informe incluye avisos claros",
-      "Metodologia transparente — todas las fuentes de investigacion estan citadas"
-    ],
-    "apiAccess": "Acceso a API",
-    "apiAccessDesc": "Este sitio proporciona una API JSON para que los agentes de IA y desarrolladores consuman datos de investigacion programaticamente.",
-    "builtWith": "Construido Con",
-    "disclaimer": "Aviso Legal",
+    "disclaimer": "No es consejo medico. Consulte a su medico.",
     "disclaimerText": "La informacion proporcionada por IA Contra el Parkinson es solo para fines informativos generales. Toda la informacion en el sitio se proporciona de buena fe; sin embargo, no hacemos ninguna representacion o garantia de ningun tipo, expresa o implicita, con respecto a la exactitud, adecuacion, validez, confiabilidad, disponibilidad o completitud de cualquier informacion en el sitio.",
     "disclaimerText2": "Bajo ninguna circunstancia tendremos ninguna responsabilidad hacia usted por cualquier perdida o dano de cualquier tipo incurred como resultado del uso del sitio o la dependencia de cualquier informacion proporcionada en el sitio. Su uso del sitio y su dependencia de cualquier informacion en el sitio es solo bajo su propio riesgo."
   },
@@ -330,5 +313,34 @@
     "termsChangesText": "Nos reservamos el derecho de modificar estos Terminos de Servicio en cualquier momento. Los cambios se publicaran en esta pagina con una fecha de 'Ultima actualizacion' actualizada. El uso continuo del servicio despues de cualquier cambio constituye su aceptacion de los nuevos terminos.",
     "governingLaw": "Ley Aplicable",
     "governingLawText": "Estos Terminos de Servicio se rigen e interpretan de acuerdo con las leyes del Estado de Texas, Estados Unidos de America, sin referencia a su disposicion de conflicto de leyes. Cualquier disputa que surja de estos terminos se resolvera en los tribunales de Texas."
+  },
+  "faq": {
+    "title": "Preguntas Frecuentes",
+    "items": [
+      {
+        "q": "¿Qué es IA Contra el Parkinson?",
+        "a": "Es un correo electrónico diario gratuito que reúne las últimas investigaciones sobre el Parkinson — ensayos clínicos, avances, consejos sobre estilo de vida y ciencia emergente — en informes escritos en lenguaje sencillo."
+      },
+      {
+        "q": "¿Es realmente gratis?",
+        "a": "Sí, completamente gratis. No se requiere cuenta, no hay muro de pago, sin tarifas de suscripción. Construido y mantenido por un cuidador para familias como la suya."
+      },
+      {
+        "q": "¿Con qué frecuencia llegan los informes?",
+        "a": "Los informes se envían cuando hay nueva investigación significativa para compartir — típicamente unas pocas veces por semana. Nunca te enviaremos spam con actualizaciones vacías."
+      },
+      {
+        "q": "¿Mi dirección de correo electrónico está segura?",
+        "a": "Tu correo se almacena en Supabase (nuestra base de datos) y solo se usa para enviarte informes. Nunca vendemos ni compartimos tus datos."
+      },
+      {
+        "q": "¿Puedo darme de baja en cualquier momento?",
+        "a": "Sí, cada correo tiene un enlace para cancelar la suscripción al final. Un clic y sales de la lista, sin preguntas."
+      },
+      {
+        "q": "¿Esto es consejo médico?",
+        "a": "No. El contenido es solo para fines informativos. Consulta siempre a tu proveedor de salud antes de tomar decisiones de tratamiento."
+      }
+    ]
   }
 }

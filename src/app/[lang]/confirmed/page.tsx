@@ -32,9 +32,8 @@ export default async function ConfirmedPage({ params }: Props) {
             </svg>
           </div>
           <h1
-            className="mb-3"
+            className="font-display mb-3"
             style={{
-              fontFamily: 'Instrument Serif, serif',
               fontSize: '1.875rem',
               fontWeight: 400,
               color: 'var(--color-charcoal)'
