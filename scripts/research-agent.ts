@@ -325,13 +325,16 @@ function assembleReport(
 // ── Email Trigger ───────────────────────────────────────────────────────────
 
 async function triggerEmail(date: string, language: string): Promise<void> {
+  const cronSecret = process.env.CRON_REPORT_SECRET
   console.log(`  [email] sending ${language} report for ${date}...`)
   try {
-    const res = run(
-      `curl -s -X POST "${SITE_URL}/api/send-report" ` +
-      `-H "Content-Type: application/json" ` +
-      `-d '{"date": "${date}", "language": "${language}"}'`
-    )
+    let cmd = `curl -s -X POST "${SITE_URL}/api/send-report" ` +
+      `-H "Content-Type: application/json" `
+    if (cronSecret) {
+      cmd += `-H "Authorization: Bearer ${cronSecret}" `
+    }
+    cmd += `-d '{"date": "${date}", "language": "${language}"}'`
+    const res = run(cmd)
     const data = JSON.parse(res)
     console.log(`  [email] ${language}: sent=${data.sent}, failed=${data.failed?.length || 0}`)
   } catch (e) {
@@ -368,7 +371,8 @@ async function main() {
 
   const allFallback = results.every(r => r.includes('No significant developments'))
   if (allFallback) {
-    console.warn('research-agent: All categories returned fallback — stub report generated. Email will be skipped.')
+    console.warn('All categories returned fallback — skipping report write and git push.')
+    process.exit(1)
   }
 
   // ── Assemble EN report ────────────────────────────────────────────────────
