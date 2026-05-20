@@ -29,7 +29,7 @@ npm test           # Jest (passWithNoTests)
 npm run build      # Next.js production build (required before every push)
 ```
 
-**CI order (important):** lint → typecheck → test → build → content-validation
+**CI order (important):** lint → typecheck → test → build
 Always run `npm run build` locally before pushing — it must exit code 0.
 
 ---
@@ -37,7 +37,7 @@ Always run `npm run build` locally before pushing — it must exit code 0.
 ## Architecture
 
 ```
-OpenClaw Cron (7 AM CDT)
+OpenClaw Cron (6:30 AM CDT)
   └── Research Agent (orchestrator)
         ├── Clinical Trials sub-agent
         ├── Breakthroughs sub-agent
@@ -113,7 +113,6 @@ curl -X POST "https://parkinson-research.vercel.app/api/send-report" \
 | `src/lib/parseReport.ts` | Markdown → structured report sections |
 | `public/reports/YYYY-MM-DD.md` | Daily EN report |
 | `public/reports/es/YYYY-MM-DD.md` | Daily ES report |
-| `scripts/content-validation.ts` | CI content validation (EN/ES pages + report schema) |
 | `supabase_schema.sql` | Subscribers table schema |
 | `supabase_schema_reports.sql` | Reports + reviews tables schema |
 | `skills/SKILL.md` | Research pipeline skill (detailed — read before working on reports) |
@@ -129,7 +128,7 @@ openclaw cron list
 openclaw cron runs --id 8f562e97-5653-4f7a-a100-3d1e0ff79da7
 ```
 
-Cron fires at 7:00 AM CDT (13:00 UTC) daily. Runs as `agentTurn` with 600s timeout.
+Cron fires at 6:30 AM CDT (12:30 UTC) daily. Runs as `agentTurn` with 600s timeout.
 
 ---
 

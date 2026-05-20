@@ -233,7 +233,10 @@ If the pipeline fails after 2 retries:
 
 **Primary sources (preferred):**
 - ClinicalTrials.gov — clinical trial registrations and results
-- PubMed.gov — peer-reviewed research abstracts
+- PubMed.gov — peer-reviewed research abstracts (via E-utilities API with 90-day freshness filter)
+- GP2 (Global Parkinson's Genetics Program) — genetic data and research (gp2.org)
+- AMP PD (Accelerating Medicines Partnership) — biomarker and therapeutic target data (amp-pd.org)
+- PPMI (Parkinson's Progression Markers Initiative) — longitudinal cohort data (ppmi-info.org)
 - NIH.gov / NINDS.nih.gov — Parkinson's Institute and related institutes
 - FDA.gov — drug approvals, clinical trial announcements
 - UCSF.edu — Parkinson's research, clinical trials

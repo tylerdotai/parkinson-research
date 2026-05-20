@@ -75,7 +75,11 @@ export function Nav() {
               <a
                 key={link.href}
                 href={withLocale(link.href, locale)}
-                className="px-3 py-2 text-sm text-pap-muted hover:text-pap-text transition-colors"
+                className={`px-3 py-2 text-sm transition-colors ${
+                  pathname === withLocale(link.href, locale)
+                    ? 'text-pap-text font-medium'
+                    : 'text-pap-muted hover:text-pap-text'
+                }`}
               >
                 {link.label}
               </a>
@@ -83,7 +87,7 @@ export function Nav() {
 
             {/* Subscribe CTA */}
             <a
-              href={`${process.env.NEXT_PUBLIC_SITE_URL || 'https://aiagainstparkinson.com'}/${locale}/api/subscribe`}
+              href={withLocale('/subscribe', locale)}
               className="ml-2 lg:ml-3 inline-flex items-center gap-1.5 rounded-full bg-pap-purple px-5 py-2 text-sm font-medium text-white hover:bg-[#8b5dc7] transition-colors"
             >
               Subscribe
@@ -195,7 +199,7 @@ export function Nav() {
                 className="mt-10"
               >
                 <a
-                  href={`${process.env.NEXT_PUBLIC_SITE_URL || 'https://aiagainstparkinson.com'}/${locale}/api/subscribe`}
+                  href={withLocale('/subscribe', locale)}
                   onClick={() => setOpen(false)}
                   className="block w-full rounded-full bg-pap-purple py-4 text-center text-base font-medium text-white hover:bg-[#8b5dc7] transition-colors"
                 >

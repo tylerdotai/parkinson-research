@@ -1,0 +1,61 @@
+- table [ref=e2]:
+  - rowgroup [ref=e3]:
+    - 'row "Parkinson''s Research Daily Research Update May 20, 2026 🧪 Clinical Trials NIH Clinical Center — clinical research facility NIH Clinical Center — clinical research facility ▶ Understanding Clinical Trials for PD Phase 3 Trial of Novel Alpha-Synuclein Inhibitor Shows Promise A large-scale clinical trial has demonstrated statistically significant slowing of disease progression in early-stage Parkinson''s patients... PubMed Disclaimer: This content is for informational purposes only and is not medical advice. Always consult your healthcare provider before making treatment decisions. Visit AI Against Parkinson''s | Unsubscribe" [ref=e4]':
+      - 'cell "Parkinson''s Research Daily Research Update May 20, 2026 🧪 Clinical Trials NIH Clinical Center — clinical research facility NIH Clinical Center — clinical research facility ▶ Understanding Clinical Trials for PD Phase 3 Trial of Novel Alpha-Synuclein Inhibitor Shows Promise A large-scale clinical trial has demonstrated statistically significant slowing of disease progression in early-stage Parkinson''s patients... PubMed Disclaimer: This content is for informational purposes only and is not medical advice. Always consult your healthcare provider before making treatment decisions. Visit AI Against Parkinson''s | Unsubscribe" [ref=e5]':
+        - table [ref=e6]:
+          - rowgroup [ref=e7]:
+            - row "Parkinson's Research Daily Research Update May 20, 2026" [ref=e8]:
+              - cell "Parkinson's Research Daily Research Update May 20, 2026" [ref=e9]:
+                - paragraph [ref=e10]: Parkinson's Research
+                - heading "Daily Research Update" [level=1] [ref=e11]
+                - paragraph [ref=e12]: May 20, 2026
+            - row [ref=e13]:
+              - cell [ref=e14]
+            - row "🧪 Clinical Trials NIH Clinical Center — clinical research facility NIH Clinical Center — clinical research facility ▶ Understanding Clinical Trials for PD Phase 3 Trial of Novel Alpha-Synuclein Inhibitor Shows Promise A large-scale clinical trial has demonstrated statistically significant slowing of disease progression in early-stage Parkinson's patients... PubMed" [ref=e15]:
+              - cell "🧪 Clinical Trials NIH Clinical Center — clinical research facility NIH Clinical Center — clinical research facility ▶ Understanding Clinical Trials for PD Phase 3 Trial of Novel Alpha-Synuclein Inhibitor Shows Promise A large-scale clinical trial has demonstrated statistically significant slowing of disease progression in early-stage Parkinson's patients... PubMed" [ref=e16]:
+                - table [ref=e17]:
+                  - rowgroup [ref=e18]:
+                    - row "🧪 Clinical Trials" [ref=e19]:
+                      - cell "🧪 Clinical Trials" [ref=e20]:
+                        - heading "🧪 Clinical Trials" [level=2] [ref=e21]
+                    - row [ref=e22]:
+                      - cell [ref=e23]:
+                        - separator [ref=e24]
+                - table [ref=e25]:
+                  - rowgroup [ref=e26]:
+                    - row "NIH Clinical Center — clinical research facility NIH Clinical Center — clinical research facility" [ref=e27]:
+                      - cell "NIH Clinical Center — clinical research facility NIH Clinical Center — clinical research facility" [ref=e28]:
+                        - img "NIH Clinical Center — clinical research facility" [ref=e29]
+                        - paragraph [ref=e30]: NIH Clinical Center — clinical research facility
+                    - row "▶ Understanding Clinical Trials for PD" [ref=e31]:
+                      - cell "▶ Understanding Clinical Trials for PD" [ref=e32]:
+                        - link "▶ Understanding Clinical Trials for PD" [ref=e33] [cursor=pointer]:
+                          - /url: https://www.youtube.com/results?search_query=parkinson+clinical+trial+explainer
+                - table [ref=e34]:
+                  - rowgroup [ref=e35]:
+                    - row "Phase 3 Trial of Novel Alpha-Synuclein Inhibitor Shows Promise" [ref=e36]:
+                      - cell "Phase 3 Trial of Novel Alpha-Synuclein Inhibitor Shows Promise" [ref=e37]:
+                        - heading "Phase 3 Trial of Novel Alpha-Synuclein Inhibitor Shows Promise" [level=3] [ref=e38]
+                    - row "A large-scale clinical trial has demonstrated statistically significant slowing of disease progression in early-stage Parkinson's patients..." [ref=e39]:
+                      - cell "A large-scale clinical trial has demonstrated statistically significant slowing of disease progression in early-stage Parkinson's patients..." [ref=e40]:
+                        - paragraph [ref=e41]: A large-scale clinical trial has demonstrated statistically significant slowing of disease progression in early-stage Parkinson's patients...
+                    - row "PubMed" [ref=e42]:
+                      - cell "PubMed" [ref=e43]:
+                        - paragraph [ref=e44]:
+                          - link "PubMed" [ref=e45] [cursor=pointer]:
+                            - /url: https://pubmed.gov
+            - 'row "Disclaimer: This content is for informational purposes only and is not medical advice. Always consult your healthcare provider before making treatment decisions. Visit AI Against Parkinson''s | Unsubscribe" [ref=e46]':
+              - 'cell "Disclaimer: This content is for informational purposes only and is not medical advice. Always consult your healthcare provider before making treatment decisions. Visit AI Against Parkinson''s | Unsubscribe" [ref=e47]':
+                - table [ref=e48]:
+                  - rowgroup [ref=e49]:
+                    - 'row "Disclaimer: This content is for informational purposes only and is not medical advice. Always consult your healthcare provider before making treatment decisions. Visit AI Against Parkinson''s | Unsubscribe" [ref=e50]':
+                      - 'cell "Disclaimer: This content is for informational purposes only and is not medical advice. Always consult your healthcare provider before making treatment decisions. Visit AI Against Parkinson''s | Unsubscribe" [ref=e51]':
+                        - paragraph [ref=e52]:
+                          - strong [ref=e53]: "Disclaimer:"
+                          - text: This content is for informational purposes only and is not medical advice. Always consult your healthcare provider before making treatment decisions.
+                        - paragraph [ref=e54]:
+                          - link "Visit AI Against Parkinson's" [ref=e55] [cursor=pointer]:
+                            - /url: https://aiagainstparkinson.com
+                          - text: "|"
+                          - link "Unsubscribe" [ref=e56] [cursor=pointer]:
+                            - /url: "#"
