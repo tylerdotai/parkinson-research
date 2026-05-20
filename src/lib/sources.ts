@@ -5,7 +5,7 @@ export function isFresh(dateStr: string): boolean {
   const date = new Date(dateStr)
   const now = new Date()
   const diff = (now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24)
-  return diff < FRESHNESS_DAYS
+  return diff <= FRESHNESS_DAYS
 }
 
 export async function searchPubMed(query: string): Promise<string> {
