@@ -21,13 +21,27 @@ export default async function ResourcesPage({ params }: Props) {
   const dictionary = await getDictionary(lang)
   const t = dictionary.resources || defaultResources
 
+  const categories = [
+    { id: 'infographics', label: 'Understanding Parkinson&apos;s' },
+    { id: 'emergency', label: 'Emergency & Helplines' },
+    { id: 'clinical', label: 'Clinical Trials & Research' },
+    { id: 'exercise', label: 'Exercise & Rehabilitation' },
+    { id: 'caregiver', label: 'Caregiver & Family Support' },
+    { id: 'financial', label: 'Financial & Insurance' },
+    { id: 'mental', label: 'Mental Health & Counseling' },
+    { id: 'tech', label: 'Tech Tools & Assistive Technology' },
+    { id: 'espanol', label: 'En Español' },
+  ] as const
+
   return (
     <div className="py-20 md:py-28 lg:py-32">
       <div className="mx-auto max-w-6xl px-5 md:px-8">
         <header className="max-w-4xl mb-16">
-          <h1
-            className="mb-3 font-display text-[clamp(2rem,5vw,3rem)] font-normal leading-[1.1] tracking-tight text-pap-text"
-          >
+          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-pap-purple mb-4 flex items-center gap-2">
+            <span className="inline-block h-px w-6 bg-pap-purple/60" />
+            Resources
+          </p>
+          <h1 className="font-display text-[clamp(2rem,5vw,3rem)] font-normal leading-[1.1] tracking-tight text-pap-text mb-4">
             {t.title}
           </h1>
           <p className="text-base text-pap-muted">
@@ -35,241 +49,307 @@ export default async function ResourcesPage({ params }: Props) {
           </p>
         </header>
 
-        <div className="max-w-4xl space-y-6">
-          {/* Visual Infographics */}
-          <section className="border border-pap-border rounded-2xl p-6" style={{ padding: '1.75rem' }}>
-            <h2
-              className="text-base font-semibold mb-5 flex items-center gap-3 text-pap-text"
-            >
-              <span
-                className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
-                style={{ background: 'var(--pap-purple-soft)' }}
-              >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--pap-purple)' }}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
-                </svg>
-              </span>
-              Understanding Parkinson&apos;s
-            </h2>
-            <div className="grid sm:grid-cols-2 gap-4">
-              <a
-                href="https://www.michaeljfox.org/parkinsons-101"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block rounded-xl overflow-hidden transition-transform duration-200 hover:scale-[1.02]"
-                style={{ boxShadow: 'var(--shadow-sm)', height: '320px' }}
-              >
-                <Image
-                  src="/images/what-is-parkinson.png"
-                  alt="What is Parkinson's? Infographic from Michael J. Fox Foundation"
-                  width={600}
-                  height={320}
-                  className="w-full h-full object-contain"
-                  style={{ background: '#f5f4f2' }}
+        <div className="flex gap-12">
+          <aside className="hidden lg:block w-48 flex-shrink-0">
+            <nav className="sticky top-28 space-y-1">
+              {categories.map((cat) => (
+                <a
+                  key={cat.id}
+                  href={`#${cat.id}`}
+                  className="block text-sm text-pap-muted hover:text-pap-text py-1.5 border-l-2 border-transparent hover:border-pap-purple/40 transition-colors pl-3"
+                >
+                  {cat.label}
+                </a>
+              ))}
+            </nav>
+          </aside>
+
+          <div className="flex-1 max-w-4xl space-y-6">
+            <section id="infographics" className="border border-pap-border rounded-2xl p-6" style={{ padding: '1.75rem' }}>
+              <h2 className="text-base font-semibold mb-5 flex items-center gap-3 text-pap-text">
+                <span className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: 'var(--pap-purple-soft)' }}>
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--pap-purple)' }}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                  </svg>
+                </span>
+                Understanding Parkinson&apos;s
+              </h2>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <a
+                  href="https://www.michaeljfox.org/parkinsons-101"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block rounded-xl overflow-hidden transition-transform duration-200 hover:scale-[1.02]"
+                  style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.08)', height: '320px' }}
+                >
+                  <Image
+                    src="/images/what-is-parkinson.png"
+                    alt="What is Parkinson's? Infographic from Michael J. Fox Foundation"
+                    width={600}
+                    height={320}
+                    className="w-full h-full object-contain"
+                    style={{ background: '#f5f4f2' }}
+                  />
+                </a>
+                <a
+                  href="https://www.michaeljfox.org/symptoms"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block rounded-xl overflow-hidden transition-transform duration-200 hover:scale-[1.02]"
+                  style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.08)', height: '320px' }}
+                >
+                  <Image
+                    src="/images/parkinsons-symptoms.jpg"
+                    alt="Parkinson's Disease Main Symptoms infographic"
+                    width={600}
+                    height={320}
+                    className="w-full h-full object-contain"
+                    style={{ background: '#f5f4f2' }}
+                  />
+                </a>
+              </div>
+              <p className="text-xs mt-3 text-pap-dim">
+                Infographics courtesy of the Michael J. Fox Foundation for Parkinson&apos;s Research.{' '}
+                <a
+                  href="https://www.michaeljfox.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-pap-purple hover:underline"
+                >
+                  {t.learnMore}
+                </a>
+              </p>
+            </section>
+
+            <section id="emergency" className="border border-pap-border rounded-2xl p-6" style={{ padding: '1.75rem' }}>
+              <h2 className="text-base font-semibold mb-5 flex items-center gap-3 text-pap-text">
+                <span className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: 'var(--pap-purple-soft)' }}>
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--pap-purple)' }}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375m.375 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm-12.75 0h.75m12.75 0a.75.75 0 111.5 0 .75.75 0 01-1.5 0z" />
+                  </svg>
+                </span>
+                {t.emergency?.title || 'Emergency & Helplines'}
+              </h2>
+              <div className="space-y-1">
+                <ResourceItem
+                  name="Parkinson's Foundation Helpline"
+                  phone="1-800-4PD-INFO (473-4636)"
+                  description={t.emergency?.pfHelpline || 'Nurse educators available Mon-Fri, 9am-7pm ET. Get answers about symptoms, treatments, and local resources.'}
+                  href="tel:1-800-473-4636"
                 />
-              </a>
-              <a
-                href="https://www.michaeljfox.org/symptoms"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block rounded-xl overflow-hidden transition-transform duration-200 hover:scale-[1.02]"
-                style={{ boxShadow: 'var(--shadow-sm)', height: '320px' }}
-              >
-                <Image
-                  src="/images/parkinsons-symptoms.jpg"
-                  alt="Parkinson's Disease Main Symptoms infographic"
-                  width={600}
-                  height={320}
-                  className="w-full h-full object-contain"
-                  style={{ background: '#f5f4f2' }}
+                <ResourceItem
+                  name="American Parkinson Disease Association"
+                  phone="1-800-223-2732"
+                  description={t.emergency?.apdaDesc || 'Information, referrals, support groups, and educational programs nationwide.'}
+                  href="tel:1-800-223-2732"
                 />
-              </a>
-            </div>
-            <p className="text-xs mt-3 text-pap-dim">
-              Infographics courtesy of the Michael J. Fox Foundation for Parkinson&apos;s Research.{' '}
-              <a
-                href="https://www.michaeljfox.org"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ color: 'var(--pap-purple)' }}
-              >
-                {t.learnMore}
-              </a>
-            </p>
-          </section>
+              </div>
+            </section>
 
-          {/* Emergency & Helplines */}
-          <section className="border border-pap-border rounded-2xl p-6" style={{ padding: '1.75rem' }}>
-            <h2
-              className="text-base font-semibold mb-5 flex items-center gap-3 text-pap-text"
-            >
-              <span
-                className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
-                style={{ background: 'var(--pap-purple-soft)' }}
-              >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--pap-purple)' }}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375m.375 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm-12.75 0h.75m12.75 0a.75.75 0 111.5 0 .75.75 0 01-1.5 0z" />
-                </svg>
-              </span>
-              {t.emergency?.title || 'Emergency & Helplines'}
-            </h2>
-            <div className="space-y-1">
-              <ResourceItem
-                name="Parkinson's Foundation Helpline"
-                phone="1-800-4PD-INFO (473-4636)"
-                description={t.emergency?.pfHelpline || 'Nurse educators available Mon-Fri, 9am-7pm ET. Get answers about symptoms, treatments, and local resources.'}
-                href="tel:1-800-473-4636"
-              />
-              <ResourceItem
-                name="American Parkinson Disease Association"
-                phone="1-800-223-2732"
-                description={t.emergency?.apdaDesc || 'Information, referrals, support groups, and educational programs nationwide.'}
-                href="tel:1-800-223-2732"
-              />
-            </div>
-          </section>
+            <section id="clinical" className="border border-pap-border rounded-2xl p-6" style={{ padding: '1.75rem' }}>
+              <h2 className="text-base font-semibold mb-5 flex items-center gap-3 text-pap-text">
+                <span className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: 'var(--pap-purple-soft)' }}>
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--pap-purple)' }}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+                  </svg>
+                </span>
+                {t.clinical?.title || 'Clinical Trials & Research'}
+              </h2>
+              <div className="space-y-1">
+                <ResourceItem
+                  name="ClinicalTrials.gov"
+                  description={t.clinical?.clinicalTrialsDesc || "Search all recruiting Parkinson's clinical trials by location, phase, and intervention type."}
+                  href="https://clinicaltrials.gov"
+                  external
+                />
+                <ResourceItem
+                  name="Fox Trial Finder"
+                  description={t.clinical?.foxTrialDesc || "Michael J. Fox Foundation tool to match patients with recruiting trials. Takes 5 minutes to sign up."}
+                  href="https://foxtrialfinder.michaeljfox.org"
+                  external
+                />
+              </div>
+            </section>
 
-          {/* Clinical Trials & Research */}
-          <section className="border border-pap-border rounded-2xl p-6" style={{ padding: '1.75rem' }}>
-            <h2
-              className="text-base font-semibold mb-5 flex items-center gap-3 text-pap-text"
-            >
-              <span
-                className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
-                style={{ background: 'var(--pap-purple-soft)' }}
-              >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--pap-purple)' }}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
-                </svg>
-              </span>
-              {t.clinical?.title || 'Clinical Trials & Research'}
-            </h2>
-            <div className="space-y-1">
-              <ResourceItem
-                name="ClinicalTrials.gov"
-                description={t.clinical?.clinicalTrialsDesc || "Search all recruiting Parkinson's clinical trials by location, phase, and intervention type."}
-                href="https://clinicaltrials.gov"
-                external
-              />
-              <ResourceItem
-                name="Fox Trial Finder"
-                description={t.clinical?.foxTrialDesc || "Michael J. Fox Foundation tool to match patients with recruiting trials. Takes 5 minutes to sign up."}
-                href="https://foxtrialfinder.michaeljfox.org"
-                external
-              />
-            </div>
-          </section>
+            <section id="exercise" className="border border-pap-border rounded-2xl p-6" style={{ padding: '1.75rem' }}>
+              <h2 className="text-base font-semibold mb-5 flex items-center gap-3 text-pap-text">
+                <span className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: 'var(--pap-purple-soft)' }}>
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--pap-purple)' }}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m-7.5-4.5l4-4.5m-5 9.5l-4-4.5M15 6l4 4.5m-9-4.5l5 4" />
+                  </svg>
+                </span>
+                {t.exercise?.title || 'Exercise & Rehabilitation'}
+              </h2>
+              <div className="space-y-1">
+                <ResourceItem
+                  name="Rock Steady Boxing"
+                  phone="(317) 550-2734"
+                  description={t.exercise?.rsbDesc || "Non-contact boxing program specifically for Parkinson's. 900+ affiliates worldwide. Scholarships available."}
+                  href="https://rocksteadyboxing.org"
+                  external
+                />
+                <ResourceItem
+                  name="LSVT BIG"
+                  description={t.exercise?.lsvtDesc || 'Therapy method using oversized movements to improve movement quality. Find certified therapists.'}
+                  href="https://www.lsvtglobal.com"
+                  external
+                />
+                <ResourceItem
+                  name="Dance for PD"
+                  description={t.exercise?.danceDesc || "Dance classes designed for people with Parkinson's. Free online videos and in-person classes."}
+                  href="https://danceforparkinsons.org"
+                  external
+                />
+              </div>
+            </section>
 
-          {/* Exercise & Rehabilitation */}
-          <section className="border border-pap-border rounded-2xl p-6" style={{ padding: '1.75rem' }}>
-            <h2
-              className="text-base font-semibold mb-5 flex items-center gap-3 text-pap-text"
-            >
-              <span
-                className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
-                style={{ background: 'var(--pap-purple-soft)' }}
-              >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--pap-purple)' }}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m-7.5-4.5l4-4.5m-5 9.5l-4-4.5M15 6l4 4.5m-9-4.5l5 4" />
-                </svg>
-              </span>
-              {t.exercise?.title || 'Exercise & Rehabilitation'}
-            </h2>
-            <div className="space-y-1">
-              <ResourceItem
-                name="Rock Steady Boxing"
-                phone="(317) 550-2734"
-                description={t.exercise?.rsbDesc || "Non-contact boxing program specifically for Parkinson's. 900+ affiliates worldwide. Scholarships available."}
-                href="https://rocksteadyboxing.org"
-                external
-              />
-              <ResourceItem
-                name="LSVT BIG"
-                description={t.exercise?.lsvtDesc || 'Therapy method using oversized movements to improve movement quality. Find certified therapists.'}
-                href="https://www.lsvtglobal.com"
-                external
-              />
-              <ResourceItem
-                name="Dance for PD"
-                description={t.exercise?.danceDesc || "Dance classes designed for people with Parkinson's. Free online videos and in-person classes."}
-                href="https://danceforparkinsons.org"
-                external
-              />
-            </div>
-          </section>
+            <section id="caregiver" className="border border-pap-border rounded-2xl p-6" style={{ padding: '1.75rem' }}>
+              <h2 className="text-base font-semibold mb-5 flex items-center gap-3 text-pap-text">
+                <span className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: 'var(--pap-purple-soft)' }}>
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--pap-purple)' }}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                  </svg>
+                </span>
+                {t.caregiver?.title || 'Caregiver & Family Support'}
+              </h2>
+              <div className="space-y-1">
+                <ResourceItem
+                  name="Family Caregiver Alliance"
+                  phone="1-800-445-8106"
+                  description={t.caregiver?.fcaDesc || 'Nationwide advocacy and support for family caregivers. Respite care guides, online forums, and care navigation.'}
+                  href="https://www.caregiver.org"
+                  external
+                />
+                <ResourceItem
+                  name="Well Spouse Association"
+                  phone="1-800-838-0879"
+                  description={t.caregiver?.wellSpouseDesc || 'Support for spouses caring for chronically ill partners. Mentors, support groups, and advocacy.'}
+                  href="https://www.wellspouse.org"
+                  external
+                />
+              </div>
+            </section>
 
-          {/* Caregiver & Family Support */}
-          <section className="border border-pap-border rounded-2xl p-6" style={{ padding: '1.75rem' }}>
-            <h2
-              className="text-base font-semibold mb-5 flex items-center gap-3 text-pap-text"
-            >
-              <span
-                className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
-                style={{ background: 'var(--pap-purple-soft)' }}
-              >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--pap-purple)' }}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
-                </svg>
-              </span>
-              {t.caregiver?.title || 'Caregiver & Family Support'}
-            </h2>
-            <div className="space-y-1">
-              <ResourceItem
-                name="Family Caregiver Alliance"
-                phone="1-800-445-8106"
-                description={t.caregiver?.fcaDesc || 'Nationwide advocacy and support for family caregivers. Respite care guides, online forums, and care navigation.'}
-                href="https://www.caregiver.org"
-                external
-              />
-              <ResourceItem
-                name="Well Spouse Association"
-                phone="1-800-838-0879"
-                description={t.caregiver?.wellSpouseDesc || 'Support for spouses caring for chronically ill partners. Mentors, support groups, and advocacy.'}
-                href="https://www.wellspouse.org"
-                external
-              />
-            </div>
-          </section>
+            <section id="financial" className="border border-pap-border rounded-2xl p-6" style={{ padding: '1.75rem' }}>
+              <h2 className="text-base font-semibold mb-5 flex items-center gap-3 text-pap-text">
+                <span className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: 'var(--pap-purple-soft)' }}>
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--pap-purple)' }}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375m.375 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm-12.75 0h.75m12.75 0a.75.75 0 111.5 0 .75.75 0 01-1.5 0z" />
+                  </svg>
+                </span>
+                {t.financial?.title || 'Financial & Insurance Assistance'}
+              </h2>
+              <div className="space-y-1">
+                <ResourceItem
+                  name="Medicare"
+                  phone="1-800-633-4227"
+                  description={t.financial?.medicareDesc || "Federal health insurance for 65+. Covers some Parkinson's medications, therapy, and equipment."}
+                  href="https://www.medicare.gov"
+                  external
+                />
+                <ResourceItem
+                  name="Social Security Disability (SSDI)"
+                  phone="1-800-772-1213"
+                  description={t.financial?.ssdiDesc || 'Apply early — takes 2-3 years for approval. Provides monthly benefits for eligible disabled individuals.'}
+                  href="https://www.ssa.gov/disability"
+                  external
+                />
+                <ResourceItem
+                  name="Parkinson's Foundation — Legal & Financial"
+                  phone="1-800-4PD-INFO"
+                  description={t.financial?.pfAssistDesc || 'Helps navigate insurance, find co-pay assistance, and access medication assistance programs.'}
+                  href="https://www.parkinson.org/living-with-parkinsons/legal-financial"
+                  external
+                />
+              </div>
+            </section>
 
-          {/* Financial & Insurance */}
-          <section className="border border-pap-border rounded-2xl p-6" style={{ padding: '1.75rem' }}>
-            <h2
-              className="text-base font-semibold mb-5 flex items-center gap-3 text-pap-text"
-            >
-              <span
-                className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
-                style={{ background: 'var(--pap-purple-soft)' }}
-              >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--pap-purple)' }}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375m.375 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm-12.75 0h.75m12.75 0a.75.75 0 111.5 0 .75.75 0 01-1.5 0z" />
-                </svg>
-              </span>
-              {t.financial?.title || 'Financial & Insurance Assistance'}
-            </h2>
-            <div className="space-y-1">
-              <ResourceItem
-                name="Medicare"
-                phone="1-800-633-4227"
-                description={t.financial?.medicareDesc || "Federal health insurance for 65+. Covers some Parkinson's medications, therapy, and equipment."}
-                href="https://www.medicare.gov"
-                external
-              />
-              <ResourceItem
-                name="Social Security Disability (SSDI)"
-                phone="1-800-772-1213"
-                description={t.financial?.ssdiDesc || 'Apply early — takes 2-3 years for approval. Provides monthly benefits for eligible disabled individuals.'}
-                href="https://www.ssa.gov/disability"
-                external
-              />
-              <ResourceItem
-                name="Parkinson's Foundation — Legal & Financial"
-                phone="1-800-4PD-INFO"
-                description={t.financial?.pfAssistDesc || 'Helps navigate insurance, find co-pay assistance, and access medication assistance programs.'}
-                href="https://www.parkinson.org/living-with-parkinsons/legal-financial"
-                external
-              />
-            </div>
-          </section>
+            {t.mental && (
+              <section id="mental" className="border border-pap-border rounded-2xl p-6" style={{ padding: '1.75rem' }}>
+                <h2 className="text-base font-semibold mb-5 flex items-center gap-3 text-pap-text">
+                  <span className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: 'var(--pap-purple-soft)' }}>
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--pap-purple)' }}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12.75 9 12.75s9-5.53 9-12.75z" />
+                    </svg>
+                  </span>
+                  {t.mental.title}
+                </h2>
+                <div className="space-y-1">
+                  <ResourceItem
+                    name="Crisis Text Line"
+                    description={t.mental.crisisTextDesc || 'Free 24/7 crisis counseling via text. Mental health support when you need it most.'}
+                    href="https://text.iready.com"
+                    external
+                  />
+                </div>
+              </section>
+            )}
+
+            {t.tech && (
+              <section id="tech" className="border border-pap-border rounded-2xl p-6" style={{ padding: '1.75rem' }}>
+                <h2 className="text-base font-semibold mb-5 flex items-center gap-3 text-pap-text">
+                  <span className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: 'var(--pap-purple-soft)' }}>
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--pap-purple)' }}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0V5.25A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12" />
+                    </svg>
+                  </span>
+                  {t.tech.title}
+                </h2>
+                <div className="space-y-1">
+                  <ResourceItem
+                    name="Parkinson's Foundation — Technology"
+                    description={t.tech.pfTechDesc || 'Curated list of technology aids for daily living — speech apps, wearables, reminder systems, and more.'}
+                    href="https://www.parkinson.org/living-with-parkinsons/connecting-to-care/technology"
+                    external
+                  />
+                  <ResourceItem
+                    name="Liftware"
+                    description={t.tech.liftwareDesc || 'Electronic stabilizing spoon for tremor compensation during eating. Clinically proven to reduce shake by 70%.'}
+                    href="https://www.liftware.com"
+                    external
+                  />
+                </div>
+              </section>
+            )}
+
+            <section id="espanol" className="border border-pap-border rounded-2xl p-6" style={{ padding: '1.75rem' }}>
+              <h2 className="text-base font-semibold mb-5 flex items-center gap-3 text-pap-text">
+                <span className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: 'var(--pap-purple-soft)' }}>
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: 'var(--pap-purple)' }}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 21l5-9m-5 9l5 9m-11-3h12m-6 0a3 3 0 01-6 0" />
+                  </svg>
+                </span>
+                En Español
+              </h2>
+              <div className="space-y-1">
+                <ResourceItem
+                  name="Parkinson's Foundation — Recursos en Español"
+                  phone="1-800-4PD-INFO opción 3"
+                  description="Más de 50 páginas web en español con información clave sobre el Parkinson: manejo del estilo de vida, comprensión de la enfermedad, síntomas y más."
+                  href="https://www.parkinson.org/espanol"
+                  external
+                />
+                <ResourceItem
+                  name="EP Salud en Casa — Programas Virtuales"
+                  description="Programas virtuales de educación y bienestar en español: ejercicio, salud mental, nutrición y más. Vea programas grabados a su ritmo."
+                  href="https://www.parkinson.org/espanol/salud-en-casa"
+                  external
+                />
+                <ResourceItem
+                  name="Blog y Podcast en Español"
+                  description="Artículos sobre los últimos temas del Parkinson y episodios del podcast 'Temas Importantes: Vida y Ciencia del Parkinson' traducidos al español."
+                  href="https://www.parkinson.org/blog/espanol"
+                  external
+                />
+                <ResourceItem
+                  name="PD GENEration — Pruebas Genéticas"
+                  description="Iniciativa de la Parkinson's Foundation que ofrece pruebas genéticas y asesoramiento sin costo para personas con Parkinson. Inscripciones abiertas."
+                  href="https://www.parkinson.org/espanol/pd-generation"
+                  external
+                />
+              </div>
+            </section>
+          </div>
         </div>
       </div>
     </div>
@@ -279,22 +359,11 @@ export default async function ResourcesPage({ params }: Props) {
 const defaultResources = {
   title: 'Resources',
   subtitle: "Free hotlines, support programs, and assistance for Parkinson's patients and families.",
-  emergency: {
-    title: 'Emergency & Helplines',
-  },
-  clinical: {
-    title: 'Clinical Trials & Research',
-  },
-  exercise: {
-    title: 'Exercise & Rehabilitation',
-  },
-  caregiver: {
-    title: 'Caregiver & Family Support',
-  },
-  financial: {
-    title: 'Financial & Insurance Assistance',
-  },
-  tech: {
-    title: 'Tech Tools & Assistive Technology',
-  },
+  emergency: { title: 'Emergency & Helplines' },
+  clinical: { title: 'Clinical Trials & Research' },
+  exercise: { title: 'Exercise & Rehabilitation' },
+  caregiver: { title: 'Caregiver & Family Support' },
+  financial: { title: 'Financial & Insurance Assistance' },
+  mental: { title: 'Mental Health & Counseling' },
+  tech: { title: 'Tech Tools & Assistive Technology' },
 }

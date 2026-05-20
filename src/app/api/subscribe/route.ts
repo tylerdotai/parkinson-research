@@ -5,7 +5,21 @@ import { Logger } from '@/lib/logger'
 
 const getResend = () => new Resend(process.env.RESEND_API_KEY)
 
+const WINDOW_MS = 60_000
+const MAX_REQUESTS = 5
+const rateLimitMap = new Map<string, number>()
+
 export async function POST(request: NextRequest) {
+  // IP-based rate limiting
+  const forwardedFor = request.headers.get('x-forwarded-for')
+  const ip = forwardedFor?.split(',')[0]?.trim() || 'unknown'
+  const count = rateLimitMap.get(ip) || 0
+  if (count >= MAX_REQUESTS) {
+    return NextResponse.json({ error: 'Rate limited' }, { status: 429 })
+  }
+  rateLimitMap.set(ip, count + 1)
+  setTimeout(() => rateLimitMap.delete(ip), WINDOW_MS)
+
   try {
     const body = await request.json()
     const email: string = body?.email?.trim()

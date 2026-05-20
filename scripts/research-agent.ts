@@ -167,15 +167,122 @@ Format each finding as:
   },
 ]
 
+// ── Freshness Filter ─────────────────────────────────────────────────────────
+
+const FRESHNESS_DAYS = 90
+
+function isFresh(dateStr: string): boolean {
+  const date = new Date(dateStr)
+  const now = new Date()
+  const diff = (now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24)
+  return diff < FRESHNESS_DAYS
+}
+
+// ── Source Search Functions ─────────────────────────────────────────────────
+
+async function searchPubMed(query: string): Promise<string> {
+  try {
+    const searchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=${encodeURIComponent(query)}+parkinson+disease&retmax=10&retmode=json&sort=relevance&datetype=pdat`
+    const searchRes = await fetch(searchUrl)
+    if (!searchRes.ok) return ''
+    const searchData = await searchRes.json() as { esearchresult?: { idlist?: string[] } }
+    const ids = searchData.esearchresult?.idlist ?? []
+    if (ids.length === 0) return ''
+
+    const fetchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=${ids.join(',')}&retmode=json`
+    const fetchRes = await fetch(fetchUrl)
+    if (!fetchRes.ok) return ''
+    const fetchData = await fetchRes.json() as { result?: Record<string, { title?: string; source?: string; pubdate?: string; url?: string; authors?: Array<{ name: string }> }> }
+
+    const results: string[] = []
+    for (const id of ids.slice(0, 5)) {
+      const article = fetchData.result?.[id]
+      if (!article) continue
+      const pubDate = article.pubdate ?? ''
+      if (pubDate && !isFresh(pubDate)) continue
+      const authors = (article.authors ?? []).slice(0, 3).map((a) => a.name).join(', ')
+      results.push(`[PubMed:${id}] ${article.title ?? ''} (${pubDate}) — ${authors}`)
+    }
+    return results.join('\n')
+  } catch {
+    return ''
+  }
+}
+
+async function searchGP2(query: string): Promise<string> {
+  try {
+    const url = `https://gp2.org/search?query=${encodeURIComponent(query + ' parkinson')}`
+    const res = await fetch(url, { headers: { 'Accept': 'application/json' } })
+    if (!res.ok) return ''
+    const data = await res.json() as { results?: Array<{ title?: string; date?: string; url?: string; description?: string }> }
+    const results: string[] = []
+    for (const item of (data.results ?? []).slice(0, 5)) {
+      if (item.date && !isFresh(item.date)) continue
+      results.push(`[GP2] ${item.title ?? ''} — ${item.description ?? ''} (${item.url ?? ''})`)
+    }
+    return results.join('\n')
+  } catch {
+    return ''
+  }
+}
+
+async function searchAMPPD(query: string): Promise<string> {
+  try {
+    const url = `https://amp-pd.org/api/search?q=${encodeURIComponent(query + ' parkinson')}`
+    const res = await fetch(url, { headers: { 'Accept': 'application/json' } })
+    if (!res.ok) return ''
+    const data = await res.json() as { items?: Array<{ title?: string; date?: string; link?: string; summary?: string }> }
+    const results: string[] = []
+    for (const item of (data.items ?? []).slice(0, 5)) {
+      if (item.date && !isFresh(item.date)) continue
+      results.push(`[AMP PD] ${item.title ?? ''} — ${item.summary ?? ''} (${item.link ?? ''})`)
+    }
+    return results.join('\n')
+  } catch {
+    return ''
+  }
+}
+
+async function searchPPMI(query: string): Promise<string> {
+  try {
+    const url = `https://www.ppmi-info.org/api/search?q=${encodeURIComponent(query + ' parkinson')}`
+    const res = await fetch(url, { headers: { 'Accept': 'application/json' } })
+    if (!res.ok) return ''
+    const data = await res.json() as { results?: Array<{ title?: string; date?: string; url?: string; summary?: string }> }
+    const results: string[] = []
+    for (const item of (data.results ?? []).slice(0, 5)) {
+      if (item.date && !isFresh(item.date)) continue
+      results.push(`[PPMI] ${item.title ?? ''} — ${item.summary ?? ''} (${item.url ?? ''})`)
+    }
+    return results.join('\n')
+  } catch {
+    return ''
+  }
+}
+
+async function fetchAllSources(query: string): Promise<string> {
+  const [pubmed, gp2, ampPD, ppmi] = await Promise.all([
+    searchPubMed(query),
+    searchGP2(query),
+    searchAMPPD(query),
+    searchPPMI(query),
+  ])
+  const combined = [pubmed, gp2, ampPD, ppmi].filter(Boolean)
+  if (combined.length === 0) return ''
+  return '\n\n--- SOURCE DATA ---\n' + combined.join('\n') + '\n--- END SOURCE DATA ---\n'
+}
+
 // ── Research Agent ───────────────────────────────────────────────────────────
 
 async function researchCategory(category: (typeof CATEGORIES)[0]): Promise<string> {
   console.log(`  [${category.section}] researching...`)
   try {
+    const sourceData = await fetchAllSources(category.searchQuery)
+
     const result = await groqChat(
       'llama-3.1-8b-instant',
       category.system,
-      category.prompt
+      category.prompt + (sourceData ? "\n\nBelow is structured data from authoritative Parkinson's sources. Use this data to supplement your search. If the data is relevant, incorporate it. If it is stale (older than 90 days), ignore it.\n\n" + sourceData : "")
     )
     console.log(`  [${category.section}] done`)
     return result
@@ -218,13 +325,16 @@ function assembleReport(
 // ── Email Trigger ───────────────────────────────────────────────────────────
 
 async function triggerEmail(date: string, language: string): Promise<void> {
+  const cronSecret = process.env.CRON_REPORT_SECRET
   console.log(`  [email] sending ${language} report for ${date}...`)
   try {
-    const res = run(
-      `curl -s -X POST "${SITE_URL}/api/send-report" ` +
-      `-H "Content-Type: application/json" ` +
-      `-d '{"date": "${date}", "language": "${language}"}'`
-    )
+    let cmd = `curl -s -X POST "${SITE_URL}/api/send-report" ` +
+      `-H "Content-Type: application/json" `
+    if (cronSecret) {
+      cmd += `-H "Authorization: Bearer ${cronSecret}" `
+    }
+    cmd += `-d '{"date": "${date}", "language": "${language}"}'`
+    const res = run(cmd)
     const data = JSON.parse(res)
     console.log(`  [email] ${language}: sent=${data.sent}, failed=${data.failed?.length || 0}`)
   } catch (e) {
@@ -258,6 +368,12 @@ async function main() {
   CATEGORIES.forEach((cat, i) => {
     findings[cat.id] = results[i]
   })
+
+  const allFallback = results.every(r => r.includes('No significant developments'))
+  if (allFallback) {
+    console.warn('All categories returned fallback — skipping report write and git push.')
+    process.exit(1)
+  }
 
   // ── Assemble EN report ────────────────────────────────────────────────────
   console.log('\nAssembling EN report...')

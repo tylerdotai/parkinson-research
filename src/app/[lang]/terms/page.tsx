@@ -23,8 +23,8 @@ export default async function TermsPage({ params }: Props) {
     <div className="max-w-4xl mx-auto px-4 sm:px-6" style={{ paddingTop: '3rem', paddingBottom: '5rem' }}>
       <header className="mb-10">
         <h1
+          className="font-display"
           style={{
-            fontFamily: 'Instrument Serif, serif',
             fontSize: 'clamp(2rem, 5vw, 3rem)',
             fontWeight: 400,
             lineHeight: 1.1,

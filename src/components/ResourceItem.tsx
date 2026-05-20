@@ -12,24 +12,15 @@ export default function ResourceItem({ name, phone, description, href, external 
   const content = (
     <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2">
       <div className="flex-1 min-w-0">
-        <h3
-          className="font-medium text-sm"
-          style={{ color: 'var(--color-charcoal)' }}
-        >
+        <h3 className="font-medium text-sm text-pap-text">
           {name}
         </h3>
         {phone && (
-          <p
-            className="text-xs font-medium mt-0.5"
-            style={{ color: 'var(--color-amethyst)' }}
-          >
+          <p className="text-xs font-medium mt-0.5 text-pap-purple">
             {phone}
           </p>
         )}
-        <p
-          className="text-xs leading-relaxed mt-1"
-          style={{ color: 'var(--color-text-secondary)' }}
-        >
+        <p className="text-xs leading-relaxed mt-1 text-pap-muted">
           {description}
         </p>
       </div>
@@ -41,7 +32,7 @@ export default function ResourceItem({ name, phone, description, href, external 
             viewBox="0 0 24 24"
             stroke="currentColor"
             strokeWidth={1.5}
-            style={{ color: 'var(--color-amethyst)' }}
+            style={{ color: 'var(--pap-purple)' }}
           >
             <path
               strokeLinecap="round"
@@ -59,10 +50,7 @@ export default function ResourceItem({ name, phone, description, href, external 
 
   if (!href) {
     return (
-      <div
-        className="py-4"
-        style={{ borderBottom: '1px solid var(--color-parchment)' }}
-      >
+      <div className="py-4 border-b border-pap-border">
         {content}
       </div>
     )
@@ -74,11 +62,10 @@ export default function ResourceItem({ name, phone, description, href, external 
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="card-lift block py-4"
+        className="block py-4 border-b border-pap-border hover:border-pap-purple/30 transition-colors"
         aria-label={`${name}${phone ? `, ${phone}` : ''}`}
-        style={{ borderBottom: '1px solid var(--color-parchment)', paddingLeft: '0', paddingRight: '0', borderRadius: '0', background: 'transparent', boxShadow: 'none' }}
       >
-        <div style={{ padding: '0 0.25rem' }}>
+        <div className="px-1">
           {content}
         </div>
       </a>
@@ -88,11 +75,10 @@ export default function ResourceItem({ name, phone, description, href, external 
   return (
     <Link
       href={href}
-      className="card-lift block py-4"
+      className="block py-4 border-b border-pap-border hover:border-pap-purple/30 transition-colors"
       aria-label={`${name}${phone ? `, ${phone}` : ''}`}
-      style={{ borderBottom: '1px solid var(--color-parchment)', paddingLeft: '0', paddingRight: '0', borderRadius: '0', background: 'transparent', boxShadow: 'none' }}
     >
-      <div style={{ padding: '0 0.25rem' }}>
+      <div className="px-1">
         {content}
       </div>
     </Link>
