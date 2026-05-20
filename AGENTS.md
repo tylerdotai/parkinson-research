@@ -15,7 +15,7 @@ This file is for AI agents working on or contributing to the project.
 
 **Live site:** https://aiagainstparkinson.com
 **GitHub:** https://github.com/tylerdotai/parkinson-research
-**Tech stack:** Next.js 15, TypeScript, Supabase, Resend, OpenClaw cron
+**Tech stack:** Next.js 16, TypeScript, Supabase, Resend, OpenClaw cron
 
 ---
 
