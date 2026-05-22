@@ -1,0 +1,41 @@
+name: Auto-Merge Reports
+
+on:
+  push:
+    branches: [reports-daily]
+  workflow_dispatch:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: ESLint
+        run: npm run lint
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+  merge:
+    needs: ci
+    runs-on: ubuntu-latest
+    steps:
+      - name: Merge to main
+        run: |
+          gh pr create --base main --head reports-daily --title "Daily report $(date +%Y-%m-%d)" --body "Auto-generated daily report" 2>/dev/null || true
+          gh pr merge --admin --squash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -3,7 +3,7 @@
  * research-agent.ts
  *
  * AI-powered daily report generator for AI Against Parkinson's.
- * Uses Groq's free Llama 3.1 8B Instant for research and translation.
+ * Uses MiniMax M2.7 for research and translation.
  *
  * Run: npx tsx scripts/research-agent.ts
  * Or: npm run research
@@ -26,17 +26,17 @@ const SITE_URL = 'https://aiagainstparkinson.com'
 const REPORTS_DIR = join(process.cwd(), 'public', 'reports')
 const ES_REPORTS_DIR = join(REPORTS_DIR, 'es')
 
-// ── Groq API ─────────────────────────────────────────────────────────────────
+// ── MiniMax API ─────────────────────────────────────────────────────────────────
 
-interface GroqResponse {
+interface MiniMaxResponse {
   choices: { message: { content: string } }[]
 }
 
-async function groqChat(model: string, system: string, user: string): Promise<string> {
-  const apiKey = process.env.GROQ_API_KEY
-  if (!apiKey) throw new Error('GROQ_API_KEY not set')
+async function minimaxChat(model: string, system: string, user: string): Promise<string> {
+  const apiKey = process.env.MINIMAX_API_KEY
+  if (!apiKey) throw new Error('MINIMAX_API_KEY not set')
 
-  const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+  const res = await fetch('https://api.minimax.io/v1/chat/completions', {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${apiKey}`,
@@ -45,20 +45,18 @@ async function groqChat(model: string, system: string, user: string): Promise<st
     body: JSON.stringify({
       model,
       messages: [
-        { role: 'system', content: system },
-        { role: 'user', content: user },
+        { role: 'user', content: system + '\n\n' + user },
       ],
-      temperature: 0.7,
       max_tokens: 1024,
     }),
   })
 
   if (!res.ok) {
     const text = await res.text()
-    throw new Error(`Groq API error ${res.status}: ${text}`)
+    throw new Error(`MiniMax API error ${res.status}: ${text}`)
   }
 
-  const data: GroqResponse = await res.json()
+  const data: MiniMaxResponse = await res.json()
   return data.choices[0]?.message?.content?.trim() ?? ''
 }
 
@@ -279,8 +277,8 @@ async function researchCategory(category: (typeof CATEGORIES)[0]): Promise<strin
   try {
     const sourceData = await fetchAllSources(category.searchQuery)
 
-    const result = await groqChat(
-      'llama-3.1-8b-instant',
+    const result = await minimaxChat(
+      'MiniMax-M2.7',
       category.system,
       category.prompt + (sourceData ? "\n\nBelow is structured data from authoritative Parkinson's sources. Use this data to supplement your search. If the data is relevant, incorporate it. If it is stale (older than 90 days), ignore it.\n\n" + sourceData : "")
     )
@@ -383,8 +381,8 @@ async function main() {
   console.log('Translating to Spanish...')
   let esReport = ''
   try {
-    esReport = await groqChat(
-      'llama-3.1-8b-instant',
+    esReport = await minimaxChat(
+      'MiniMax-M2.7',
       `You are a professional medical translator. Translate the following Parkinson's disease research report from English to warm, accessible Spanish (not overly formal). Preserve the exact structure: YAML frontmatter (change title to Spanish), section headings, finding format, and source URLs. Do NOT translate source URLs or NCT numbers.`,
       `Translate this report to Spanish:\n\n${enReport}`
     )
@@ -406,12 +404,14 @@ async function main() {
   // ── Git push ───────────────────────────────────────────────────────────────
   console.log('\nCommitting and pushing...')
   try {
+    // Create or update reports-daily branch
+    run(`git checkout reports-daily 2>/dev/null || git checkout -b reports-daily`)
     run(`git add public/reports/${date}.md public/reports/es/${date}.md`)
     run(`git config user.email "agent@parkinson-research"`)
     run(`git config user.name "Parkinson Research Agent"`)
     run(`git commit -m "reports: ${date} daily update"`)
-    run(`git push origin main`)
-    console.log('  [git] pushed successfully')
+    run(`git push -f origin reports-daily`)
+    console.log('  [git] pushed to reports-daily branch')
   } catch (e) {
     console.log(`  [git] push failed: ${e}`)
     process.exit(1)
