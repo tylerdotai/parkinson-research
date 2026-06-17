@@ -33,6 +33,8 @@ jobs:
     needs: ci
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
       - name: Merge to main
         run: |
           gh pr create --base main --head reports-daily --title "Daily report $(date +%Y-%m-%d)" --body "Auto-generated daily report" 2>/dev/null || true

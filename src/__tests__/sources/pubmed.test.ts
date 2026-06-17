@@ -31,7 +31,7 @@ describe('searchPubMed', () => {
           '12345': {
             title: 'Alpha-synuclein and Parkinsons disease',
             source: 'PubMed',
-            pubdate: '2026-03-15',
+            pubdate: '2026-03-20',
             authors: [{ name: 'Smith J' }, { name: 'Doe A' }],
           },
           '67890': {
