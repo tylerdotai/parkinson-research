@@ -4,10 +4,8 @@ export const FRESHNESS_DAYS = 90
 export function isFresh(dateStr: string): boolean {
   const date = new Date(dateStr)
   const now = new Date()
-  const dateDay = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
-  const nowDay = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())
-  const diffDays = (nowDay - dateDay) / (1000 * 60 * 60 * 24)
-  return diffDays <= FRESHNESS_DAYS
+  const diff = (now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24)
+  return diff <= FRESHNESS_DAYS
 }
 
 export async function searchPubMed(query: string): Promise<string> {
