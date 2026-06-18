@@ -24,6 +24,10 @@ describe('searchPubMed', () => {
   })
 
   it('returns formatted results when API returns recent articles', async () => {
+    const recentDate = new Date()
+    recentDate.setDate(recentDate.getDate() - 30)
+    const recentDateStr = recentDate.toISOString().split('T')[0]
+
     mockFetch
       .mockResolvedValueOnce(createMockResponse({ esearchresult: { idlist: ['12345', '67890'] } }))
       .mockResolvedValueOnce(createMockResponse({
@@ -31,13 +35,13 @@ describe('searchPubMed', () => {
           '12345': {
             title: 'Alpha-synuclein and Parkinsons disease',
             source: 'PubMed',
-            pubdate: '2026-03-20',
+            pubdate: recentDateStr,
             authors: [{ name: 'Smith J' }, { name: 'Doe A' }],
           },
           '67890': {
             title: 'Exercise and motor symptoms',
             source: 'PubMed',
-            pubdate: '2026-04-01',
+            pubdate: recentDateStr,
             authors: [{ name: 'Brown K' }],
           },
         },
