@@ -167,11 +167,14 @@ export function HomeClient({ locale, dictionary, latestReport }: HomeClientProps
               >
                 <div className="flex-1 min-w-0">
                   <p className="font-display text-lg text-pap-text mb-1">
-                    {new Date(latestReport.date).toLocaleDateString(locale === 'es' ? 'es-ES' : 'en-US', {
-                      month: 'long',
-                      day: 'numeric',
-                      year: 'numeric'
-                    })}
+                    {(() => {
+                      const [year, month, day] = latestReport.date.split('-').map(Number)
+                      return new Date(year, month - 1, day).toLocaleDateString(locale === 'es' ? 'es-ES' : 'en-US', {
+                        month: 'long',
+                        day: 'numeric',
+                        year: 'numeric'
+                      })
+                    })()}
                   </p>
                   <p className="text-sm text-pap-muted line-clamp-2">{latestReport.preview}</p>
                 </div>
