@@ -1,21 +1,18 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import type { ReportEntry as ReportEntryType } from '@/lib/types'
 
 interface Props {
   entry: ReportEntryType
-  index: number
+  lang: 'en' | 'es'
 }
 
-export default function ReportEntry({ entry, index }: Props) {
+export default function ReportEntry({ entry, lang }: Props) {
   if (!entry.title && !entry.snippet) return null
 
   return (
-    <motion.li
-      initial={{ opacity: 0, x: -8 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: index * 0.06, duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+    <li
+      className="report-entry"
       style={{
         paddingLeft: '0',
         paddingTop: '1.25rem',
@@ -87,11 +84,11 @@ export default function ReportEntry({ entry, index }: Props) {
               >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v8.25m0-11.25H9.75m0 0h6.265M12 3h6.75m0 0v11.25c0 .621.504 1.125 1.125 1.125H2.625A1.125 1.125 0 011.5 14.625V8.25m0-11.25H9m9 0h3.75m-3.75 0l-3.75 3.75m3.75-3.75l-3.75 3.75" />
               </svg>
-              {entry.source || 'Read more'}
+              {lang === 'es' ? 'Fuente' : 'Source'}: {entry.source || (lang === 'es' ? 'Leer más' : 'Read more')}
             </a>
           )}
         </div>
       </div>
-    </motion.li>
+    </li>
   )
 }

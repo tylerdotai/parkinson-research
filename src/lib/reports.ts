@@ -66,6 +66,11 @@ function cleanReportBody(content: string): string {
   return content
     .replace(/\s*---\s*\n\s*\*?(?:Solo para fines informativos — no consejos médicos\.|For informational purposes only — not medical advice\.)\*?\s*$/i, '')
     .replace(/\s*\*?(?:Solo para fines informativos — no consejos médicos\.|For informational purposes only — not medical advice\.)\*?\s*$/i, '')
+    // Conservative editorial corrections for deterministic translation artifacts.
+    .replace(/esta resumen/gi, 'este resumen')
+    .replace(/del enfermedad/gi, 'de la enfermedad')
+    .replace(/sinucleina/gi, 'sinucleína')
+    .replace(/epitopios/gi, 'epítopos')
     .trim()
 }
 

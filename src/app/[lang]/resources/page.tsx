@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { getDictionary } from '@/lib/dictionary'
+import { localizedMetadata } from '@/lib/seo'
 import ResourceItem from '@/components/ResourceItem'
 
 type Props = {
@@ -11,7 +12,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params
   const dictionary = await getDictionary(lang)
   return {
-    title: dictionary.resources?.title || 'Resources',
+    ...localizedMetadata(lang, '/resources'),
+    title: dictionary.resources.title,
     description: "Free resources, hotlines, and support for Parkinson's patients and families.",
   }
 }

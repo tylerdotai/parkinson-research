@@ -35,9 +35,9 @@ export function Nav() {
   }, [])
 
   const navLinks = [
-    { label: 'Reports', href: '/reports' },
-    { label: 'Resources', href: '/resources' },
-    { label: 'About', href: '/about' },
+    { label: locale === 'es' ? 'Informes' : 'Reports', href: '/reports' },
+    { label: locale === 'es' ? 'Recursos' : 'Resources', href: '/resources' },
+    { label: locale === 'es' ? 'Acerca de' : 'About', href: '/about' },
   ]
 
   return (
@@ -90,7 +90,7 @@ export function Nav() {
               href={withLocale('/subscribe', locale)}
               className="ml-2 lg:ml-3 inline-flex items-center gap-1.5 rounded-full bg-pap-purple px-5 py-2 text-sm font-medium text-white hover:bg-pap-purple/90 transition-colors"
             >
-              Subscribe
+              {locale === 'es' ? 'Suscribirse' : 'Subscribe'}
               <svg
                 width="12"
                 height="12"
@@ -203,7 +203,7 @@ export function Nav() {
                   onClick={() => setOpen(false)}
                   className="block w-full rounded-full bg-pap-purple py-4 text-center text-base font-medium text-white hover:bg-pap-purple/90 transition-colors"
                 >
-                  Subscribe
+                  {locale === 'es' ? 'Suscribirse' : 'Subscribe'}
                 </a>
 
                 <div className="mt-6 flex items-center justify-center gap-2" aria-label="Language">

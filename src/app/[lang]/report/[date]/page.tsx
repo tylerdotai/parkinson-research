@@ -61,17 +61,34 @@ export default async function ReportPage({ params }: Props) {
 
   if (!report) notFound()
 
-  const formatDate = (d: string) =>
-    new Date(d).toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US', {
+  const formatDate = (d: string) => {
+    const [year, month, day] = d.split('-').map(Number)
+    return new Date(year, month - 1, day).toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
     })
+  }
 
   const totalEntries = sections.reduce((acc, s) => acc + s.entries.length, 0)
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://aiagainstparkinson.com'
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: report.title,
+    description: report.preview,
+    datePublished: date,
+    dateModified: date,
+    inLanguage: lang,
+    mainEntityOfPage: `${siteUrl}/${lang}/report/${date}`,
+    image: `${siteUrl}/parkinson-og.jpg`,
+    author: { '@type': 'Organization', name: "AI Against Parkinson's", url: siteUrl },
+    publisher: { '@type': 'Organization', name: "AI Against Parkinson's", logo: { '@type': 'ImageObject', url: `${siteUrl}/images/logo.png` } },
+  }
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
       <ReadingProgress />
 
       <div style={{ background: 'var(--pap-void)', minHeight: '100vh' }}>
@@ -128,7 +145,7 @@ export default async function ReportPage({ params }: Props) {
           {sections.length > 0 ? (
             sections.map((section, i) => (
               <div key={section.title} style={{ marginBottom: i < sections.length - 1 ? '3rem' : 0 }}>
-                <ReportSection section={section} sectionIndex={i} />
+                <ReportSection key={section.category} section={section} sectionIndex={i} lang={lang as 'en' | 'es'} />
                 {i < sections.length - 1 && (
                   <div
                     style={{

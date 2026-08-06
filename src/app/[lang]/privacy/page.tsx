@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { getDictionary } from '@/lib/dictionary'
+import { localizedMetadata } from '@/lib/seo'
 
 type Props = {
   params: Promise<{ lang: string }>
@@ -9,6 +10,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params
   const dictionary = await getDictionary(lang)
   return {
+    ...localizedMetadata(lang, '/privacy'),
     title: dictionary.privacy.pageTitle,
     description: dictionary.privacy.metaDesc,
   }

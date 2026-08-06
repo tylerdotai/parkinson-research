@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { Nav } from '@/components/nav'
 import { Badge } from '@/components/Badge'
 import { type Locale } from '@/lib/i18n/config'
@@ -32,6 +32,9 @@ interface HomeClientProps {
 export function HomeClient({ locale, dictionary, latestReport }: HomeClientProps) {
   const t = dictionary.home
   const [openIndex, setOpenIndex] = useState<number | null>(null)
+  const reducedMotion = useReducedMotion()
+  const animationProps = reducedMotion ? { initial: false } : fade
+  const staggerProps = (index: number) => reducedMotion ? { initial: false } : stagger(index)
 
   return (
     <>
@@ -61,7 +64,7 @@ export function HomeClient({ locale, dictionary, latestReport }: HomeClientProps
               {/* LEFT — Text */}
               <div className="lg:col-span-6">
                 <motion.p
-                  {...fade}
+                  {...animationProps}
                   className="font-mono text-[11px] uppercase tracking-[0.22em] text-pap-purple mb-6 flex items-center gap-2"
                 >
                   <span className="inline-block h-px w-6 bg-pap-purple/60" />
@@ -69,21 +72,21 @@ export function HomeClient({ locale, dictionary, latestReport }: HomeClientProps
                 </motion.p>
 
                 <motion.h1
-                  {...stagger(1)}
+                  {...staggerProps(1)}
                   className="font-display text-[44px] sm:text-6xl lg:text-[68px] xl:text-[80px] leading-[0.98] tracking-tight text-pap-text"
                 >
                   {t.headline}
                 </motion.h1>
 
                 <motion.p
-                  {...stagger(2)}
+                  {...staggerProps(2)}
                   className="mt-7 text-base sm:text-lg text-pap-muted leading-relaxed max-w-lg"
                 >
                   {t.heroSubtitle}
                 </motion.p>
 
                 <motion.div
-                  {...stagger(3)}
+                  {...staggerProps(3)}
                   className="mt-8 flex items-center gap-4"
                 >
                   <a
@@ -105,7 +108,7 @@ export function HomeClient({ locale, dictionary, latestReport }: HomeClientProps
                 </motion.div>
 
                 <motion.div
-                  {...stagger(4)}
+                  {...staggerProps(4)}
                   className="mt-10 flex items-center gap-3 text-sm text-pap-dim"
                 >
                   <span className="inline-block h-2 w-2 rounded-full bg-pap-purple" />
@@ -115,7 +118,7 @@ export function HomeClient({ locale, dictionary, latestReport }: HomeClientProps
 
               {/* RIGHT — Image */}
               <motion.div
-                {...fade}
+                {...animationProps}
                 transition={{ duration: 1, ease }}
                 className="lg:col-span-6 relative"
               >
@@ -229,7 +232,7 @@ export function HomeClient({ locale, dictionary, latestReport }: HomeClientProps
               ].map((item, i) => (
                 <motion.div
                   key={item.title}
-                  {...stagger(i)}
+                  {...staggerProps(i)}
                   className={`flex flex-col items-start ${item.featured ? 'md:col-span-1 relative' : ''}`}
                 >
                   {item.featured && (
@@ -296,13 +299,13 @@ export function HomeClient({ locale, dictionary, latestReport }: HomeClientProps
           style={{ background: 'var(--pap-surface)' }}
         >
           <div className="mx-auto max-w-2xl text-center">
-            <motion.h2 {...stagger(0)} className="font-display text-3xl sm:text-4xl text-pap-text mb-4">
+            <motion.h2 {...staggerProps(0)} className="font-display text-3xl sm:text-4xl text-pap-text mb-4">
               {t.stayAhead}
             </motion.h2>
-            <motion.p {...stagger(1)} className="text-pap-muted mb-8">
+            <motion.p {...staggerProps(1)} className="text-pap-muted mb-8">
               {t.subscribeTagline}
             </motion.p>
-            <motion.div {...stagger(2)}>
+            <motion.div {...staggerProps(2)}>
               <a
                 href={withLocale('/subscribe', locale)}
                 className="inline-flex items-center gap-2 rounded-full bg-pap-purple px-8 py-4 text-base font-medium text-white hover:bg-pap-purple/90 transition-colors"
@@ -313,11 +316,11 @@ export function HomeClient({ locale, dictionary, latestReport }: HomeClientProps
                 </svg>
               </a>
             </motion.div>
-            <motion.p {...stagger(3)} className="mt-4 text-sm text-pap-dim">
+            <motion.p {...staggerProps(3)} className="mt-4 text-sm text-pap-dim">
               {t.subscribeDisclaimer}
             </motion.p>
             {/* Trust signal — founder attribution */}
-            <motion.div {...stagger(4)} className="mt-8 flex items-center justify-center gap-3">
+            <motion.div {...staggerProps(4)} className="mt-8 flex items-center justify-center gap-3">
               <div className="w-8 h-8 rounded-full overflow-hidden bg-pap-purple/10 flex items-center justify-center">
                 <span className="text-pap-purple text-xs font-display">T</span>
               </div>
