@@ -4,6 +4,7 @@ const CATEGORY_MAP: Record<string, string> = {
   'Clinical Trials': 'clinical',
   'Ensayos Clinicos': 'clinical',
   'Ensayos clínicos': 'clinical',
+  'Pruebas Clínicas': 'clinical',
   'Breakthrough Treatments': 'breakthrough',
   'Tratamientos Innovadores': 'breakthrough',
   'Investigación sobre tratamientos': 'breakthrough',
