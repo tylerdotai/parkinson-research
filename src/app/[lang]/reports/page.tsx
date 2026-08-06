@@ -41,7 +41,7 @@ export default async function ReportsPage({ params }: Props) {
   const reportData = await Promise.all(
     dates.map(async (date) => {
       const sections = await getReportSections(date, lang)
-      const meta = getReportMetadata(date, lang)
+      const meta = await getReportMetadata(date, lang)
       if (!sections.length) return null
       const categoriesWithContent = sections.map(s => s.category).filter(c => categoryLabels[c])
       return { date, categoriesWithContent, preview: meta?.preview }

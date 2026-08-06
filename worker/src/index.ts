@@ -12,7 +12,7 @@ interface Env {
 type Lang = 'en' | 'es'
 const CATEGORIES = [
   ['clinical', 'Clinical Trials', "Parkinson disease clinical trial", 'clinical trial'],
-  ['treatment', 'Treatment Research', "Parkinson disease treatment", 'treatment'],
+  ['breakthrough', 'Breakthrough Treatments', "Parkinson disease treatment", 'treatment'],
   ['lifestyle', 'Lifestyle Interventions', "Parkinson disease exercise OR diet OR sleep", 'lifestyle'],
   ['emerging', 'Emerging Research', "Parkinson disease alpha-synuclein OR biomarker OR genetics", 'emerging'],
 ] as const
@@ -235,6 +235,14 @@ export default {
   },
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url)
+    // The Worker is the data/runtime layer. Keep the public visual experience
+    // on the canonical editorial frontend until a faithful frontend cutover is
+    // explicitly verified.
+    if (request.method === 'GET' && (url.pathname === '/' || /^\/(en|es)(\/reports|\/report\/\d{4}-\d{2}-\d{2})?$/.test(url.pathname))) {
+      const destination = new URL(url.pathname === '/' ? '/en' : url.pathname, env.PUBLIC_SITE_URL)
+      destination.search = url.search
+      return Response.redirect(destination.toString(), 302)
+    }
     const match = url.pathname.match(/^\/(en|es)\/report\/(\d{4}-\d{2}-\d{2})$/)
     if (match) return renderReport(env, match[2], match[1] as Lang)
     if (url.pathname === '/en/reports') return renderReports(env, 'en')

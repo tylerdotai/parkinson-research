@@ -18,7 +18,7 @@ export default async function LocalePage({ params }: Props) {
 
   const dates = await getAllReportDates(lang)
   const latestDate = dates[0]
-  const latestReport = latestDate ? getReportMetadata(latestDate, lang) : null
+  const latestReport = latestDate ? await getReportMetadata(latestDate, lang) : null
 
   return (
     <HomeClient

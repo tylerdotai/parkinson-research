@@ -20,6 +20,40 @@ export interface Report {
   preview: string
 }
 
+const REPORT_API_URL = process.env.REPORT_API_URL?.replace(/\/$/, '')
+
+type RemoteReport = {
+  title?: string
+  report_date?: string
+  content?: string
+}
+
+async function fetchRemote<T>(pathname: string): Promise<T | null> {
+  if (!REPORT_API_URL) return null
+  try {
+    const response = await fetch(`${REPORT_API_URL}${pathname}`, {
+      next: { revalidate: 300 },
+    })
+    if (!response.ok) return null
+    return await response.json() as T
+  } catch {
+    return null
+  }
+}
+
+function reportFromRemote(item: RemoteReport, fallbackDate: string): Report | null {
+  if (!item.content) return null
+  const date = item.report_date || fallbackDate
+  const body = item.content.replace(/^---[\s\S]*?\n---\s*/, '')
+  return {
+    title: item.title || `Parkinson's Research Report — ${date}`,
+    date,
+    content: body,
+    html: simpleMarkdownToHtml(body),
+    preview: stripEmojis(body).slice(0, 200) + '...',
+  }
+}
+
 // Strip emojis from text for web display (reports keep them in markdown)
 function stripEmojis(text: string): string {
   return text.replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '')
@@ -97,6 +131,10 @@ function processedLine(text: string): string {
 }
 
 export async function getAllReportDates(lang = 'en'): Promise<string[]> {
+  const remote = await fetchRemote<{ results?: Array<{ report_date?: string }> }>(`/api/reports?language=${lang}`)
+  const remoteDates = (remote?.results ?? []).map((item) => item.report_date).filter((date): date is string => Boolean(date))
+  if (remoteDates.length) return remoteDates.sort().reverse()
+
   try {
     const reportsDir = getLangReportsDir(lang)
     if (!fs.existsSync(reportsDir)) {
@@ -113,7 +151,10 @@ export async function getAllReportDates(lang = 'en'): Promise<string[]> {
   }
 }
 
-export function getReportMetadata(date: string, lang = 'en'): { preview: string } | null {
+export async function getReportMetadata(date: string, lang = 'en'): Promise<{ preview: string } | null> {
+  const remoteReport = await getReport(date, lang)
+  if (remoteReport) return { preview: remoteReport.preview }
+
   try {
     const filePath = path.join(getLangReportsDir(lang), `${date}.md`)
     if (!fs.existsSync(filePath)) return null
@@ -140,6 +181,10 @@ export function getReportMetadata(date: string, lang = 'en'): { preview: string 
 }
 
 export async function getReport(date: string, lang = 'en'): Promise<Report | null> {
+  const remote = await fetchRemote<RemoteReport>(`/api/reports/${date}?language=${lang}`)
+  const remoteReport = remote ? reportFromRemote(remote, date) : null
+  if (remoteReport) return remoteReport
+
   try {
     const filePath = path.join(getLangReportsDir(lang), `${date}.md`)
     if (!fs.existsSync(filePath)) return null
@@ -179,6 +224,19 @@ export interface ReportSummary {
 export async function getLatestReportSummary(lang = 'en'): Promise<ReportSummary | null> {
   const dates = await getAllReportDates(lang)
   if (dates.length === 0) return null
+
+  const remoteReport = await getReport(dates[0], lang)
+  if (remoteReport) {
+    const sections = parseReportSections(remoteReport.content)
+    return {
+      date: dates[0],
+      title: remoteReport.title,
+      sections: sections.map((section) => ({
+        title: section.title,
+        summary: extractSummary(section.entries.map((entry) => entry.snippet || '').join(' ')),
+      })),
+    }
+  }
 
   const filePath = path.join(getLangReportsDir(lang), `${dates[0]}.md`)
   if (!fs.existsSync(filePath)) return null
