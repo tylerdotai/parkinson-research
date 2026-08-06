@@ -44,7 +44,7 @@ async function fetchRemote<T>(pathname: string): Promise<T | null> {
 function reportFromRemote(item: RemoteReport, fallbackDate: string): Report | null {
   if (!item.content) return null
   const date = item.report_date || fallbackDate
-  const body = item.content.replace(/^---[\s\S]*?\n---\s*/, '')
+  const body = cleanReportBody(stripRemoteFrontmatter(item.content))
   return {
     title: item.title || `Parkinson's Research Report — ${date}`,
     date,
@@ -54,11 +54,26 @@ function reportFromRemote(item: RemoteReport, fallbackDate: string): Report | nu
   }
 }
 
+function stripRemoteFrontmatter(content: string): string {
+  const lines = content.split('\n')
+  if (lines[0]?.trim() !== '---') return content
+  const closingIndex = lines.slice(1, 12).findIndex((line) => line.trim() === '---')
+  if (closingIndex === -1) return content
+  return lines.slice(closingIndex + 2).join('\n').replace(/^\s+/, '')
+}
+
+function cleanReportBody(content: string): string {
+  return content
+    .replace(/\s*---\s*\n\s*\*?(?:Solo para fines informativos — no consejos médicos\.|For informational purposes only — not medical advice\.)\*?\s*$/i, '')
+    .replace(/\s*\*?(?:Solo para fines informativos — no consejos médicos\.|For informational purposes only — not medical advice\.)\*?\s*$/i, '')
+    .trim()
+}
+
 function previewFromMarkdown(markdown: string): string {
   const intro = markdown
     .split('\n')
     .map((line) => line.trim())
-    .find((line) => line && !line.startsWith('#') && !line.startsWith('*From:') && !line.startsWith('*De:'))
+    .find((line) => line && !['---', '***', '___'].includes(line) && !line.startsWith('#') && !line.startsWith('*From:') && !line.startsWith('*De:'))
   if (!intro) return 'Daily research update'
   const clean = stripEmojis(intro)
     .replace(/\*\*(.*?)\*\*/g, '$1')

@@ -32,9 +32,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: report.title,
     description: report.preview,
     openGraph: {
+      type: 'article',
       title: report.title,
       description: report.preview,
       url: `${siteUrl}/${lang}/report/${date}`,
+      locale: lang === 'es' ? 'es_ES' : 'en_US',
+      images: [{ url: '/parkinson-og.jpg', width: 1200, height: 630, alt: "AI Against Parkinson's" }],
+    },
+    twitter: { card: 'summary_large_image', images: ['/parkinson-og.jpg'] },
+    alternates: {
+      canonical: `${siteUrl}/${lang}/report/${date}`,
+      languages: {
+        en: `${siteUrl}/en/report/${date}`,
+        es: `${siteUrl}/es/report/${date}`,
+        'x-default': `${siteUrl}/en/report/${date}`,
+      },
     },
   }
 }
