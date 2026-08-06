@@ -69,7 +69,7 @@ export default function ReportEntry({ entry, lang }: Props) {
 
           {entry.whyItMatters && (
             <p className="text-sm leading-relaxed text-pap-muted mb-2">
-              <strong className="text-pap-text">{lang === 'es' ? 'Por qué importa:' : 'Why it matters:'}</strong> {entry.whyItMatters}
+              <strong className="text-pap-text">{lang === 'es' ? 'Qué significa:' : 'What the study tells us:'}</strong> {entry.whyItMatters}
             </p>
           )}
 
