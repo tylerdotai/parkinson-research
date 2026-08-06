@@ -1,12 +1,12 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import type { ReportSection as ReportSectionType } from '@/lib/types'
 import ReportEntry from './ReportEntry'
 
 interface Props {
   section: ReportSectionType
   sectionIndex: number
+  lang: 'en' | 'es'
 }
 
 const CATEGORY_ICONS: Record<string, React.ReactNode> = {
@@ -37,12 +37,10 @@ const CATEGORY_ICONS: Record<string, React.ReactNode> = {
   ),
 }
 
-export default function ReportSection({ section, sectionIndex }: Props) {
+export default function ReportSection({ section, lang }: Props) {
   return (
-    <motion.section
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: sectionIndex * 0.1, duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+    <section
+      className="report-section"
       style={{ marginBottom: '3.5rem' }}
     >
       {/* Section header */}
@@ -72,9 +70,9 @@ export default function ReportSection({ section, sectionIndex }: Props) {
       {/* Entries — bullet list */}
       <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
         {section.entries.map((entry, i) => (
-          <ReportEntry key={i} entry={entry} index={i} />
+          <ReportEntry key={i} entry={entry} lang={lang} />
         ))}
       </ul>
-    </motion.section>
+    </section>
   )
 }

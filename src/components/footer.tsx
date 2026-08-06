@@ -47,27 +47,27 @@ export function Footer() {
               </span>
             </Link>
             <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.22em] text-pap-purple">
-              Daily Research for Families
+              {locale === 'es' ? 'Investigación diaria para familias' : 'Daily Research for Families'}
             </p>
             <div className="mt-3 flex items-center gap-2">
               <span className="inline-block h-2 w-2 rounded-full bg-pap-lavender" />
-              <span className="text-[12px] text-pap-dim">Daily at 7:00 AM CDT</span>
+              <span className="text-[12px] text-pap-dim">{locale === 'es' ? 'Diario a las 7:00 AM CDT' : 'Daily at 7:00 AM CDT'}</span>
             </div>
             <p className="mt-4 text-[14px] sm:text-[15px] text-pap-muted leading-[1.6] max-w-sm">
-              Every morning, AI agents search clinical trials, medical journals, and research databases to bring you the latest breakthroughs, trials, and evidence-based tips.
+              {locale === 'es' ? 'Cada mañana, agentes de IA buscan ensayos clínicos, revistas médicas y bases de datos de investigación para ofrecerte los últimos avances, ensayos y consejos basados en evidencia.' : 'Every morning, AI agents search clinical trials, medical journals, and research databases to bring you the latest breakthroughs, trials, and evidence-based tips.'}
             </p>
           </div>
 
           {/* Nav columns */}
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-pap-purple mb-5">
-              Navigate
+              {locale === 'es' ? 'Navegar' : 'Navigate'}
             </p>
             <ul className="space-y-3">
               {[
-                { label: 'Reports', href: '/reports' },
-                { label: 'Resources', href: '/resources' },
-                { label: 'About', href: '/about' },
+                { label: locale === 'es' ? 'Informes' : 'Reports', href: '/reports' },
+                { label: locale === 'es' ? 'Recursos' : 'Resources', href: '/resources' },
+                { label: locale === 'es' ? 'Acerca de' : 'About', href: '/about' },
               ].map((item) => (
                 <li key={item.href}>
                   <a
@@ -83,12 +83,12 @@ export function Footer() {
 
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-pap-purple mb-5">
-              Legal
+              {locale === 'es' ? 'Legal' : 'Legal'}
             </p>
             <ul className="space-y-3">
               {[
-                { label: 'Privacy Policy', href: '/privacy' },
-                { label: 'Terms of Service', href: '/terms' },
+                { label: locale === 'es' ? 'Política de privacidad' : 'Privacy Policy', href: '/privacy' },
+                { label: locale === 'es' ? 'Términos de servicio' : 'Terms of Service', href: '/terms' },
               ].map((item) => (
                 <li key={item.href}>
                   <a

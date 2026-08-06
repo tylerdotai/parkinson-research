@@ -51,8 +51,34 @@ export default async function LangLayout({ children, params }: Props) {
     notFound()
   }
 
+  const spanish = lang === 'es'
+  const siteJsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id': `${BASE_URL}/#organization`,
+        name: "AI Against Parkinson's",
+        url: BASE_URL,
+        logo: `${BASE_URL}/images/logo.png`,
+        description: spanish
+          ? 'Investigación diaria sobre Parkinson para familias y cuidadores.'
+          : "Daily Parkinson's research for families and caregivers.",
+      },
+      {
+        '@type': 'WebSite',
+        '@id': `${BASE_URL}/#website`,
+        name: "AI Against Parkinson's",
+        url: `${BASE_URL}/${lang}`,
+        inLanguage: lang,
+        publisher: { '@id': `${BASE_URL}/#organization` },
+      },
+    ],
+  }
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }} />
       <Nav />
       <main id="main-content" className="flex-1">
         {children}

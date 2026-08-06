@@ -169,6 +169,31 @@
   outline-offset: 2px;
 }
 
+/* Emil-style interaction baseline: immediate press feedback, bounded properties. */
+button,
+[role="button"] {
+  transition: transform 140ms cubic-bezier(0.23, 1, 0.32, 1), opacity 140ms ease-out;
+}
+
+button:active,
+[role="button"]:active {
+  transform: scale(0.98);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  a:hover,
+  button:hover {
+    text-underline-offset: 3px;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  nav {
+    background: #ffffff !important;
+    backdrop-filter: none !important;
+  }
+}
+
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

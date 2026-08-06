@@ -118,24 +118,15 @@ async function summarize(env: Env, category: string, label: string, items: Array
   }))
 }
 
-function structurePreservingSpanish(content: string): string {
-  return content
-    .replace(/Parkinson’s Research/g, 'Investigación sobre Parkinson')
-    .replace(/Verified research updates for families\./g, 'Actualizaciones verificadas de investigación para familias.')
-    .replace(/Clinical Trials/g, 'Ensayos clínicos')
-    .replace(/Treatment Research/g, 'Investigación sobre tratamientos')
-    .replace(/Lifestyle Interventions/g, 'Intervenciones de estilo de vida')
-    .replace(/Emerging Research/g, 'Investigación emergente')
-    .replace(/For informational purposes only — not medical advice\./g, 'Solo con fines informativos — no es consejo médico.')
-}
-
 async function translateReport(env: Env, content: string): Promise<string> {
-  const result = await env.AI.run('@cf/meta/llama-3.2-3b-instruct', { messages: [{ role: 'system', content: 'Translate markdown into natural, accessible Spanish. Preserve every line beginning with #, ##, ###, or *From exactly, including all URLs and dates. Return only markdown.' }, { role: 'user', content }], max_tokens: 2200, temperature: 0.1 }) as { response?: string }
+  const result = await env.AI.run('@cf/meta/llama-3.2-3b-instruct', { messages: [{ role: 'system', content: 'Translate this Parkinson\'s research report into natural, accessible Spanish for families and caregivers. Preserve the markdown heading structure, every URL, every date, and every source citation. Translate prose and source labels naturally. Never invent findings or advice. Return only markdown.' }, { role: 'user', content }], max_tokens: 2200, temperature: 0.1 }) as { response?: string }
   const translated = (result.response ?? '').replace(/^```(?:markdown)?\s*|\s*```$/g, '').trim()
   const headings = (value: string) => (value.match(/^## /gm) ?? []).length
   const urls = (value: string) => (value.match(/https?:\/\/[^)\s]+/g) ?? []).sort().join('|')
-  if (translated && headings(translated) === headings(content) && urls(translated) === urls(content)) return translated
-  return structurePreservingSpanish(content)
+  const hasSpanishProse = /\b(?:investigación|familias|estudio|fuente|informativos|ensayos|tratamientos)\b/i.test(translated)
+  const hasEnglishLeak = /\b(?:Verified research updates for families|A recent peer-reviewed study|For informational purposes only)\b/i.test(translated)
+  if (translated && translated !== content && headings(translated) === headings(content) && urls(translated) === urls(content) && hasSpanishProse && !hasEnglishLeak) return translated
+  throw new Error('SPANISH_TRANSLATION_INVALID')
 }
 
 async function runPipeline(env: Env, requestedDate?: string): Promise<Record<string, unknown>> {

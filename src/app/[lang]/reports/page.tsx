@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { getDictionary } from '@/lib/dictionary'
 import { getAllReportDates, getReportMetadata, getReportSections } from '@/lib/reports'
 import { Badge } from '@/components/Badge'
+import { localizedMetadata } from '@/lib/seo'
 
 type Props = {
   params: Promise<{ lang: string }>
@@ -12,6 +13,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params
   const dictionary = await getDictionary(lang)
   return {
+    ...localizedMetadata(lang, '/reports'),
     title: dictionary.reports.title,
     description: dictionary.reports.noReportsDesc,
   }
@@ -24,7 +26,8 @@ export default async function ReportsPage({ params }: Props) {
   const t = dictionary.reports
 
   const formatDate = (date: string) => {
-    return new Date(date).toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US', {
+    const [year, month, day] = date.split('-').map(Number)
+    return new Date(year, month - 1, day).toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric'
