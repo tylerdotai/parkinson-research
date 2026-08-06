@@ -6,11 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint --ext .ts,.tsx .",
+    "lint": "eslint --ext .ts,.tsx src",
     "test": "jest --passWithNoTests",
     "test:coverage": "jest --coverage",
-    "typecheck": "tsc --noEmit",
-    "research": "npx tsx scripts/research-agent.ts"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "framer-motion": "^12.38.0",
