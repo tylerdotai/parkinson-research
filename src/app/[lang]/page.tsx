@@ -7,6 +7,8 @@ type Props = {
   params: Promise<{ lang: string }>
 }
 
+export const dynamic = 'force-dynamic'
+
 export default async function LocalePage({ params }: Props) {
   const { lang } = await params
 

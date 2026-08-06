@@ -32,7 +32,7 @@ async function fetchRemote<T>(pathname: string): Promise<T | null> {
   if (!REPORT_API_URL) return null
   try {
     const response = await fetch(`${REPORT_API_URL}${pathname}`, {
-      next: { revalidate: 300 },
+      cache: 'no-store',
     })
     if (!response.ok) return null
     return await response.json() as T
@@ -50,8 +50,22 @@ function reportFromRemote(item: RemoteReport, fallbackDate: string): Report | nu
     date,
     content: body,
     html: simpleMarkdownToHtml(body),
-    preview: stripEmojis(body).slice(0, 200) + '...',
+    preview: previewFromMarkdown(body),
   }
+}
+
+function previewFromMarkdown(markdown: string): string {
+  const intro = markdown
+    .split('\n')
+    .map((line) => line.trim())
+    .find((line) => line && !line.startsWith('#') && !line.startsWith('*From:') && !line.startsWith('*De:'))
+  if (!intro) return 'Daily research update'
+  const clean = stripEmojis(intro)
+    .replace(/\*\*(.*?)\*\*/g, '$1')
+    .replace(/\*(.*?)\*/g, '$1')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .trim()
+  return clean.slice(0, 160) + (clean.length > 160 ? '...' : '')
 }
 
 // Strip emojis from text for web display (reports keep them in markdown)
@@ -133,21 +147,18 @@ function processedLine(text: string): string {
 export async function getAllReportDates(lang = 'en'): Promise<string[]> {
   const remote = await fetchRemote<{ results?: Array<{ report_date?: string }> }>(`/api/reports?language=${lang}`)
   const remoteDates = (remote?.results ?? []).map((item) => item.report_date).filter((date): date is string => Boolean(date))
-  if (remoteDates.length) return remoteDates.sort().reverse()
+  const dates = new Set(remoteDates)
 
   try {
     const reportsDir = getLangReportsDir(lang)
-    if (!fs.existsSync(reportsDir)) {
-      return []
+    if (fs.existsSync(reportsDir)) {
+      for (const file of fs.readdirSync(reportsDir)) {
+        if (file.endsWith('.md')) dates.add(file.replace('.md', ''))
+      }
     }
-    const files = fs.readdirSync(reportsDir)
-      .filter(f => f.endsWith('.md'))
-      .map(f => f.replace('.md', ''))
-      .sort()
-      .reverse()
-    return files
+    return [...dates].sort().reverse()
   } catch {
-    return []
+    return [...dates].sort().reverse()
   }
 }
 
@@ -199,7 +210,7 @@ export async function getReport(date: string, lang = 'en'): Promise<Report | nul
       date,
       content: body,
       html,
-      preview: stripEmojis(body).slice(0, 200) + '...',
+      preview: previewFromMarkdown(body),
     }
   } catch {
     return null
