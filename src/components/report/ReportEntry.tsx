@@ -59,6 +59,26 @@ export default function ReportEntry({ entry, lang }: Props) {
             </p>
           )}
 
+          {(entry.evidenceType || entry.evidenceLevel || entry.studyDesign) && (
+            <div className="flex flex-wrap gap-2 mb-2" aria-label={lang === 'es' ? 'Detalles de evidencia' : 'Evidence details'}>
+              {entry.evidenceType && <span className="rounded-full bg-pap-purple-soft px-2.5 py-1 text-xs text-pap-purple">{entry.evidenceType}</span>}
+              {entry.evidenceLevel && <span className="rounded-full border border-pap-border px-2.5 py-1 text-xs text-pap-muted">{lang === 'es' ? 'Nivel' : 'Level'}: {entry.evidenceLevel}</span>}
+              {entry.studyDesign && <span className="rounded-full border border-pap-border px-2.5 py-1 text-xs text-pap-muted">{entry.studyDesign}</span>}
+            </div>
+          )}
+
+          {entry.whyItMatters && (
+            <p className="text-sm leading-relaxed text-pap-muted mb-2">
+              <strong className="text-pap-text">{lang === 'es' ? 'Por qué importa:' : 'Why it matters:'}</strong> {entry.whyItMatters}
+            </p>
+          )}
+
+          {entry.limitations && (
+            <p className="text-xs leading-relaxed text-pap-dim mb-2">
+              <strong>{lang === 'es' ? 'Límite:' : 'Limit:'}</strong> {entry.limitations}
+            </p>
+          )}
+
           {/* Source link */}
           {entry.url && (
             <a

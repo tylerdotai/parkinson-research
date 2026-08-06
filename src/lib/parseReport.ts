@@ -45,6 +45,7 @@ export function parseReportSections(content: string): ReportSection[] {
       let source = ''
       let sourceUrl = ''
       let snippet = currentBody.trim()
+      const metadata = (label: string) => currentBody.match(new RegExp(`\\*?\\*?${label}:\\s*(.+?)(?:\\n|$)`, 'i'))?.[1]?.replace(/\*+/g, '').trim()
 
       // Look for "From: domain.com (https://...)" or "*From/De: domain.com (https://...)*" (markdown italic)
       const sourceLine = currentBody.match(/(?:\*From:|\*De:|From|De|Source):\s*(.+?)(?:\n|$)/i)
@@ -63,6 +64,7 @@ export function parseReportSections(content: string): ReportSection[] {
 
       // Clean markdown from snippet
       snippet = snippet
+        .replace(/\*?\*?(?:Evidence|Evidencia|Evidence level|Nivel de evidencia|Study design|Diseño del estudio|Source quality|Calidad de la fuente|Why it matters|Por qué importa|Limitations|Limitaciones):\s*[^\n]+/gi, '')
         .replace(/\*\*(.*?)\*\*/g, '$1')
         .replace(/\*(.*?)\*/g, '$1')
         .replace(/\n+/g, ' ')
@@ -74,6 +76,12 @@ export function parseReportSections(content: string): ReportSection[] {
           snippet: snippet || undefined,
           source: source || undefined,
           url: sourceUrl || undefined,
+          evidenceType: metadata('Evidence') || metadata('Evidencia'),
+          evidenceLevel: metadata('Evidence level') || metadata('Nivel de evidencia'),
+          studyDesign: metadata('Study design') || metadata('Diseño del estudio'),
+          sourceQuality: metadata('Source quality') || metadata('Calidad de la fuente'),
+          whyItMatters: metadata('Why it matters') || metadata('Por qué importa'),
+          limitations: metadata('Limitations') || metadata('Limitaciones'),
         })
       }
     }
@@ -113,7 +121,7 @@ export function parseReportSections(content: string): ReportSection[] {
 
     // Body text (accumulate until next ### or ##)
     if (currentSection) {
-      currentBody += ' ' + trimmed
+      currentBody += `${currentBody ? '\n' : ''}${trimmed}`
     }
   }
 
