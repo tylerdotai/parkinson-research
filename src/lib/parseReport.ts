@@ -32,8 +32,19 @@ function cleanDomain(url: string): string {
   }
 }
 
+function inferEvidence(body: string, lang: 'en' | 'es') {
+  const text = body.toLowerCase()
+  const spanish = lang === 'es'
+  if (/systematic review|meta-analysis|revisión sistemática|metaanálisis/.test(text)) return { type: spanish ? 'Revisión sistemática' : 'Systematic review', level: spanish ? 'Evidencia sintetizada' : 'Synthesized evidence', design: spanish ? 'Reúne varios estudios' : 'Combines multiple studies' }
+  if (/mouse|mice|rat model|cell-model|cell model|laboratory|preclinical|ratón|modelo animal|estudio de laboratorio|preclínic/.test(text)) return { type: spanish ? 'Investigación preclínica' : 'Preclinical research', level: spanish ? 'Temprana' : 'Early', design: spanish ? 'Laboratorio o modelo animal' : 'Laboratory or animal model' }
+  if (/randomized|randomised|placebo|phase [1-4]|recruiting|trial|ensayo|aleatorizado|reclutando|fase [1-4]/.test(text)) return { type: spanish ? 'Ensayo clínico' : 'Clinical trial', level: spanish ? 'En evaluación' : 'Under evaluation', design: spanish ? 'Prueba en personas' : 'Study in people' }
+  if (/observational|cohort|database study|base de datos|observacional|cohorte/.test(text)) return { type: spanish ? 'Estudio observacional' : 'Observational study', level: spanish ? 'Asociación, no causalidad' : 'Association, not causation', design: spanish ? 'Observa datos de personas' : 'Observes people or records' }
+  return { type: spanish ? 'Estudio de investigación' : 'Research study', level: spanish ? 'No indicado en el informe' : 'Not stated in report', design: spanish ? 'Diseño no indicado' : 'Design not stated' }
+}
+
 export function parseReportSections(content: string): ReportSection[] {
   const lines = content.split('\n')
+  const lang = /\b(?:investigación|estudio|ensayo|familias)\b/i.test(content) ? 'es' as const : 'en' as const
   const sections: ReportSection[] = []
   let currentSection: ReportSection | null = null
   let currentEntryTitle = ''
@@ -48,7 +59,7 @@ export function parseReportSections(content: string): ReportSection[] {
       const metadata = (label: string) => currentBody.match(new RegExp(`\\*?\\*?${label}:\\s*(.+?)(?:\\n|$)`, 'i'))?.[1]?.replace(/\*+/g, '').trim()
 
       // Look for "From: domain.com (https://...)" or "*From/De: domain.com (https://...)*" (markdown italic)
-      const sourceLine = currentBody.match(/(?:\*From:|\*De:|From|De|Source):\s*(.+?)(?:\n|$)/i)
+      const sourceLine = currentBody.match(/^\*?(?:From|De|Source):\s*(.+?)\s*$/im)
       if (sourceLine) {
         const raw = sourceLine[1].replace(/\*+/g, '').trim()
         // Extract URL from parenthetical: "domain.com (https://...)"
@@ -59,7 +70,7 @@ export function parseReportSections(content: string): ReportSection[] {
         } else {
           source = cleanDomain(raw)
         }
-        snippet = snippet.replace(/(?:\*From:|From|Source):\s*\(?https?:\/\/[^\)]+\)?\s*/gi, '').replace(/(?:\*From:|From|Source):\s*[^\n]+/gi, '').trim()
+        snippet = currentBody.split('\n').filter((line) => !/^\*?(?:From|De|Source):/i.test(line.trim())).join(' ').trim()
       }
 
       // Clean markdown from snippet
@@ -71,14 +82,15 @@ export function parseReportSections(content: string): ReportSection[] {
         .trim()
 
       if (snippet || currentEntryTitle) {
+        const inferred = inferEvidence(currentBody, lang)
         currentSection.entries.push({
           title: currentEntryTitle.trim() || 'Research Update',
           snippet: snippet || undefined,
           source: source || undefined,
           url: sourceUrl || undefined,
-          evidenceType: metadata('Evidence') || metadata('Evidencia'),
-          evidenceLevel: metadata('Evidence level') || metadata('Nivel de evidencia'),
-          studyDesign: metadata('Study design') || metadata('Diseño del estudio'),
+          evidenceType: metadata('Evidence') || metadata('Evidencia') || inferred.type,
+          evidenceLevel: metadata('Evidence level') || metadata('Nivel de evidencia') || inferred.level,
+          studyDesign: metadata('Study design') || metadata('Diseño del estudio') || inferred.design,
           sourceQuality: metadata('Source quality') || metadata('Calidad de la fuente'),
           whyItMatters: metadata('Why it matters') || metadata('Por qué importa'),
           limitations: metadata('Limitations') || metadata('Limitaciones'),

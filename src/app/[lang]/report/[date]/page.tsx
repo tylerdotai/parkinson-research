@@ -71,6 +71,17 @@ export default async function ReportPage({ params }: Props) {
   }
 
   const totalEntries = sections.reduce((acc, s) => acc + s.entries.length, 0)
+  const familyLens: Record<string, string> = lang === 'es' ? {
+    clinical: 'Personas: estudios que todavía prueban seguridad o beneficio; aparecer en un ensayo no significa que un tratamiento funcione.',
+    breakthrough: 'Tratamientos: señales que van desde estudios en personas hasta trabajo de laboratorio; la etapa cambia lo que se puede concluir.',
+    lifestyle: 'Vida diaria: estudios sobre ejercicio, sueño, nutrición y rehabilitación; los resultados no sustituyen un plan clínico personal.',
+    emerging: 'Investigación emergente: pistas sobre causas, biomarcadores y diagnósticos futuros; todavía necesitan validación.',
+  } : {
+    clinical: 'For people: studies still testing safety or benefit; appearing in a trial does not mean a treatment works.',
+    breakthrough: 'Treatments: signals ranging from human studies to lab work; the stage changes what can be concluded.',
+    lifestyle: 'Daily life: studies of exercise, sleep, nutrition, and rehabilitation; results do not replace a personal care plan.',
+    emerging: 'Emerging research: clues about causes, biomarkers, and future diagnostics; these still need validation.',
+  }
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://aiagainstparkinson.com'
   const articleJsonLd = {
     '@context': 'https://schema.org',
@@ -138,10 +149,23 @@ export default async function ReportPage({ params }: Props) {
                 {totalEntries} {totalEntries === 1 ? 'finding' : 'findings'}
               </p>
             </div>
+            {report.archiveWarning && (
+              <div role="note" style={{ marginTop: '1.5rem', padding: '1rem 1.1rem', borderRadius: '0.75rem', background: '#fff8e8', border: '1px solid #ead8a4', color: '#6d571e', fontSize: '0.9rem', lineHeight: 1.55 }}>
+                {lang === 'es' ? 'Nota del archivo: este informe contiene material de redacción antiguo que no se verificó con un registro de investigación actual. Úsalo solo como archivo; no para decisiones médicas.' : report.archiveWarning}
+              </div>
+            )}
           </div>
         </header>
 
         <main style={{ maxWidth: '720px', margin: '0 auto', padding: '3rem 1.5rem 4rem' }}>
+          {sections.length > 0 && (
+            <aside aria-label={lang === 'es' ? 'Cómo leer este informe' : 'How to read this report'} style={{ marginBottom: '2.5rem', padding: '1.25rem 1.5rem', borderRadius: '0.75rem', background: 'var(--pap-surface)', border: '1px solid var(--pap-border)' }}>
+              <p style={{ margin: '0 0 0.65rem', fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--pap-muted)' }}>{lang === 'es' ? 'Cómo leerlo' : 'How to read it'}</p>
+              <ul style={{ margin: 0, paddingLeft: '1.1rem', color: 'var(--pap-muted)', fontSize: '0.92rem', lineHeight: 1.6 }}>
+                {Array.from(new Set(sections.map((section) => section.category))).map((category) => <li key={category}>{familyLens[category]}</li>)}
+              </ul>
+            </aside>
+          )}
           {sections.length > 0 ? (
             sections.map((section, i) => (
               <div key={section.title} style={{ marginBottom: i < sections.length - 1 ? '3rem' : 0 }}>
@@ -156,6 +180,10 @@ export default async function ReportPage({ params }: Props) {
                 )}
               </div>
             ))
+          ) : report.archiveWarning ? (
+            <div role="status" style={{ padding: '1.5rem', borderRadius: '0.75rem', background: 'var(--pap-surface)', border: '1px solid var(--pap-border)', color: 'var(--pap-muted)', lineHeight: 1.6 }}>
+              {lang === 'es' ? 'El contenido de este informe archivado no se muestra porque no contiene un registro de investigación verificable.' : 'The content of this archived report is not shown because it does not contain a verifiable research record.'}
+            </div>
           ) : (
             <div dangerouslySetInnerHTML={{ __html: report.html }} />
           )}
