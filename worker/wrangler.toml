@@ -1,0 +1,24 @@
+name = "ai-against-parkinsons"
+main = "src/index.ts"
+compatibility_date = "2026-08-06"
+workers_dev = true
+preview_urls = false
+
+[vars]
+SITE_NAME = "AI Against Parkinson's"
+PUBLIC_SITE_URL = "https://aiagainstparkinson.com"
+
+[triggers]
+crons = ["0 13 * * *"]
+
+[ai]
+binding = "AI"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "ai-again-against-parkinsons"
+database_id = "246a440e-537a-4346-9bd6-fb93093deab9"
+migrations_dir = "migrations"
+
+[observability]
+enabled = true
