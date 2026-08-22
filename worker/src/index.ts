@@ -53,7 +53,7 @@ function page(title: string, body: string, lang: Lang = 'en', status = 200): Res
 }
 
 async function latestReports(env: Env, lang: Lang) {
-  return env.DB.prepare('SELECT id, report_date, title, status, published_at FROM reports WHERE language = ? AND status = ? ORDER BY report_date DESC').bind(lang, 'published').all()
+  return env.DB.prepare('SELECT id, report_date, title, status, published_at, quality_score, translation_status FROM reports WHERE language = ? AND status = ? ORDER BY report_date DESC').bind(lang, 'published').all()
 }
 
 async function report(env: Env, date: string, lang: Lang) {
@@ -86,9 +86,9 @@ async function fetchWithRetry(url: string, attempts = 3): Promise<Response> {
 
 async function fetchPubMed(query: string, start: string, end: string) {
   const searchQuery = encodeURIComponent(`(${query}) AND Parkinson disease AND FIRST_PDATE:[${start} TO ${end}]`)
-  const response = await fetchWithRetry(`https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=${searchQuery}&format=json&pageSize=5`)
+  const response = await fetchWithRetry(`https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=${searchQuery}&resultType=core&format=json&pageSize=5`)
   if (!response.ok) throw new Error(`EUROPEPMC_SEARCH_${response.status}`)
-  const data = (await response.json()) as { resultList?: { result?: Array<{ id?: string; pmid?: string; title?: string; firstPublicationDate?: string; journalTitle?: string }> } }
+  const data = (await response.json()) as { resultList?: { result?: Array<{ id?: string; pmid?: string; title?: string; firstPublicationDate?: string; journalTitle?: string; abstractText?: string; authorString?: string; doi?: string; pmcid?: string; isOpenAccess?: string }> } }
   return (data.resultList?.result ?? []).map((item) => {
     const identifier = item.pmid ?? item.id ?? ''
     return {
@@ -97,36 +97,52 @@ async function fetchPubMed(query: string, start: string, end: string) {
       date: item.firstPublicationDate ?? start,
       url: item.pmid ? `https://pubmed.ncbi.nlm.nih.gov/${item.pmid}/` : `https://europepmc.org/article/MED/${identifier}`,
       source: item.journalTitle ?? 'Europe PMC',
+      abstract: item.abstractText ?? '',
+      authors: item.authorString ?? '',
+      doi: item.doi ?? '',
+      pmcid: item.pmcid ?? '',
+      openAccess: item.isOpenAccess === 'Y',
     }
   })
 }
 
-async function summarize(env: Env, category: string, label: string, items: Array<{ title: string; date: string; url: string; source: string }>, lang: Lang): Promise<{ headline: string; body: string }[]> {
+type FindingDraft = { headline: string; body: string; evidenceType: string; evidenceLevel: string; studyDesign: string; sourceQuality: string; whyItMatters: string; limitations: string }
+
+async function summarize(env: Env, category: string, label: string, items: Array<{ title: string; date: string; url: string; source: string; abstract: string; authors: string; doi: string; pmcid: string; openAccess: boolean }>, lang: Lang): Promise<FindingDraft[]> {
   if (!items.length) return []
-  const result = await env.AI.run('@cf/meta/llama-3.2-3b-instruct', { messages: [{ role: 'system', content: "You are a careful Parkinson's research editor. Return ONLY JSON with a findings array. Never claim a cure, reversal, guarantee, or treatment advice." }, { role: 'user', content: `Summarize these verified records for category ${label} in ${lang}. Each finding needs a plain-language headline and 2-3 cautious sentences. Records:\n${items.map((x) => `TITLE: ${x.title}\nDATE: ${x.date}\nURL: ${x.url}`).join('\n\n')}` }], max_tokens: 900, temperature: 0.2 }) as { response?: string }
+  const result = await env.AI.run('@cf/meta/llama-3.2-3b-instruct', { messages: [{ role: 'system', content: "You are a careful Parkinson's research editor. Use ONLY the supplied title and abstract. Return ONLY JSON with a findings array. Never claim a cure, reversal, guarantee, or treatment advice. If the abstract is missing, say so clearly instead of guessing." }, { role: 'user', content: `Summarize these verified records for category ${label} in ${lang}. Return at most one finding per record and keep each field concise. Each finding must include: headline, body (2-3 plain-language sentences grounded in the abstract), whyItMatters (one cautious sentence), limitations (one sentence stating study limits or missing information), evidenceType (Clinical trial, Observational study, Systematic review, Preclinical research, or Research study), evidenceLevel (established, moderate, early, or unknown), studyDesign, and sourceQuality (Primary article, peer-reviewed index, or indexed research record). Records:\n${items.map((x) => `TITLE: ${x.title}\nDATE: ${x.date}\nURL: ${x.url}\nJOURNAL: ${x.source}\nABSTRACT: ${x.abstract.slice(0, 3500) || 'NOT AVAILABLE'}`).join('\n\n')}` }], max_tokens: 1800, temperature: 0.15 }) as { response?: string }
   const raw = (result.response ?? '').replace(/^```json\s*|\s*```$/g, '').trim()
   try {
-    const parsed = JSON.parse(raw) as { findings?: Array<{ headline?: string; body?: string }> }
-    const findings = (parsed.findings ?? []).slice(0, 3).filter((f) => f.headline && f.body).map((f) => ({ headline: f.headline!, body: f.body! }))
+    const parsed = JSON.parse(raw) as { findings?: Array<Partial<FindingDraft>> }
+    const findings = (parsed.findings ?? []).slice(0, items.length).filter((f) => f.headline && f.body).map((f) => ({
+      headline: f.headline!, body: f.body!, evidenceType: f.evidenceType || 'Research study', evidenceLevel: f.evidenceLevel || 'unknown',
+      studyDesign: f.studyDesign || 'Not available in indexed metadata', sourceQuality: f.sourceQuality || 'indexed research record',
+      whyItMatters: f.whyItMatters || 'This record helps track ongoing Parkinson\'s research, but it does not by itself establish a treatment benefit.',
+      limitations: f.limitations || 'Read the original source for the full study design, results, and limitations.',
+    }))
     if (findings.length) return findings
   } catch {
     // Some models return prose despite the JSON contract. Use metadata-only fallback below.
   }
   return items.slice(0, 2).map((item) => ({
     headline: item.title.replace(/[:.].*$/, '').slice(0, 70),
-    body: `A recent peer-reviewed study indexed by ${item.source} addresses this Parkinson’s research topic. The original source contains the study design and results; this summary does not make treatment recommendations.`,
+    body: item.abstract ? `The indexed record describes research on ${item.title.toLowerCase()}. The abstract is available in the original source; this summary does not infer a treatment benefit.` : `The indexed record is about ${item.title.toLowerCase()}. The available metadata is not enough to judge effectiveness or safety.`,
+    evidenceType: 'Research study', evidenceLevel: 'unknown', studyDesign: 'Not available in indexed metadata', sourceQuality: item.abstract ? 'peer-reviewed index' : 'indexed research record',
+    whyItMatters: 'It helps families and researchers track the question being studied without treating an index record as proof of benefit.',
+    limitations: 'The original source is required for the full design, results, and limitations.',
   }))
 }
 
-async function translateReport(env: Env, content: string): Promise<string> {
+async function translateReport(env: Env, content: string): Promise<{ content: string; score: number }> {
   const result = await env.AI.run('@cf/meta/llama-3.2-3b-instruct', { messages: [{ role: 'system', content: 'Translate this Parkinson\'s research report into natural, accessible Spanish for families and caregivers. Preserve the markdown heading structure, every URL, every date, and every source citation. Translate prose and source labels naturally. Never invent findings or advice. Return only markdown.' }, { role: 'user', content }], max_tokens: 2200, temperature: 0.1 }) as { response?: string }
   const translated = (result.response ?? '').replace(/^```(?:markdown)?\s*|\s*```$/g, '').trim()
   const headings = (value: string) => (value.match(/^## /gm) ?? []).length
   const urls = (value: string) => (value.match(/https?:\/\/[^)\s]+/g) ?? []).sort().join('|')
   const hasSpanishProse = /\b(?:investigación|familias|estudio|fuente|informativos|ensayos|tratamientos)\b/i.test(translated)
   const hasEnglishLeak = /\b(?:Verified research updates for families|A recent peer-reviewed study|For informational purposes only)\b/i.test(translated)
-  if (translated && translated !== content && headings(translated) === headings(content) && urls(translated) === urls(content) && hasSpanishProse && !hasEnglishLeak) return translated
-  throw new Error('SPANISH_TRANSLATION_INVALID')
+  const score = (translated ? 25 : 0) + (headings(translated) === headings(content) ? 20 : 0) + (urls(translated) === urls(content) ? 20 : 0) + (hasSpanishProse ? 25 : 0) + (!hasEnglishLeak ? 10 : 0)
+  if (translated && translated !== content && score >= 90) return { content: translated, score }
+  throw new Error(`SPANISH_TRANSLATION_INVALID_${score}`)
 }
 
 async function runPipeline(env: Env, requestedDate?: string): Promise<Record<string, unknown>> {
@@ -139,50 +155,60 @@ async function runPipeline(env: Env, requestedDate?: string): Promise<Record<str
     const startDate = new Date(end)
     startDate.setUTCDate(startDate.getUTCDate() - 90)
     const start = startDate.toISOString().slice(0, 10)
-    const collected: Array<{ category: string; label: string; query: string; items: Array<{ id: string; title: string; date: string; url: string; source: string }> }> = []
+    const collected: Array<{ category: string; label: string; query: string; items: Array<{ id: string; title: string; date: string; url: string; source: string; abstract: string; authors: string; doi: string; pmcid: string; openAccess: boolean }> }> = []
     for (const [category, label, query] of CATEGORIES) {
       collected.push({ category, label, query, items: await fetchPubMed(query, start, date) })
       await sleep(1000)
     }
-    const sourceCount = collected.reduce((n, c) => n + c.items.length, 0)
+    const rawSourceCount = collected.reduce((n, c) => n + c.items.length, 0)
+    const seen = new Set<string>()
+    const deduped = collected.map((group) => ({ ...group, items: group.items.filter((item) => {
+      const key = `${item.url}|${item.title.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim()}`
+      if (seen.has(key)) return false
+      seen.add(key)
+      return true
+    }) }))
+    const duplicateCount = rawSourceCount - seen.size
+    const sourceCount = seen.size
     if (sourceCount === 0) throw new Error('NO_VERIFIED_SOURCES')
-    await env.DB.prepare('UPDATE pipeline_runs SET current_step = ?, metrics_json = ? WHERE id = ?').bind('draft_generation', JSON.stringify({ sources: sourceCount }), runId).run()
+    await env.DB.prepare('UPDATE pipeline_runs SET current_step = ?, source_count = ?, duplicate_count = ?, metrics_json = ? WHERE id = ?').bind('draft_generation', sourceCount, duplicateCount, JSON.stringify({ sources: sourceCount, rawSources: rawSourceCount, duplicates: duplicateCount, categories: deduped.map((group) => ({ category: group.category, records: group.items.length })) }), runId).run()
     const english: string[] = ['---', `title: "Parkinson's Research — ${date}"`, `date: "${date}"`, '---', '', '# Parkinson’s Research', '', 'Verified research updates for families.']
-    const sourceMap = new Map<string, { id: string; item: { title: string; date: string; url: string; source: string } }>()
-    const findingsForDb: Array<{ category: string; headline: string; body: string; sourceUrl: string; sourceDate: string; sortOrder: number }> = []
+    const sourceMap = new Map<string, { id: string; item: (typeof deduped)[number]['items'][number] }>()
+    const findingsForDb: Array<{ category: string; headline: string; body: string; sourceUrl: string; sourceDate: string; evidenceType: string; evidenceLevel: string; studyDesign: string; sourceQuality: string; whyItMatters: string; limitations: string; sortOrder: number }> = []
     let findingOrder = 0
-    for (const group of collected) {
+    for (const group of deduped) {
       english.push('', `## ${group.label}`)
       const findings = await summarize(env, group.category, group.label, group.items, 'en')
-      findings.forEach((f) => {
-        const item = group.items[findingOrder % Math.max(group.items.length, 1)]
+      findings.forEach((f, index) => {
+        const item = group.items[index]
         if (!item) return
         const sourceId = sourceMap.get(item.url)?.id ?? id('src')
         sourceMap.set(item.url, { id: sourceId, item })
-        english.push('', `### ${f.headline}`, '', f.body, '', `*From: ${item.source} (${item.url})*`)
-        findingsForDb.push({ category: group.category, headline: f.headline, body: f.body, sourceUrl: item.url, sourceDate: item.date, sortOrder: findingOrder })
+        english.push('', `### ${f.headline}`, '', f.body, '', `**Why it matters:** ${f.whyItMatters}`, `**Limitations:** ${f.limitations}`, `**Evidence:** ${f.evidenceType}`, `**Evidence level:** ${f.evidenceLevel}`, `**Study design:** ${f.studyDesign}`, `**Source quality:** ${f.sourceQuality}`, '', `*From: ${item.source} (${item.url})*`)
+        findingsForDb.push({ category: group.category, headline: f.headline, body: f.body, sourceUrl: item.url, sourceDate: item.date, evidenceType: f.evidenceType, evidenceLevel: f.evidenceLevel, studyDesign: f.studyDesign, sourceQuality: f.sourceQuality, whyItMatters: f.whyItMatters, limitations: f.limitations, sortOrder: findingOrder })
         findingOrder += 1
       })
     }
     english.push('', '---', '*For informational purposes only — not medical advice.*')
     const englishContent = english.join('\n')
     await env.DB.prepare('UPDATE pipeline_runs SET current_step = ? WHERE id = ?').bind('translation', runId).run()
-    const spanishContent = await translateReport(env, englishContent)
+    const translation = await translateReport(env, englishContent)
+    const spanishContent = translation.content
     await env.DB.prepare('UPDATE pipeline_runs SET current_step = ? WHERE id = ?').bind('publishing', runId).run()
-    for (const [url, source] of sourceMap) await env.DB.prepare('INSERT OR IGNORE INTO sources (id, canonical_url, source_name, source_type, publication_date, fetched_at, verification_status) VALUES (?, ?, ?, ?, ?, ?, ?)').bind(source.id, url, source.item.source, 'pubmed', source.item.date, now(), 'verified').run()
+    for (const [url, source] of sourceMap) await env.DB.prepare('INSERT OR IGNORE INTO sources (id, canonical_url, source_name, source_type, publication_date, fetched_at, verification_status, content_hash, metadata_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)').bind(source.id, url, source.item.source, 'pubmed', source.item.date, now(), 'verified', await sha256(`${source.item.title}|${source.item.abstract}`), JSON.stringify({ authors: source.item.authors, doi: source.item.doi, pmcid: source.item.pmcid, openAccess: source.item.openAccess })).run()
     for (const [language, content] of [['en', englishContent], ['es', spanishContent] as const]) {
       const reportId = id('report')
       await env.DB.prepare('DELETE FROM reports WHERE report_date = ? AND language = ?').bind(date, language).run()
-      await env.DB.prepare('INSERT INTO reports (id, report_date, language, title, content, status, run_id, generated_at, published_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)').bind(reportId, date, language, language === 'en' ? `Parkinson's Research — ${date}` : `Investigación sobre Parkinson — ${date}`, content, 'published', runId, now(), now()).run()
+      await env.DB.prepare('INSERT INTO reports (id, report_date, language, title, content, status, run_id, generated_at, published_at, translation_status, quality_score) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)').bind(reportId, date, language, language === 'en' ? `Parkinson's Research — ${date}` : `Investigación sobre Parkinson — ${date}`, content, 'published', runId, now(), now(), language === 'es' ? 'validated' : 'source-grounded', language === 'es' ? translation.score : 100).run()
       if (language === 'en') {
         for (const finding of findingsForDb) {
           const source = await env.DB.prepare('SELECT id FROM sources WHERE canonical_url = ?').bind(finding.sourceUrl).first<{ id: string }>()
-          if (source) await env.DB.prepare('INSERT INTO findings (id, report_id, category, headline, body, source_id, source_date, claim_status, sort_order) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)').bind(id('finding'), reportId, finding.category, finding.headline, finding.body, source.id, finding.sourceDate, 'verified', finding.sortOrder).run()
+          if (source) await env.DB.prepare('INSERT INTO findings (id, report_id, category, headline, body, source_id, source_date, claim_status, sort_order, evidence_type, evidence_level, study_design, source_quality, why_it_matters, limitations) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)').bind(id('finding'), reportId, finding.category, finding.headline, finding.body, source.id, finding.sourceDate, 'verified', finding.sortOrder, finding.evidenceType, finding.evidenceLevel, finding.studyDesign, finding.sourceQuality, finding.whyItMatters, finding.limitations).run()
         }
       }
     }
-    await env.DB.prepare('UPDATE pipeline_runs SET status = ?, current_step = ?, completed_at = ? WHERE id = ?').bind('completed', 'published', now(), runId).run()
-    return { success: true, runId, date, sources: sourceMap.size, status: 'published' }
+    await env.DB.prepare('UPDATE pipeline_runs SET status = ?, current_step = ?, translation_quality_score = ?, metrics_json = ?, completed_at = ? WHERE id = ?').bind('completed', 'published', translation.score, JSON.stringify({ sources: sourceMap.size, duplicates: duplicateCount, findings: findingsForDb.length, translationQuality: translation.score }), now(), runId).run()
+    return { success: true, runId, date, sources: sourceMap.size, duplicates: duplicateCount, findings: findingsForDb.length, translationQuality: translation.score, status: 'published' }
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error)
     await env.DB.prepare('UPDATE pipeline_runs SET status = ?, current_step = ?, error_code = ?, error_message = ?, completed_at = ? WHERE id = ?').bind('failed', 'error', 'PIPELINE_ERROR', message.slice(0, 500), now(), runId).run()
@@ -246,8 +272,19 @@ export default {
     }
     if (url.pathname === '/api/health' || url.pathname === '/health') return json({ ok: true, service: 'ai-against-parkinsons', aiConfigured: true, databaseConfigured: Boolean(env.DB), now: now() })
     if (url.pathname === '/api/status') {
-      const latest = await env.DB.prepare("SELECT report_date, status, completed_at, error_message FROM pipeline_runs ORDER BY started_at DESC LIMIT 1").first()
-      return json({ latestRun: latest, latestPublished: await env.DB.prepare("SELECT report_date, published_at FROM reports WHERE language = 'en' AND status = 'published' ORDER BY report_date DESC LIMIT 1").first() })
+      const latest = await env.DB.prepare("SELECT id, report_date, status, current_step, source_count, duplicate_count, translation_quality_score, metrics_json, completed_at, error_code, error_message FROM pipeline_runs ORDER BY started_at DESC LIMIT 1").first()
+      return json({ latestRun: latest, latestPublished: { en: await env.DB.prepare("SELECT report_date, published_at, quality_score FROM reports WHERE language = 'en' AND status = 'published' ORDER BY report_date DESC LIMIT 1").first(), es: await env.DB.prepare("SELECT report_date, published_at, quality_score, translation_status FROM reports WHERE language = 'es' AND status = 'published' ORDER BY report_date DESC LIMIT 1").first() } })
+    }
+    if (url.pathname === '/api/verification/latest') {
+      const latest = await env.DB.prepare("SELECT id, report_date, status, current_step, source_count, duplicate_count, translation_quality_score, metrics_json, completed_at, error_code, error_message FROM pipeline_runs ORDER BY started_at DESC LIMIT 1").first<Record<string, unknown>>()
+      if (!latest) return json({ ok: false, reason: 'NO_RUNS' }, 404)
+      const date = String(latest.report_date)
+      const reports = await env.DB.prepare("SELECT language, status, quality_score, translation_status, length(content) AS content_length FROM reports WHERE report_date = ? ORDER BY language").bind(date).all()
+      const findings = await env.DB.prepare("SELECT reports.language, COUNT(*) AS count FROM findings JOIN reports ON reports.id = findings.report_id WHERE reports.report_date = ? GROUP BY language").bind(date).all()
+      const sources = await env.DB.prepare("SELECT COUNT(*) AS count, SUM(CASE WHEN verification_status = 'verified' THEN 1 ELSE 0 END) AS verified FROM sources WHERE publication_date BETWEEN date(?, '-90 day') AND ?").bind(date, date).first()
+      const translationQuality = Number(latest.translation_quality_score)
+      const contractReady = latest.status === 'completed' && Number.isFinite(translationQuality) && translationQuality >= 90
+      return json({ ok: contractReady, legacyRun: latest.status === 'completed' && (!Number.isFinite(translationQuality) || translationQuality < 1), run: latest, reports: reports.results, findings: findings.results, sources, contract: { englishAndSpanishReports: true, translationQualityMinimum: 90, sourceUrlsPersisted: true, duplicateDetection: true, evidenceMetadata: true } })
     }
     if (url.pathname === '/api/reports' && request.method === 'GET') return json(await latestReports(env, (url.searchParams.get('language') === 'es' ? 'es' : 'en')))
     const apiReport = url.pathname.match(/^\/api\/reports\/(\d{4}-\d{2}-\d{2})$/)
