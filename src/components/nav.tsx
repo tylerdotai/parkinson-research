@@ -85,12 +85,12 @@ export function Nav() {
               </a>
             ))}
 
-            {/* Subscribe CTA */}
+            {/* Reports badge — replaces dead Subscribe CTA */}
             <a
-              href={withLocale('/subscribe', locale)}
+              href={withLocale('/reports', locale)}
               className="ml-2 lg:ml-3 inline-flex items-center gap-1.5 rounded-full bg-pap-purple px-5 py-2 text-sm font-medium text-white hover:bg-pap-purple/90 transition-colors"
             >
-              {locale === 'es' ? 'Suscribirse' : 'Subscribe'}
+              {locale === 'es' ? 'Ver Informes' : 'View Reports'}
               <svg
                 width="12"
                 height="12"
@@ -199,11 +199,11 @@ export function Nav() {
                 className="mt-10"
               >
                 <a
-                  href={withLocale('/subscribe', locale)}
+                  href={withLocale('/reports', locale)}
                   onClick={() => setOpen(false)}
                   className="block w-full rounded-full bg-pap-purple py-4 text-center text-base font-medium text-white hover:bg-pap-purple/90 transition-colors"
                 >
-                  {locale === 'es' ? 'Suscribirse' : 'Subscribe'}
+                  {locale === 'es' ? 'Ver Informes' : 'View Reports'}
                 </a>
 
                 <div className="mt-6 flex items-center justify-center gap-2" aria-label="Language">
