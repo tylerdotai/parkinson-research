@@ -75,7 +75,7 @@ export function HomeClient({ locale, dictionary, latestReport }: HomeClientProps
               <div className="lg:col-span-6">
                 <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-pap-purple mb-5 flex items-center gap-2">
                   <span className="inline-block h-px w-5 bg-pap-purple/50" />
-                  Daily Parkinson's Research
+                  {"Daily Parkinson's Research"}
                 </p>
 
                 <h1 className="font-display text-[42px] sm:text-5xl lg:text-[60px] xl:text-[72px] leading-[0.97] tracking-tight text-pap-text">
@@ -206,7 +206,7 @@ export function HomeClient({ locale, dictionary, latestReport }: HomeClientProps
                 {
                   num: '02',
                   title: 'Breakthroughs',
-                  desc: 'Peer-reviewed findings from NEJM, Lancet, NPJ Parkinson's — translated before the mainstream picks them up.',
+                  desc: "Peer-reviewed findings from NEJM, Lancet, NPJ Parkinson's — translated before the mainstream picks them up.",
                   color: '#16a34a',
                   bg: 'rgba(22,163,74,0.08)',
                 },
