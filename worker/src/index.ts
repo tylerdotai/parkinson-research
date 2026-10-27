@@ -141,7 +141,7 @@ async function translateReport(env: Env, content: string): Promise<{ content: st
   const hasSpanishProse = /\b(?:investigación|familias|estudio|fuente|informativos|ensayos|tratamientos)\b/i.test(translated)
   const hasEnglishLeak = /\b(?:Verified research updates for families|A recent peer-reviewed study|For informational purposes only)\b/i.test(translated)
   const score = (translated ? 25 : 0) + (headings(translated) === headings(content) ? 20 : 0) + (urls(translated) === urls(content) ? 20 : 0) + (hasSpanishProse ? 25 : 0) + (!hasEnglishLeak ? 10 : 0)
-  if (translated && translated !== content && score >= 90) return { content: translated, score }
+  if (translated && translated !== content && !hasEnglishLeak && score >= 90) return { content: translated, score }
   throw new Error(`SPANISH_TRANSLATION_INVALID_${score}`)
 }
 

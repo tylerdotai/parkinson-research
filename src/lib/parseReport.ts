@@ -86,7 +86,7 @@ export function parseReportSections(content: string): ReportSection[] {
       const metadata = (label: string) => currentBody.match(new RegExp(`\\*?\\*?${label}:\\s*(.+?)(?:\\n|$)`, 'i'))?.[1]?.replace(/\*+/g, '').trim()
 
       // Look for "From: domain.com (https://...)" or "*From/De: domain.com (https://...)*" (markdown italic)
-      const sourceLine = currentBody.match(/^\*?(?:From|De|Source):\s*(.+?)\s*$/im)
+      const sourceLine = currentBody.match(/^\*?(?:From|De|Source|Fuente):\s*(.+?)\s*$/im)
       if (sourceLine) {
         const raw = sourceLine[1].replace(/\*+/g, '').trim()
         // Extract URL from parenthetical: "domain.com (https://...)"
@@ -97,15 +97,15 @@ export function parseReportSections(content: string): ReportSection[] {
         } else {
           source = cleanDomain(raw)
         }
-        snippet = currentBody.split('\n').filter((line) => !/^\*?(?:From|De|Source):/i.test(line.trim())).join(' ').trim()
+        snippet = currentBody.split('\n').filter((line) => !/^\*?(?:From|De|Source|Fuente):/i.test(line.trim())).join('\n').trim()
       }
 
       // Clean markdown from snippet
       snippet = snippet
-        .replace(/\*?\*?(?:Evidence|Evidencia|Evidence level|Nivel de evidencia|Study design|Diseño del estudio|Source quality|Calidad de la fuente|Why it matters|Por qué importa|Limitations|Limitaciones):\s*[^\n]+/gi, '')
+        .replace(/\*?\*?(?:Evidence|Evidencia|Evidence level|Nivel de evidencia|Study design|Diseño del estudio|Source quality|Calidad de la fuente|Why it matters|Por qué importa|Por qué es importante|Limitations|Limitaciones):\s*[^\n]+/gi, '')
         .replace(/\*\*(.*?)\*\*/g, '$1')
         .replace(/\*(.*?)\*/g, '$1')
-        .replace(/\n+/g, ' ')
+        .replace(/\s+/g, ' ')
         .trim()
 
       if (snippet || currentEntryTitle) {
@@ -121,7 +121,7 @@ export function parseReportSections(content: string): ReportSection[] {
           evidenceLevel: metadata('Evidence level') || metadata('Nivel de evidencia') || inferred.level,
           studyDesign: metadata('Study design') || metadata('Diseño del estudio') || inferred.design,
           sourceQuality: metadata('Source quality') || metadata('Calidad de la fuente'),
-          whyItMatters: metadata('Why it matters') || metadata('Por qué importa') || takeaway || interpretation.why,
+          whyItMatters: metadata('Why it matters') || metadata('Por qué importa') || metadata('Por qué es importante') || takeaway || interpretation.why,
           limitations: metadata('Limitations') || metadata('Limitaciones') || interpretation.limit,
         })
       }
