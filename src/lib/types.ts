@@ -4,6 +4,12 @@ export interface ReportEntry {
   date?: string
   source?: string
   url?: string
+  evidenceType?: string
+  evidenceLevel?: string
+  studyDesign?: string
+  sourceQuality?: string
+  whyItMatters?: string
+  limitations?: string
 }
 
 export interface ReportSection {

@@ -31,7 +31,17 @@ npx wrangler deploy
 
 The AI binding is Cloudflare Workers AI. The pipeline retrieves recent records through Europe PMC, preserves PubMed links when available, generates English findings, translates to Spanish, validates section/URL parity, and publishes both languages atomically to D1.
 
-A run is not considered successful when source collection fails, AI output cannot be structured, or translation parity fails. Zero-source runs are rejected.
+A run is not considered successful when source collection fails, AI output cannot be structured, or translation parity fails. Zero-source runs are rejected. Each new finding stores evidence type, evidence level, study design, source quality, why-it-matters context, and limitations. Duplicate source records are removed before generation.
+
+Operational verification:
+
+```bash
+curl https://ai-against-parkinsons.tyler-delano.workers.dev/api/health
+curl https://ai-against-parkinsons.tyler-delano.workers.dev/api/status
+curl https://ai-against-parkinsons.tyler-delano.workers.dev/api/verification/latest
+```
+
+`/api/verification/latest` checks the latest run, English/Spanish publication, source verification, findings, translation score, duplicate detection, and evidence metadata contract. Deploy the backend from this directory (`worker/`); running Wrangler from the repository root targets a different project.
 
 ## Current domain cutover status
 

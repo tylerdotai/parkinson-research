@@ -7,6 +7,7 @@ import { localizedMetadata } from '@/lib/seo'
 
 type Props = {
   params: Promise<{ lang: string }>
+  searchParams: Promise<{ q?: string; category?: string }>
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -19,8 +20,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default async function ReportsPage({ params }: Props) {
+export default async function ReportsPage({ params, searchParams }: Props) {
   const { lang } = await params
+  const filters = await searchParams
   const dictionary = await getDictionary(lang)
   const dates = await getAllReportDates(lang)
   const t = dictionary.reports
@@ -40,6 +42,8 @@ export default async function ReportsPage({ params }: Props) {
     lifestyle: 'Lifestyle',
     emerging: 'Emerging',
   }
+  const query = (filters.q || '').trim().toLowerCase()
+  const category = filters.category || ''
 
   const reportData = await Promise.all(
     dates.map(async (date) => {
@@ -47,10 +51,16 @@ export default async function ReportsPage({ params }: Props) {
       const meta = await getReportMetadata(date, lang)
       if (!sections.length) return null
       const categoriesWithContent = sections.map(s => s.category).filter(c => categoryLabels[c])
-      return { date, categoriesWithContent, preview: meta?.preview }
+      return { date, categoriesWithContent, preview: meta?.preview, searchText: sections.flatMap((section) => [section.title, ...section.entries.flatMap((entry) => [entry.title, entry.snippet || ''])]).join(' ') }
     })
   )
   const validReports = reportData.filter(Boolean)
+  const filteredReports = validReports.filter((report) => {
+    if (!report) return false
+    const matchesCategory = !category || report.categoriesWithContent.includes(category as typeof report.categoriesWithContent[number])
+    const matchesQuery = !query || report.date.includes(query) || report.searchText.toLowerCase().includes(query)
+    return matchesCategory && matchesQuery
+  })
 
   return (
     <div className="py-20 md:py-28 lg:py-32">
@@ -98,8 +108,19 @@ export default async function ReportsPage({ params }: Props) {
                 Subscribe to Daily Reports
               </Link>
             </div>
+            <form method="get" className="mb-8 flex flex-col sm:flex-row gap-3 max-w-5xl" role="search">
+              <label className="sr-only" htmlFor="report-search">{lang === 'es' ? 'Buscar informes' : 'Search reports'}</label>
+              <input id="report-search" name="q" defaultValue={filters.q || ''} placeholder={lang === 'es' ? 'Buscar por fecha o tema' : 'Search by date or topic'} className="min-h-11 flex-1 rounded-full border border-pap-border bg-white px-4 text-sm text-pap-text" />
+              <label className="sr-only" htmlFor="report-category">{lang === 'es' ? 'Filtrar por categoría' : 'Filter by category'}</label>
+              <select id="report-category" name="category" defaultValue={category} className="min-h-11 rounded-full border border-pap-border bg-white px-4 text-sm text-pap-text">
+                <option value="">{lang === 'es' ? 'Todas las categorías' : 'All categories'}</option>
+                {Object.entries(categoryLabels).map(([key, value]) => <option key={key} value={key}>{lang === 'es' ? ({ clinical: 'Ensayos clínicos', breakthrough: 'Tratamientos', lifestyle: 'Estilo de vida', emerging: 'Investigación emergente' }[key] || value) : value}</option>)}
+              </select>
+              <button type="submit" className="min-h-11 rounded-full bg-pap-purple px-5 text-sm font-medium text-white">{lang === 'es' ? 'Filtrar' : 'Filter'}</button>
+            </form>
+            {(query || category) && <p className="mb-4 text-sm text-pap-muted">{filteredReports.length} {lang === 'es' ? 'informes coinciden' : 'reports match'}</p>}
             <div className="max-w-5xl space-y-3">
-              {validReports.map((report) => {
+              {filteredReports.map((report) => {
                 if (!report) return null
                 const { date, categoriesWithContent } = report
 
@@ -140,6 +161,7 @@ export default async function ReportsPage({ params }: Props) {
                   </div>
                 )
               })}
+              {filteredReports.length === 0 && <p className="rounded-2xl border border-pap-border p-8 text-center text-sm text-pap-muted">{lang === 'es' ? 'No encontramos informes con esos filtros.' : 'No reports match those filters.'}</p>}
             </div>
           </>
         )}

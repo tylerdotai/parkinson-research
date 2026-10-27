@@ -18,6 +18,7 @@ export interface Report {
   content: string
   html: string
   preview: string
+  archiveWarning?: string
 }
 
 const REPORT_API_URL = process.env.REPORT_API_URL?.replace(/\/$/, '')
@@ -45,12 +46,14 @@ function reportFromRemote(item: RemoteReport, fallbackDate: string): Report | nu
   if (!item.content) return null
   const date = item.report_date || fallbackDate
   const body = cleanReportBody(stripRemoteFrontmatter(item.content))
+  const archiveWarning = archiveWarningFromMarkdown(body)
   return {
     title: item.title || `Parkinson's Research Report — ${date}`,
     date,
     content: body,
     html: simpleMarkdownToHtml(body),
-    preview: previewFromMarkdown(body),
+    preview: archiveWarning ? 'Archived report withheld because its research record could not be verified.' : previewFromMarkdown(body),
+    archiveWarning,
   }
 }
 
@@ -78,14 +81,21 @@ function previewFromMarkdown(markdown: string): string {
   const intro = markdown
     .split('\n')
     .map((line) => line.trim())
-    .find((line) => line && !['---', '***', '___'].includes(line) && !line.startsWith('#') && !line.startsWith('*From:') && !line.startsWith('*De:'))
-  if (!intro) return 'Daily research update'
+    .find((line) => line && !['---', '***', '___'].includes(line) && !line.startsWith('#') && !line.startsWith('*From:') && !line.startsWith('*De:') && !/^daily research for families navigating/i.test(line) && !/^investigación diaria para familias/i.test(line) && !line.startsWith('<think>') && !/^a recent peer-reviewed study/i.test(line) && !/^un estudio reciente revisado/i.test(line) && !/^the indexed record/i.test(line) && !/^la fuente original/i.test(line))
+  if (!intro) return 'Research details unavailable in this archived report.'
   const clean = stripEmojis(intro)
     .replace(/\*\*(.*?)\*\*/g, '$1')
     .replace(/\*(.*?)\*/g, '$1')
     .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
     .trim()
   return clean.slice(0, 160) + (clean.length > 160 ? '...' : '')
+}
+
+function archiveWarningFromMarkdown(markdown: string): string | undefined {
+  if (/<think>|knowledge cutoff|I don['’]t have access to current|no tengo acceso a información actual/i.test(markdown)) {
+    return 'This archived report contains legacy drafting material that was not verified against a live research record. Use it as an archive only; do not use it for medical decisions.'
+  }
+  return undefined
 }
 
 // Strip emojis from text for web display (reports keep them in markdown)
@@ -224,13 +234,15 @@ export async function getReport(date: string, lang = 'en'): Promise<Report | nul
     const { data, content: body } = matter(content)
 
     const html = simpleMarkdownToHtml(body)
+    const archiveWarning = archiveWarningFromMarkdown(body)
 
     return {
       title: data.title || `Parkinson's Research Report — ${date}`,
       date,
       content: body,
       html,
-      preview: previewFromMarkdown(body),
+      preview: archiveWarning ? 'Archived report withheld because its research record could not be verified.' : previewFromMarkdown(body),
+      archiveWarning,
     }
   } catch {
     return null
@@ -239,7 +251,7 @@ export async function getReport(date: string, lang = 'en'): Promise<Report | nul
 
 export async function getReportSections(date: string, lang = 'en'): Promise<ReportSection[]> {
   const report = await getReport(date, lang)
-  if (!report) return []
+  if (!report || report.archiveWarning) return []
   return parseReportSections(report.content)
 }
 
